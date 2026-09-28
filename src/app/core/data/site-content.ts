@@ -4,14 +4,14 @@
  * Everything in square brackets [like this] is a placeholder.
  * ─────────────────────────────────────────────────────────────
  */
-import { Book, Hobby, Interest, JourneyStage, Profile, Qualification, Stat } from '../models/content.model';
+import { Book, Hobby, Interest, JournalPhoto, JourneyStage, Place, Profile, Qualification, Stat } from '../models/content.model';
 
 export const PROFILE: Profile = {
   name: 'Garima Jain',
-  role: 'IAS Aspirant',
+  role: 'Traveller & Storyteller',
   location: 'New Delhi · India',
   intro:
-    'I am an IAS aspirant passionate about understanding society, public policy, people — and the ideas that shape our world.',
+    'I collect stories — through oral histories, conversations, photographs and reflections on people, places and cultures.',
   email: 'hello@garimajain.in', // [replace]
   siteUrl: 'https://garimajain.in', // [replace]
   socials: [
@@ -31,9 +31,37 @@ export const ABOUT = {
 
 /** Placeholder figures — replace with your own. Animated as counters. */
 export const STATS: Stat[] = [
-  { value: 400, suffix: '+', label: 'days of newspaper notes' },
-  { value: 36, label: 'books read this year' },
-  { value: 120, suffix: '+', label: 'answers written & reviewed' },
+  { value: 18, label: 'states wandered' },
+  { value: 60, suffix: '+', label: 'conversations recorded' },
+  { value: 2400, suffix: '+', label: 'photographs kept' },
+];
+
+/**
+ * The horizontal "places" strip. Images live in public/images/places/.
+ * Placeholder illustrations for now — drop real photos over the same filenames.
+ */
+export const PLACES: Place[] = [
+  { name: 'Ladakh', region: 'Jammu & Kashmir', when: 'jun 2025', note: 'Prayer flags, butter tea and a monastery that hums at dawn.', image: 'images/places/ladakh.jpg', imageAlt: 'Snow peaks and a hillside monastery under a deep blue sky' },
+  { name: 'Varanasi', region: 'Uttar Pradesh', when: 'nov 2024', note: 'A boatman who remembers every flood since 1978.', image: 'images/places/varanasi.jpg', imageAlt: 'The ghats of Varanasi at dusk with a boat on the Ganga' },
+  { name: 'Jaisalmer', region: 'Rajasthan', when: 'jan 2025', note: 'A golden fort, and a haveli with forty-two windows.', image: 'images/places/jaisalmer.jpg', imageAlt: 'Sand dunes, a camel and the fort of Jaisalmer' },
+  { name: 'Alleppey', region: 'Kerala', when: 'aug 2024', note: 'Slow backwaters and a kitchen that smelled of coconut.', image: 'images/places/kerala.jpg', imageAlt: 'A houseboat on the Kerala backwaters between coconut palms' },
+  { name: 'Hampi', region: 'Karnataka', when: 'dec 2023', note: 'Boulders balanced like a question nobody answered.', image: 'images/places/hampi.jpg', imageAlt: 'Balanced boulders and a temple tower in Hampi' },
+  { name: 'Cherrapunji', region: 'Meghalaya', when: 'jul 2024', note: 'Rain, root bridges, and a grandmother’s folk songs.', image: 'images/places/meghalaya.jpg', imageAlt: 'Green hills, clouds and a waterfall in Meghalaya' },
+  { name: 'Rann of Kutch', region: 'Gujarat', when: 'feb 2025', note: 'White salt to the horizon under a full moon.', image: 'images/places/kutch.jpg', imageAlt: 'The white salt desert of Kutch under a full moon' },
+  { name: 'Darjeeling', region: 'West Bengal', when: 'apr 2024', note: 'Tea gardens, a toy train and Kanchenjunga at 5 a.m.', image: 'images/places/darjeeling.jpg', imageAlt: 'Tea gardens and the toy train below snow peaks at dawn' },
+];
+
+/** The photo journal grid. Images live in public/images/journal/. */
+export const JOURNAL: JournalPhoto[] = [
+  { image: 'images/journal/doorway.jpg', alt: 'A blue arched doorway in a terracotta wall with a marigold garland', caption: 'a door someone painted blue for luck', place: 'jodhpur', shape: 'tall' },
+  { image: 'images/journal/spices.jpg', alt: 'Cones of coloured spices at a market stall', caption: 'the spice lane, 7 a.m.', place: 'old delhi', shape: 'wide' },
+  { image: 'images/journal/chai.jpg', alt: 'Glasses of chai on a tin tray beside a kettle', caption: 'the chai that started every conversation', place: 'lansdowne', shape: 'square' },
+  { image: 'images/journal/cassette.jpg', alt: 'A cassette tape labelled nani’s stories', caption: 'nani’s stories, side a', place: 'home', shape: 'square' },
+  { image: 'images/journal/train.jpg', alt: 'Hills seen through the barred window of a train', caption: 'window seat, sleeper class', place: 'konkan railway', shape: 'tall' },
+  { image: 'images/journal/flags.jpg', alt: 'Strings of prayer flags against a blue sky', caption: 'flags carrying prayers into the wind', place: 'leh', shape: 'wide' },
+  { image: 'images/journal/kites.jpg', alt: 'Colourful kites in a pale sky', caption: 'uttarayan, from a rooftop', place: 'ahmedabad', shape: 'square' },
+  { image: 'images/journal/lanterns.jpg', alt: 'Paper lanterns hanging in a row', caption: 'lanterns before diwali', place: 'jaipur', shape: 'tall' },
+  { image: 'images/journal/nets.jpg', alt: 'Chinese fishing nets silhouetted at sunset', caption: 'the nets come up at sunset', place: 'kochi', shape: 'wide' },
 ];
 
 export const QUALIFICATIONS: Qualification[] = [
@@ -77,16 +105,17 @@ export const JOURNEY: JourneyStage[] = [
   { numeral: 'V', title: 'Service', description: 'Turning understanding into work that reaches people.' },
 ];
 
+/** "What catches my eye" — the dot-separated word run. (`icon` is unused by the current design.) */
 export const INTERESTS: Interest[] = [
-  { title: 'Public Policy', description: 'Understanding how ideas translate into decisions that affect everyday lives.', icon: 'M4 20h16M6 20V9m4 11V9m4 11V9m4 11V9M3 9l9-5 9 5' },
-  { title: 'Indian History', description: 'Reading the past to make sense of the institutions we inherited.', icon: 'M12 3v18M5 7h14M7 7l-3 7h6zM17 7l-3 7h6z' },
-  { title: 'Governance', description: 'The machinery between a law on paper and a service at the doorstep.', icon: 'M4 10h16v10H4zM2 10l10-6 10 6M9 14h6' },
-  { title: 'International Relations', description: 'How India negotiates its place in a crowded, shifting world.', icon: 'M12 3a9 9 0 100 18 9 9 0 000-18zM3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18' },
-  { title: 'Psychology', description: 'Why people decide the way they do — and what that means for policy.', icon: 'M9 18h6M10 21h4M12 3a6 6 0 00-4 10.5c.6.6 1 1.4 1 2.5h6c0-1.1.4-1.9 1-2.5A6 6 0 0012 3z' },
-  { title: 'Current Affairs', description: 'Following the news slowly: context first, headlines second.', icon: 'M4 5h13v14H6a2 2 0 01-2-2zM17 9h3v8a2 2 0 01-2 2M7 9h7M7 13h7' },
-  { title: 'Society & Culture', description: 'Festivals, languages, kitchens — the everyday grammar of India.', icon: 'M8 11a3 3 0 100-6 3 3 0 000 6zM16 11a3 3 0 100-6 3 3 0 000 6zM2 20c0-3 3-5 6-5s6 2 6 5M14 15c3 0 8 1 8 5' },
-  { title: 'Technology', description: 'Digital public infrastructure and the questions it raises about access.', icon: 'M4 5h16v11H4zM2 19h20M9 9l-2 2 2 2M15 9l2 2-2 2' },
-  { title: 'Environment', description: 'Climate, water and cities — the policy problems of my generation.', icon: 'M5 19c0-8 5-14 15-14 0 10-6 15-14 15M5 19c3-5 6-8 10-10' },
+  { title: 'Oral Histories', description: 'The stories nobody wrote down — recorded before they quietly slip away.', icon: '' },
+  { title: 'Old Streets', description: 'Lanes that were there before the maps, and still don’t quite fit on them.', icon: '' },
+  { title: 'Kitchens', description: 'A recipe is a family history you can taste.', icon: '' },
+  { title: 'Festivals', description: 'The days a whole town agrees to be someone else for a while.', icon: '' },
+  { title: 'Handmade Things', description: 'Looms, kilns and workshops — and the hands that remember how.', icon: '' },
+  { title: 'Languages', description: 'Words that don’t translate, and the people who carry them.', icon: '' },
+  { title: 'Mountains', description: 'Places that make every plan feel pleasantly small.', icon: '' },
+  { title: 'Markets', description: 'The fastest way to learn what a town eats, wears and argues about.', icon: '' },
+  { title: 'Trains', description: 'Twenty strangers, one compartment, a dozen stories by morning.', icon: '' },
 ];
 
 export const HOBBIES: Hobby[] = [
@@ -101,31 +130,26 @@ export const HOBBIES: Hobby[] = [
 ];
 
 export const BOOKS: Book[] = [
-  { title: 'Why Nations Fail', author: 'Daron Acemoglu & James A. Robinson', thought: 'Understanding institutions through the lens of history.', tone: 'pink' },
-  { title: 'The Discovery of India', author: 'Jawaharlal Nehru', thought: 'A country read as a long conversation with itself.', tone: 'teal' },
-  { title: 'Poor Economics', author: 'Abhijit Banerjee & Esther Duflo', thought: 'Policy is best judged at the scale of one household.', tone: 'marigold' },
-  { title: 'India After Gandhi', author: 'Ramachandra Guha', thought: 'The improbable, unfinished story of a republic.', tone: 'saffron' },
+  { title: 'City of Djinns', author: 'William Dalrymple', thought: 'A city read through the people who still remember it.', tone: 'pink' },
+  { title: 'The Great Railway Bazaar', author: 'Paul Theroux', thought: 'Proof that the journey is the story.', tone: 'teal' },
+  { title: 'Nine Lives', author: 'William Dalrymple', thought: 'Nine strangers, nine faiths, one long listening.', tone: 'marigold' },
+  { title: 'In Patagonia', author: 'Bruce Chatwin', thought: 'How to write a place you can’t quite hold.', tone: 'saffron' },
 ];
 
-export const CURRENTLY_EXPLORING: string[] = [
-  'Public Administration',
-  'Indian Polity',
-  'International Relations',
-  'Climate Policy',
-  'Ethics & Integrity',
-];
+/** Spun on the orbit globe as "next on the map". */
+export const CURRENTLY_EXPLORING: string[] = ['Spiti', 'Majuli', 'Ziro', 'Chettinad', 'Gokarna'];
 
 export const PHILOSOPHY = {
-  quote: 'Preparation is not only about knowing the answers.',
-  quoteEmphasis: 'It is about learning to ask better questions.',
+  quote: 'Every place has a story it tells visitors.',
+  quoteEmphasis: 'I go looking for the one it keeps for friends.',
 };
 
 /** Manifest statements — each line: [bold part, ghosted part]. */
 export const MANIFEST = {
   lines: [
-    ['aspirant,', ' not applicant.'],
-    ['one goal', ', many questions.'],
-    ['no shortcuts', '.'],
+    ['collector', ' of stories.'],
+    ['many places', ', one notebook.'],
+    ['no itinerary', '.'],
   ] as [string, string][],
-  closing: ['just honest questions', ' — for a country worth understanding.'] as [string, string],
+  closing: ['just open roads', ' — and the people along them.'] as [string, string],
 };

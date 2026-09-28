@@ -43,9 +43,9 @@ export class NavbarComponent {
   protected readonly items: NavItem[] = [
     { label: 'home', link: '/', exact: true },
     { label: 'about', link: '/about' },
-    { label: 'journey', link: '/qualifications' },
-    { label: 'interests', link: '/', fragment: 'interests' },
-    { label: 'writing', link: '/blog' },
+    { label: 'places', link: '/', fragment: 'places' },
+    { label: 'journal', link: '/', fragment: 'journal' },
+    { label: 'stories', link: '/blog' },
   ];
 
   constructor() {

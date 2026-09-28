@@ -3,7 +3,7 @@
 
   <article class="article" itemscope itemtype="https://schema.org/BlogPosting">
     <header class="article__head">
-      <a routerLink="/blog" class="article__back">← all notes</a>
+      <a routerLink="/blog" class="article__back">← all stories</a>
       <p class="article__cat">
         <a routerLink="/blog" [queryParams]="{ category: p.category }">{{ p.category.toLowerCase() }}</a>
       </p>
@@ -68,7 +68,7 @@
         <span class="bio__avatar" aria-hidden="true">g</span>
         <div>
           <p class="bio__name">Garima Jain</p>
-          <p class="bio__text">IAS aspirant writing about society, governance and the books that shape how I think.</p>
+          <p class="bio__text">Traveller and storyteller, collecting oral histories, photographs and small moments from the road.</p>
         </div>
       </div>
     </footer>
@@ -95,7 +95,7 @@
     <section class="related" aria-labelledby="related-title">
       <div class="related__head">
         <h2 id="related-title" class="related__title">keep <em>reading</em></h2>
-        <a routerLink="/blog" class="text-link">all notes <span class="arrow" aria-hidden="true">↗</span></a>
+        <a routerLink="/blog" class="text-link">all stories <span class="arrow" aria-hidden="true">↗</span></a>
       </div>
       <div class="related__grid" appReveal="stagger">
         @for (r of related(); track r.id; let i = $index) {
@@ -108,6 +108,6 @@
   <section class="missing">
     <p class="label accent">GJ / 404</p>
     <h1 class="missing__title">this note doesn’t exist <em>(yet).</em></h1>
-    <a routerLink="/blog" class="btn btn--dark">Browse all notes <span class="btn__arrow" aria-hidden="true">→</span></a>
+    <a routerLink="/blog" class="btn btn--dark">Browse all stories <span class="btn__arrow" aria-hidden="true">→</span></a>
   </section>
 }

@@ -23,13 +23,12 @@ export interface BlogPost {
 }
 
 export const BLOG_CATEGORIES = [
-  'UPSC',
-  'Governance',
-  'Society',
-  'History',
-  'Books',
-  'Current Affairs',
-  'Personal Reflections',
+  'People',
+  'Places',
+  'Food',
+  'Culture',
+  'Photo Essays',
+  'Reflections',
 ] as const;
 
 export type BlogCategory = (typeof BLOG_CATEGORIES)[number];

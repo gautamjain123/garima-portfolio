@@ -57,6 +57,27 @@ export interface Book {
   tone: 'pink' | 'teal' | 'marigold' | 'saffron';
 }
 
+/** A destination in the horizontal "places" strip. */
+export interface Place {
+  name: string;
+  region: string;
+  /** When you were there, e.g. 'mar 2025' */
+  when: string;
+  /** One line about the place — shown under the name. */
+  note: string;
+  image: string;
+  imageAlt: string;
+}
+
+/** One frame in the photo journal. `shape` sets its span in the grid. */
+export interface JournalPhoto {
+  image: string;
+  alt: string;
+  caption: string;
+  place: string;
+  shape: 'tall' | 'wide' | 'square';
+}
+
 export interface Stat {
   value: number;
   suffix?: string;

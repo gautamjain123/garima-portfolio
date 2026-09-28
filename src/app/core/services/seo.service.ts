@@ -11,7 +11,7 @@ export interface SeoConfig {
   type?: 'website' | 'article' | 'profile';
 }
 
-const DEFAULT_TITLE = 'Garima Jain | IAS Aspirant | Learner, Writer & Curious Mind';
+const DEFAULT_TITLE = 'Garima Jain | Traveller & Storyteller';
 
 @Injectable({ providedIn: 'root' })
 export class SeoService {
@@ -41,7 +41,7 @@ export class SeoService {
     this.update({
       title: DEFAULT_TITLE,
       description:
-        'Garima Jain is an IAS aspirant writing about society, public policy, governance, books and the ideas that shape India.',
+        'Garima Jain collects stories — oral histories, conversations, photographs and reflections on people, places and cultures across India.',
       path: '/',
     });
     this.setJsonLd('person', this.personSchema());

@@ -13,7 +13,7 @@ import { RevealDirective } from '../core/directives/reveal.directive';
   template: `
     <section id="interests" class="interests" aria-labelledby="interests-title">
       <div class="interests__rail">
-        <h2 id="interests-title" class="label">(02) what keeps me curious</h2>
+        <h2 id="interests-title" class="label">(03) what catches my eye</h2>
       </div>
       <div class="interests__body">
         <ul class="interests__list" appReveal>

@@ -8,11 +8,11 @@ import { PROFILE } from '../../core/data/site-content';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <footer class="footer">
-      <span class="footer__copy">© {{ year }} garima jain — built with curiosity &amp; purpose.</span>
+      <span class="footer__copy">© {{ year }} garima jain — collected along the way.</span>
       <nav class="footer__links" aria-label="Footer">
         <a routerLink="/about">about</a>
-        <a routerLink="/qualifications">journey</a>
-        <a routerLink="/blog">writing</a>
+        <a routerLink="/blog">stories</a>
+        <a routerLink="/qualifications">education</a>
         @for (s of profile.socials; track s.label) {
           <a [href]="s.url" target="_blank" rel="noopener">{{ s.label.toLowerCase() }}</a>
         }

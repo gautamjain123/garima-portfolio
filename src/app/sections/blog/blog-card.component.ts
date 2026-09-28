@@ -14,6 +14,16 @@ import { ImageFrameComponent } from '../../shared/image-frame.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @let p = post();
+    @if (variant() === 'card' || variant() === 'hero') {
+      <article class="card is-zoomable" [class.card--hero]="variant() === 'hero'">
+        <a class="card__link" [routerLink]="['/blog', p.slug]" data-cursor="READ">
+          <div class="card__img"><app-image-frame [src]="p.image" [alt]="p.imageAlt" placeholder="image" /></div>
+          <p class="card__meta"><span class="card__cat">{{ p.category | lowercase }}</span><span><time [attr.datetime]="p.date">{{ p.date | date: 'MMM y' | lowercase }}</time> · {{ p.readTime }} min</span></p>
+          <h3 class="card__title">{{ p.title.toLowerCase() }}</h3>
+          @if (variant() === 'hero') {<p class="card__excerpt">{{ p.excerpt }}</p>}
+        </a>
+      </article>
+    } @else {
     <article class="row" [class.row--featured]="variant() === 'featured'">
       <a class="row__link" [routerLink]="['/blog', p.slug]" data-cursor="READ">
         <span class="row__n mono">{{ number() }}</span>
@@ -24,6 +34,7 @@ import { ImageFrameComponent } from '../../shared/image-frame.component';
       </a>
       <div class="row__preview" aria-hidden="true"><app-image-frame [src]="p.image" [alt]="p.imageAlt" placeholder="image" /></div>
     </article>
+    }
   `,
   styles: `
     @use 'mixins' as m;
@@ -57,10 +68,23 @@ import { ImageFrameComponent } from '../../shared/image-frame.component';
     }
     .row:hover .row__preview { opacity: 1; transform: translateY(-50%) rotate(-3deg) scale(1); }
     @media (prefers-reduced-motion: reduce) { .row__preview { display: none !important; } }
+
+    // Image card
+    .card__link { display: flex; flex-direction: column; gap: 12px; }
+    .card__img { position: relative; aspect-ratio: 4 / 3; border-radius: var(--r-img); overflow: hidden;
+      app-image-frame { position: absolute; inset: 0; } }
+    .card--hero .card__img { @include m.tablet { aspect-ratio: 16 / 10; } }
+    .card__meta { display: flex; justify-content: space-between; gap: 12px; font-size: 13px; color: var(--c-dim); margin-top: 4px; }
+    .card__cat { color: var(--c-accent); }
+    .card__title { font-size: clamp(1.375rem, 1rem + 1vw, 1.875rem); font-weight: 600; letter-spacing: -0.028em; line-height: 1.1;
+      transition: color var(--d-fast); text-wrap: balance; }
+    .card--hero .card__title { font-size: var(--t-h3); }
+    .card__excerpt { font-size: var(--t-body-lg); line-height: 1.6; color: var(--c-muted); max-width: 60ch; }
+    .card__link:hover .card__title { color: var(--c-accent); }
   `,
 })
 export class BlogCardComponent {
   readonly post = input.required<BlogPost>();
   readonly number = input('01');
-  readonly variant = input<'featured' | 'standard' | 'row'>('row');
+  readonly variant = input<'featured' | 'standard' | 'row' | 'card' | 'hero'>('row');
 }

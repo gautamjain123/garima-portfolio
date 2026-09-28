@@ -4,8 +4,8 @@ import { BooksComponent } from '../sections/books.component';
 import { CurrentlyLearningComponent } from '../sections/currently-learning.component';
 import { HobbiesComponent } from '../sections/hobbies.component';
 import { InterestsComponent } from '../sections/interests.component';
-import { JourneyComponent } from '../sections/journey.component';
 import { PhilosophyComponent } from '../sections/philosophy.component';
+import { PlacesComponent } from '../sections/places.component';
 import { PageHeaderComponent } from '../shared/page-header.component';
 import { SeoService } from '../core/services/seo.service';
 
@@ -15,7 +15,7 @@ import { SeoService } from '../core/services/seo.service';
     PageHeaderComponent,
     AboutComponent,
     CurrentlyLearningComponent,
-    JourneyComponent,
+    PlacesComponent,
     InterestsComponent,
     HobbiesComponent,
     BooksComponent,
@@ -25,12 +25,12 @@ import { SeoService } from '../core/services/seo.service';
   template: `
     <app-page-header
       index="about"
-      title="learning. reflecting."
-      emphasis="preparing."
-      lede="An aspirant, a reader, a slightly obsessive note-taker — and someone who believes public service begins with paying attention."
+      title="wandering. listening."
+      emphasis="writing."
+      lede="A traveller, a listener, a slightly obsessive note-taker — collecting the stories we inherit and the ones that quietly slip away."
     />
     <app-about class="band band--terracotta" />
-    <app-journey />
+    <app-places />
     <app-interests class="band band--teal" />
     <app-currently-learning class="band band--indigo" />
     <app-hobbies class="band band--pink" />
@@ -43,7 +43,7 @@ export default class AboutPage implements OnInit {
   ngOnInit(): void {
     this.seo.update({
       title: 'About',
-      description: 'About Garima Jain — IAS aspirant, reader and writer curious about society, governance and public policy.',
+      description: 'About Garima Jain — traveller and storyteller collecting oral histories, photographs and reflections on people, places and cultures.',
       path: '/about',
       type: 'profile',
     });

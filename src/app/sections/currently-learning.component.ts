@@ -13,10 +13,10 @@ import { CURRENTLY_EXPLORING } from '../core/data/site-content';
 import { RevealDirective } from '../core/directives/reveal.directive';
 import { MotionService } from '../core/services/motion.service';
 
-const EXTRA = ['economy', 'geography', 'essay', 'history', 'governance', 'constitution'];
+const EXTRA = ['tawang', 'kutch', 'pondicherry', 'orchha', 'mawlynnong', 'kasol'];
 
 /**
- * "curiosity, in orbit" — topics placed on a sphere that slowly spins.
+ * "wanderlust, in orbit" — places on the list, spinning on a little globe.
  * Drag (mouse, touch or pen) to throw it around; arrow keys nudge it.
  */
 @Component({
@@ -26,10 +26,10 @@ const EXTRA = ['economy', 'geography', 'essay', 'history', 'governance', 'consti
   template: `
     <section id="exploring" class="orbit" aria-labelledby="orbit-title">
       <div class="orbit__copy">
-        <p class="label">(04) currently exploring</p>
-        <h2 id="orbit-title" class="orbit__title" appReveal>curiosity,<br /><em>in orbit.</em></h2>
+        <p class="label">(05) next on the map</p>
+        <h2 id="orbit-title" class="orbit__title" appReveal>wanderlust,<br /><em>in orbit.</em></h2>
         <p class="orbit__text" appReveal>
-          {{ topics.slice(0, 4).join(', ') }} — the subjects I’m circling this season. Drag to spin them around.
+          {{ topics.slice(0, 4).join(', ') }} — the places circling my list for the next few seasons. Drag to spin the globe.
         </p>
         <p class="orbit__hint" aria-hidden="true"><span class="orbit__rule"></span>drag to orbit</p>
       </div>
@@ -39,7 +39,7 @@ const EXTRA = ['economy', 'geography', 'essay', 'history', 'governance', 'consti
         class="orbit__stage"
         tabindex="0"
         role="group"
-        aria-label="Topics I am exploring. Use arrow keys to rotate."
+        aria-label="Places I want to visit. Use arrow keys to rotate."
         (keydown)="nudge($event)"
       >
         <span class="orbit__ring" aria-hidden="true"></span>

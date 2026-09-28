@@ -13,10 +13,10 @@ import { PageHeaderComponent } from '../../shared/page-header.component';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <app-page-header
-      index="writing"
-      title="notes"
-      emphasis="& reflections"
-      lede="Thoughts on society, governance, books, current affairs and everything that makes me curious."
+      index="stories"
+      title="stories"
+      emphasis="from the road"
+      lede="People, places, kitchens and questions — oral histories, photo essays and field notes, written down before they slip away."
     >
       <nav aria-label="Filter by category">
         <ul class="chips">
@@ -42,14 +42,14 @@ import { PageHeaderComponent } from '../../shared/page-header.component';
     <div class="list">
 
       <p class="list__count" aria-live="polite">
-        {{ visible().length }} {{ visible().length === 1 ? 'note' : 'notes' }}{{ activeCategory() ? ' in ' + activeCategory() : '' }}
+        {{ visible().length }} {{ visible().length === 1 ? 'story' : 'stories' }}{{ activeCategory() ? ' in ' + activeCategory()!.toLowerCase() : '' }}
       </p>
 
       <div class="list__grid">
-        @for (p of visible(); track p.id; let i = $index) {
-          <app-blog-card [post]="p" [number]="(i + 1).toString().padStart(2, '0')" [variant]="p.featured ? 'featured' : 'row'" />
+        @for (p of visible(); track p.id; let first = $first) {
+          <app-blog-card [post]="p" [variant]="first ? 'hero' : 'card'" [class.list__hero]="first" />
         } @empty {
-          <p class="list__empty">Nothing here yet — the first note in this category is on its way.</p>
+          <p class="list__empty">Nothing here yet — the first story in this category is on its way.</p>
         }
       </div>
     </div>
@@ -59,7 +59,13 @@ import { PageHeaderComponent } from '../../shared/page-header.component';
     .chips { display: flex; flex-wrap: wrap; gap: 6px; }
     .list { @include m.container; padding-block: 32px var(--section-y); display: flex; flex-direction: column; gap: 24px; }
     .list__count { @include m.label; }
-    .list__grid { border-top: 1px solid var(--c-line); }
+    .list__grid {
+      display: grid; gap: 40px 24px; border-top: 1px solid var(--c-line); padding-top: 32px;
+      @include m.tablet { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      @include m.laptop { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 48px 28px; }
+    }
+    .list__hero { @include m.tablet { grid-column: 1 / -1; } @include m.laptop { grid-column: span 2; grid-row: span 2; } }
+    .list__empty { grid-column: 1 / -1; }
     .list__empty { padding: 40px 0; color: var(--c-muted); font-size: var(--t-lead); }
   `,
 })
@@ -88,8 +94,8 @@ export default class BlogListPage implements OnInit {
 
   ngOnInit(): void {
     this.seo.update({
-      title: 'Notes & Reflections',
-      description: 'Essays and notes by Garima Jain on society, governance, history, books, current affairs and UPSC preparation.',
+      title: 'Stories from the road',
+      description: 'Oral histories, photo essays and travel stories by Garima Jain — people, places, food and culture across India.',
       path: '/blog',
     });
   }

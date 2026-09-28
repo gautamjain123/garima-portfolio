@@ -18,7 +18,8 @@ Almost everything lives in two data files:
 | What | Where |
 | --- | --- |
 | Name, intro, email, social links, domain | `src/app/core/data/site-content.ts` → `PROFILE` |
-| About text, counters, qualifications, journey, interests, hobbies, books, "currently exploring", quote | `src/app/core/data/site-content.ts` |
+| About text, counters, places strip, photo journal, interests, hobbies, books, "next on the map", quote | `src/app/core/data/site-content.ts` |
+| Qualifications (the `/qualifications` page) | `src/app/core/data/site-content.ts` → `QUALIFICATIONS` |
 | Blog posts | `src/app/core/data/blog-posts.ts` |
 
 Anything in `[square brackets]` is a placeholder. Also update the domain in `src/index.html`, `public/robots.txt` and `scripts/generate-sitemap.mjs`.
@@ -30,8 +31,10 @@ Images are referenced by path and **fall back to a styled, captioned placeholder
 ```
 public/images/garima-portrait.jpg      ← hero portrait, 4:5, ~1600px tall
 public/images/og-cover.jpg             ← social share image, 1200×630
+public/images/places/ladakh.jpg …      ← see PLACES in site-content.ts (3:4)
+public/images/journal/doorway.jpg …    ← see JOURNAL in site-content.ts
 public/images/hobbies/reading.jpg …    ← see HOBBIES in site-content.ts
-public/images/blog/good-governance.jpg …  ← see each post's `image`
+public/images/blog/boatman.jpg …       ← see each post's `image`
 ```
 
 Book covers: add `cover: 'images/books/why-nations-fail.jpg'` to a book in `BOOKS`; otherwise a typographic cover is drawn.
