@@ -1,0 +1,71 @@
+<header class="nav" [class.nav--scrolled]="scrolled()" [class.nav--open]="open()">
+  <div class="nav__inner">
+    <a routerLink="/" class="nav__brand" aria-label="Garima Jain — home">garima<span class="nav__dot">.</span></a>
+
+    <nav class="nav__desktop" aria-label="Primary">
+      <ul class="nav__links">
+        @for (item of items; track item.label) {
+          <li>
+            <a
+              class="nav__link"
+              [routerLink]="item.link"
+              [fragment]="item.fragment"
+              routerLinkActive="is-active"
+              [routerLinkActiveOptions]="item.exact || item.fragment ? exactMatch : subsetMatch"
+              [ariaCurrentWhenActive]="item.fragment ? false : 'page'"
+              >{{ item.label }}</a
+            >
+          </li>
+        }
+      </ul>
+      <a routerLink="/contact" class="btn btn--sm" appMagnetic>contact</a>
+    </nav>
+
+    <button
+      #menuButton
+      type="button"
+      class="nav__toggle"
+      [attr.aria-expanded]="open()"
+      aria-controls="mobile-drawer"
+      (click)="toggle()"
+    >
+      {{ open() ? 'close' : 'menu' }}
+    </button>
+  </div>
+</header>
+
+<div
+  id="mobile-drawer"
+  class="drawer"
+  [class.drawer--open]="open()"
+  [attr.aria-hidden]="!open()"
+  [attr.inert]="open() ? null : ''"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Site navigation"
+>
+  <nav aria-label="Mobile">
+    <ol class="drawer__links">
+      @for (item of items; track item.label; let i = $index; let first = $first) {
+        <li class="drawer__item" [style.--i]="i">
+          @if (first) {
+            <a #firstDrawerLink class="drawer__link" [routerLink]="item.link" [fragment]="item.fragment" (click)="close(false)">{{ item.label }}</a>
+          } @else {
+            <a class="drawer__link" [routerLink]="item.link" [fragment]="item.fragment" (click)="close(false)">{{ item.label }}</a>
+          }
+        </li>
+      }
+      <li class="drawer__item" [style.--i]="items.length">
+        <a class="drawer__link drawer__link--it" routerLink="/contact" (click)="close(false)">contact</a>
+      </li>
+    </ol>
+  </nav>
+  <div class="drawer__foot">
+    <a class="drawer__mail" [href]="'mailto:' + profile.email">{{ profile.email }}</a>
+    <ul class="drawer__socials">
+      @for (s of profile.socials; track s.label) {
+        <li><a [href]="s.url" target="_blank" rel="noopener">{{ s.label.toLowerCase() }}</a></li>
+      }
+    </ul>
+  </div>
+</div>

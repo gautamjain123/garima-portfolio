@@ -1,0 +1,64 @@
+<section id="contact" class="contact" aria-labelledby="contact-title">
+  <p class="label">(08) contact</p>
+
+  <a [href]="'mailto:' + profile.email" class="contact__cta" appReveal>
+    <h2 id="contact-title" class="contact__title">let’s <em>meet</em> up!</h2>
+  </a>
+
+  <div class="contact__grid">
+    <div class="contact__side">
+      <a [href]="'mailto:' + profile.email" class="btn btn--solid btn--lg" appMagnetic>{{ profile.email }}</a>
+      <p class="contact__text">
+        An interesting idea, a book recommendation, a good debate — or simply hello.
+      </p>
+      <ul class="contact__links">
+        @for (s of profile.socials; track s.label) {
+          <li>
+            <a [href]="s.url" target="_blank" rel="noopener">{{ s.label.toLowerCase() }} <span aria-hidden="true">↗</span>
+              <span class="visually-hidden">(opens in a new tab)</span></a>
+          </li>
+        }
+      </ul>
+    </div>
+
+    <form class="form" [formGroup]="form" (ngSubmit)="submit()" novalidate aria-label="Contact form">
+      <div class="field" [class.field--error]="invalid('name')">
+        <label for="c-name">name</label>
+        <input id="c-name" type="text" formControlName="name" autocomplete="name" placeholder="your name"
+          [attr.aria-invalid]="invalid('name')" aria-describedby="c-name-err" />
+        <p id="c-name-err" class="field__err" [hidden]="!invalid('name')">Please tell me your name.</p>
+      </div>
+
+      <div class="field" [class.field--error]="invalid('email')">
+        <label for="c-email">email</label>
+        <input id="c-email" type="email" formControlName="email" autocomplete="email" placeholder="you@example.com"
+          [attr.aria-invalid]="invalid('email')" aria-describedby="c-email-err" />
+        <p id="c-email-err" class="field__err" [hidden]="!invalid('email')">Please enter a valid email address.</p>
+      </div>
+
+      <div class="field field--wide" [class.field--error]="invalid('message')">
+        <label for="c-message">message</label>
+        <textarea id="c-message" rows="3" formControlName="message" placeholder="what’s on your mind?"
+          [attr.aria-invalid]="invalid('message')" aria-describedby="c-message-err"></textarea>
+        <p id="c-message-err" class="field__err" [hidden]="!invalid('message')">A few more words, please (at least 10 characters).</p>
+      </div>
+
+      <div class="form__hp" aria-hidden="true">
+        <label for="c-website">Website</label>
+        <input id="c-website" type="text" formControlName="website" tabindex="-1" autocomplete="off" />
+      </div>
+
+      <div class="form__foot">
+        <p class="form__status" role="status" aria-live="polite">
+          @switch (status()) {
+            @case ('sent') { thank you — your message is on its way. }
+            @case ('error') { something went wrong. please email me directly. }
+          }
+        </p>
+        <button type="submit" class="btn" [disabled]="status() === 'sending'">
+          {{ status() === 'sending' ? 'sending…' : 'send message' }} <span class="btn__arrow" aria-hidden="true">↗</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</section>

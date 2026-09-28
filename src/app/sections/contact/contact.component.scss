@@ -1,0 +1,54 @@
+@use 'mixins' as m;
+
+.contact {
+  @include m.container;
+  padding-block: var(--section-y) calc(var(--section-y) * 0.6);
+  border-top: 1px solid var(--c-line-soft);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(28px, 4vw, 48px);
+}
+
+.contact__cta { display: block; width: fit-content; }
+.contact__title {
+  @include m.heading(clamp(4rem, 0.5rem + 13vw, 12.5rem));
+  line-height: 0.85;
+  letter-spacing: -0.065em;
+  transition: color var(--d-base);
+  em { letter-spacing: -0.02em; }
+}
+.contact__cta:hover .contact__title { color: var(--c-accent); em { color: var(--c-fg); } }
+
+.contact__grid {
+  display: grid;
+  gap: 48px;
+  border-top: 1px solid var(--c-line);
+  padding-top: 40px;
+  @include m.laptop { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 80px; }
+}
+.contact__side { display: flex; flex-direction: column; gap: 24px; align-items: flex-start; }
+.contact__side .btn { text-transform: none; }
+.contact__text { font-size: var(--t-body-lg); color: var(--c-muted); max-width: 420px; line-height: 1.6; }
+.contact__links { display: flex; flex-wrap: wrap; gap: 8px 24px; font-size: 15px;
+  a { color: var(--c-muted); display: inline-block; padding: 6px 0; &:hover { color: var(--c-accent); } } }
+
+.form { display: grid; gap: 28px 32px; @include m.tablet { grid-template-columns: 1fr 1fr; } }
+.field {
+  display: flex; flex-direction: column; gap: 6px;
+  &--wide { @include m.tablet { grid-column: 1 / -1; } }
+  label { font-size: 13px; color: var(--c-dim); }
+  input, textarea {
+    width: 100%; min-height: 52px; border: 0; border-bottom: 1px solid #333; border-radius: 0;
+    background: transparent; font-size: clamp(1.125rem, 1rem + 0.5vw, 1.5rem); padding: 8px 0;
+    transition: border-color var(--d-fast);
+    &::placeholder { color: #55514b; }
+    &:focus { outline: none; border-color: var(--c-accent); }
+    &:focus-visible { outline: 2px solid var(--c-accent); outline-offset: 4px; }
+  }
+  textarea { resize: vertical; min-height: 96px; }
+  &--error input, &--error textarea { border-color: #ff7a6b; }
+}
+.field__err { font-size: 13px; color: #ff9a8e; }
+.form__hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.form__foot { display: flex; justify-content: space-between; align-items: center; gap: 16px; @include m.tablet { grid-column: 1 / -1; } }
+.form__status { font-size: 14px; color: var(--c-accent); }

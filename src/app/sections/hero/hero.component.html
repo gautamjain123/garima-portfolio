@@ -1,0 +1,32 @@
+<section #root id="top" class="hero" aria-labelledby="hero-title">
+  <div class="hero__coords mono" aria-hidden="true">
+    <span>28.6139° n, 77.2090° e</span>
+    <span><span appPointerCoords>x 0.000 · y 0.000</span><span class="hero__caret"> _</span></span>
+  </div>
+
+  <figure class="hero__portrait">
+    <app-image-frame
+      src="images/garima-portrait.jpg"
+      alt="Portrait of Garima Jain"
+      placeholder="portrait — b/w, 4:5"
+      [eager]="true"
+    />
+    <figcaption class="hero__fig">fig. 01 — new delhi</figcaption>
+  </figure>
+
+  <h1 id="hero-title" class="hero__name" aria-label="Garima Jain">
+    @for (word of nameWords; track $index) {
+      <span class="hero__word" aria-hidden="true">
+        @for (ch of word; track $index) {
+          <span class="hero__char">{{ ch }}</span>
+        }
+      </span>
+    }
+  </h1>
+
+  <div class="hero__meta">
+    <p class="hero__role"><span>ias aspirant &amp;</span>&nbsp;<span class="it">curious mind</span></p>
+    <p class="hero__tags"><span>policy</span> · <span>society</span> · <span>service</span></p>
+    <a routerLink="/" fragment="manifest" class="hero__scroll">scroll <span aria-hidden="true">↓</span></a>
+  </div>
+</section>

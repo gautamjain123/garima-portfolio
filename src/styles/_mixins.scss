@@ -1,0 +1,76 @@
+@use 'tokens' as *;
+
+@mixin tablet { @media (min-width: $bp-tablet) { @content; } }
+@mixin laptop { @media (min-width: $bp-laptop) { @content; } }
+@mixin desktop { @media (min-width: $bp-desktop) { @content; } }
+@mixin below-laptop { @media (max-width: #{$bp-laptop - 1}) { @content; } }
+@mixin hover { @media (hover: hover) and (pointer: fine) { &:hover { @content; } } }
+
+@mixin container {
+  width: 100%;
+  max-width: var(--max-w);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+  box-sizing: border-box;
+}
+
+/** Section scaffold: a "(0n) label" rail on the left, content on the right. */
+@mixin rail-section {
+  @include container;
+  padding-block: var(--section-y);
+  border-top: 1px solid var(--c-line-soft);
+  display: grid;
+  gap: 28px;
+  @include laptop { grid-template-columns: var(--rail) minmax(0, 1fr); gap: 56px; }
+}
+
+@mixin label {
+  font-family: var(--f-sans);
+  font-size: var(--t-label);
+  font-weight: 400;
+  color: var(--c-dim);
+  letter-spacing: 0;
+  text-transform: lowercase;
+}
+
+/** Big, tight, lowercase grotesk heading. `em` becomes an italic serif accent. */
+@mixin heading($size: var(--t-h2)) {
+  margin: 0;
+  font-family: var(--f-sans);
+  font-size: $size;
+  font-weight: 700;
+  line-height: 0.9;
+  letter-spacing: -0.055em;
+  text-transform: lowercase;
+
+  em {
+    font-family: var(--f-serif);
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    color: var(--c-accent);
+  }
+}
+
+@mixin serif-accent {
+  font-family: var(--f-serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--c-accent);
+}
+
+/** Legacy names kept for any leftover styles. */
+@mixin serif-heading($size: var(--t-h2)) { @include heading($size); }
+@mixin hand($size: 28px) { @include serif-accent; font-size: $size; }
+@mixin pop-card($bg: var(--c-surface), $radius: var(--r-card), $shadow: none) {
+  background: $bg; border: var(--border); border-radius: $radius; box-shadow: $shadow;
+}
+@mixin sticker($bg: transparent, $fg: var(--c-muted), $rot: 0deg) {
+  display: inline-flex; align-items: center; width: fit-content;
+  padding: 6px 14px; border: var(--border); border-radius: var(--r-pill);
+  background: $bg; color: $fg; font-size: 13px;
+}
+@mixin print-strip($a: null, $b: null, $h: null) { height: 1px; background: var(--c-line); }
+@mixin dots($color: rgba(255, 255, 255, 0.04), $size: 12px) {
+  background-image: repeating-linear-gradient(135deg, $color 0 1px, transparent 1px $size);
+}

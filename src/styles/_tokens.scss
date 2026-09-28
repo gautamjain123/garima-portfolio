@@ -1,0 +1,89 @@
+// ─────────────────────────────────────────────────────────────
+// Design tokens — "gravity"
+// Near-black canvas, warm off-white type, one marigold accent.
+// Huge lowercase grotesk, italic serif for emphasis, hairlines only.
+// ─────────────────────────────────────────────────────────────
+
+$bp-tablet: 768px;
+$bp-laptop: 1024px;
+$bp-desktop: 1440px;
+
+:root {
+  color-scheme: dark;
+
+  // Core palette
+  --c-bg: #101010;
+  --c-surface: #171717;
+  --c-surface-2: #1e1e1e;
+  --c-fg: #edeae3;          // primary text
+  --c-muted: #a6a097;       // secondary text (AA on bg)
+  --c-dim: #8a857d;         // labels, captions (AA for 14px+ on bg)
+  --c-faint: #4a4742;       // decorative only: separators, ghost words
+  --c-line: #262626;        // hairlines
+  --c-line-soft: #1e1e1e;
+  --c-accent: #f2b544;      // marigold — used sparingly
+
+  // Legacy aliases so any older styles stay coherent in the dark theme
+  --c-cream: var(--c-bg);
+  --c-ivory: var(--c-bg);
+  --c-white: var(--c-surface);
+  --c-paper: var(--c-surface);
+  --c-ink: var(--c-fg);
+  --c-ink-2: var(--c-muted);
+  --c-on-dark: var(--c-fg);
+  --c-on-dark-muted: var(--c-muted);
+  --c-dark-line: var(--c-line);
+  --c-teal: var(--c-accent);
+  --c-teal-text: var(--c-accent);
+  --c-pink-text: var(--c-accent);
+  --c-marigold: var(--c-accent);
+  --c-marigold-text: var(--c-accent);
+  --c-saffron-text: var(--c-accent);
+  --c-wine: var(--c-accent);
+  --c-teal-tint: var(--c-surface);
+  --c-pink-tint: var(--c-surface);
+  --c-saffron-tint: var(--c-surface);
+  --c-marigold-tint: var(--c-surface);
+
+  // Type
+  --f-sans: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+  --f-serif: 'Instrument Serif', Georgia, serif;
+  --f-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  --t-mega: clamp(5.75rem, 1rem + 15.6vw, 14.5rem);     // 92 → 232 (hero name)
+  --t-display: clamp(3.25rem, 1.2rem + 8.2vw, 8rem);    // 52 → 128
+  --t-h1: clamp(3rem, 1.2rem + 6.6vw, 7.5rem);
+  --t-h2: clamp(2.75rem, 1.2rem + 5.2vw, 6.5rem);       // 44 → 104
+  --t-list: clamp(1.9rem, 1rem + 3.2vw, 4rem);          // 30 → 64 (dot lists)
+  --t-h3: clamp(1.5rem, 1.1rem + 1.5vw, 2.75rem);       // 24 → 44
+  --t-lead: clamp(1.25rem, 1rem + 1vw, 1.625rem);
+  --t-body: 1rem;
+  --t-body-lg: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --t-small: 0.875rem;
+  --t-label: 0.875rem;
+
+  // Space
+  --gutter: clamp(1.25rem, 0.5rem + 3vw, 3.5rem);       // 20 → 56
+  --section-y: clamp(4rem, 2rem + 7vw, 10rem);          // 64 → 160
+  --max-w: 1600px;
+  --measure: 720px;
+  --rail: 280px;                                       // left label column
+
+  // Shape
+  --r-img: 4px;
+  --r-pill: 999px;
+  --r-input: 12px;
+  --r-card: 4px;
+
+  --border: 1px solid var(--c-line);
+
+  // Motion
+  --ease-out: cubic-bezier(0.2, 0.7, 0.1, 1);
+  --ease-in-out: cubic-bezier(0.7, 0, 0.2, 1);
+  --d-fast: 0.25s;
+  --d-base: 0.45s;
+  --d-slow: 0.9s;
+
+  --nav-h: 96px;
+  @media (max-width: #{$bp-laptop - 1}) { --nav-h: 72px; }
+}

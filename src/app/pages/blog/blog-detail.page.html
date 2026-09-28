@@ -1,0 +1,113 @@
+@if (post(); as p) {
+  <app-reading-progress />
+
+  <article class="article" itemscope itemtype="https://schema.org/BlogPosting">
+    <header class="article__head">
+      <a routerLink="/blog" class="article__back">← all notes</a>
+      <p class="article__cat">
+        <a routerLink="/blog" [queryParams]="{ category: p.category }">{{ p.category.toLowerCase() }}</a>
+      </p>
+      <h1 class="article__title" itemprop="headline" appReveal>{{ p.title.toLowerCase() }}</h1>
+      <p class="article__intro" itemprop="description" appReveal>{{ p.excerpt }}</p>
+      <div class="article__byline" appReveal>
+        <span class="article__author" itemprop="author" itemscope itemtype="https://schema.org/Person">
+          <span class="article__avatar" aria-hidden="true">g</span>
+          <span itemprop="name">Garima Jain</span>
+        </span>
+        <span class="article__sep" aria-hidden="true"></span>
+        <time [attr.datetime]="p.date" itemprop="datePublished">{{ p.date | date: 'd MMMM y' }}</time>
+        <span class="article__sep" aria-hidden="true"></span>
+        <span>{{ p.readTime }} min read</span>
+      </div>
+    </header>
+
+    <figure class="article__hero" appReveal="clip">
+      <app-image-frame [src]="p.image" [alt]="p.imageAlt" [placeholder]="'Hero image — ' + p.imageAlt" [eager]="true" />
+    </figure>
+
+    <div class="article__layout">
+      <aside class="article__rail" aria-label="Article tools">
+        @if (toc().length) {
+          <nav class="toc" aria-label="In this note">
+            <p class="rail__label">contents</p>
+            <ol>
+              @for (t of toc(); track t.id) {
+                <li><a [routerLink]="[]" [fragment]="t.id">{{ t.text }}</a></li>
+              }
+            </ol>
+          </nav>
+        }
+        <div class="share">
+          <p class="rail__label">share</p>
+          <div class="share__row">
+            <a class="share__btn" [href]="tweetUrl(p)" target="_blank" rel="noopener" aria-label="Share on X">X</a>
+            <a class="share__btn" [href]="linkedInUrl()" target="_blank" rel="noopener" aria-label="Share on LinkedIn">in</a>
+            <button type="button" class="share__btn" (click)="copyLink()" [attr.aria-label]="copied() ? 'Link copied' : 'Copy link'">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+                <path d="M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1M14 10a4 4 0 00-5.7 0l-3 3a4 4 0 005.7 5.7l1-1" />
+              </svg>
+            </button>
+          </div>
+          <p class="share__copied" aria-live="polite">{{ copied() ? 'Link copied' : '' }}</p>
+        </div>
+      </aside>
+
+      <div class="prose" itemprop="articleBody" [innerHTML]="content()"></div>
+    </div>
+
+    <footer class="article__foot">
+      @if (p.tags?.length) {
+        <ul class="tags" aria-label="Tags">
+          <li class="tag">{{ p.category }}</li>
+          @for (t of p.tags; track t) {
+            <li class="tag">{{ t }}</li>
+          }
+        </ul>
+      }
+      <div class="bio">
+        <span class="bio__avatar" aria-hidden="true">g</span>
+        <div>
+          <p class="bio__name">Garima Jain</p>
+          <p class="bio__text">IAS aspirant writing about society, governance and the books that shape how I think.</p>
+        </div>
+      </div>
+    </footer>
+  </article>
+
+  <nav class="pager" aria-label="More articles">
+    @if (neighbours().previous; as prev) {
+      <a class="pager__link" [routerLink]="['/blog', prev.slug]" data-cursor="READ">
+        <span class="pager__dir">← previous</span>
+        <span class="pager__title">{{ prev.title.toLowerCase() }}</span>
+      </a>
+    } @else {
+      <span></span>
+    }
+    @if (neighbours().next; as next) {
+      <a class="pager__link pager__link--next" [routerLink]="['/blog', next.slug]" data-cursor="READ">
+        <span class="pager__dir">next →</span>
+        <span class="pager__title">{{ next.title.toLowerCase() }}</span>
+      </a>
+    }
+  </nav>
+
+  @if (related().length) {
+    <section class="related" aria-labelledby="related-title">
+      <div class="related__head">
+        <h2 id="related-title" class="related__title">keep <em>reading</em></h2>
+        <a routerLink="/blog" class="text-link">all notes <span class="arrow" aria-hidden="true">↗</span></a>
+      </div>
+      <div class="related__grid" appReveal="stagger">
+        @for (r of related(); track r.id; let i = $index) {
+          <app-blog-card [post]="r" [number]="'0' + (i + 1)" />
+        }
+      </div>
+    </section>
+  }
+} @else if (loaded()) {
+  <section class="missing">
+    <p class="label accent">GJ / 404</p>
+    <h1 class="missing__title">this note doesn’t exist <em>(yet).</em></h1>
+    <a routerLink="/blog" class="btn btn--dark">Browse all notes <span class="btn__arrow" aria-hidden="true">→</span></a>
+  </section>
+}
