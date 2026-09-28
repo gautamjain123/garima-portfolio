@@ -18,7 +18,8 @@ import { MotionService } from '../services/motion.service';
 export class ColorLensDirective implements OnInit, OnDestroy {
   /** Where the bloom starts, as fractions of the host box (her face). */
   readonly origin = input<[number, number]>([0.5, 0.4]);
-  readonly lensRadius = input(150);
+  /** Lens radius as a fraction of the host width (so it scales with the photo). */
+  readonly lensScale = input(0.62);
 
   readonly full = signal(false);
 
@@ -47,7 +48,7 @@ export class ColorLensDirective implements OnInit, OnDestroy {
       if (!this.motion.isFinePointer) return;
       on('pointerenter', (e) => {
         this.moveTo(...this.localPx(e), true);
-        if (!this.full()) this.tweenRadius(this.lensRadius(), 0.7);
+        if (!this.full()) this.tweenRadius(this.lensRadius(), 0.8);
       });
       on('pointermove', (e) => this.moveTo(...this.localPx(e)));
       on('pointerleave', () => {
@@ -112,6 +113,10 @@ export class ColorLensDirective implements OnInit, OnDestroy {
   private originPx(): [number, number] {
     const [ox, oy] = this.origin();
     return [this.el.offsetWidth * ox, this.el.offsetHeight * oy];
+  }
+
+  private lensRadius(): number {
+    return Math.max(180, this.el.offsetWidth * this.lensScale());
   }
 
   /** A radius that covers the whole box from any lens position (mask fades over the outer 45%). */
