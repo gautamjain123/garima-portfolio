@@ -5,13 +5,24 @@
   </div>
 
   <figure class="hero__portrait">
-    <app-image-frame
-      src="images/garima-portrait.jpg"
-      alt="Portrait of Garima Jain"
-      placeholder="portrait — b/w, 4:5"
-      [eager]="true"
-    />
-    <figcaption class="hero__fig">fig. 01 — new delhi</figcaption>
+    <figcaption class="hero__fig mono">
+      <span>fig. 01 — new delhi</span>
+      <span class="hero__hint" aria-hidden="true">{{ lens.full() ? hint.full : hint.mono }}</span>
+    </figcaption>
+    <div class="hero__photo" appColorLens #lens="colorLens" [origin]="[0.5, 0.36]">
+      <div class="hero__layer">
+        <div class="hero__photo-inner">
+          <img class="hero__img" [src]="portrait" alt="Portrait of Garima Jain, smiling, with pine-covered hills behind her" fetchpriority="high" decoding="async" />
+        </div>
+      </div>
+      <div class="hero__layer hero__layer--color" aria-hidden="true">
+        <div class="hero__photo-inner">
+          <img class="hero__img" [src]="portrait" alt="" decoding="async" />
+        </div>
+      </div>
+      <span class="hero__corner hero__corner--tl" aria-hidden="true"></span>
+      <span class="hero__corner hero__corner--br" aria-hidden="true"></span>
+    </div>
   </figure>
 
   <h1 id="hero-title" class="hero__name" aria-label="Garima Jain">
