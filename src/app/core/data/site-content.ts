@@ -4,6 +4,7 @@
  * Everything in square brackets [like this] is a placeholder.
  * ─────────────────────────────────────────────────────────────
  */
+import { unsplash } from './unsplash';
 import { Book, Hobby, Interest, JournalPhoto, JourneyStage, Place, Profile, Qualification, Stat } from '../models/content.model';
 
 export const PROFILE: Profile = {
@@ -37,31 +38,30 @@ export const STATS: Stat[] = [
 ];
 
 /**
- * The horizontal "places" strip. Images live in public/images/places/.
- * Placeholder illustrations for now — drop real photos over the same filenames.
+ * The horizontal "places" strip. Stock photos from Unsplash for now (see unsplash.ts).
  */
 export const PLACES: Place[] = [
-  { name: 'Ladakh', region: 'Jammu & Kashmir', when: 'jun 2025', note: 'Prayer flags, butter tea and a monastery that hums at dawn.', image: 'images/places/ladakh.jpg', imageAlt: 'Snow peaks and a hillside monastery under a deep blue sky' },
-  { name: 'Varanasi', region: 'Uttar Pradesh', when: 'nov 2024', note: 'A boatman who remembers every flood since 1978.', image: 'images/places/varanasi.jpg', imageAlt: 'The ghats of Varanasi at dusk with a boat on the Ganga' },
-  { name: 'Jaisalmer', region: 'Rajasthan', when: 'jan 2025', note: 'A golden fort, and a haveli with forty-two windows.', image: 'images/places/jaisalmer.jpg', imageAlt: 'Sand dunes, a camel and the fort of Jaisalmer' },
-  { name: 'Alleppey', region: 'Kerala', when: 'aug 2024', note: 'Slow backwaters and a kitchen that smelled of coconut.', image: 'images/places/kerala.jpg', imageAlt: 'A houseboat on the Kerala backwaters between coconut palms' },
-  { name: 'Hampi', region: 'Karnataka', when: 'dec 2023', note: 'Boulders balanced like a question nobody answered.', image: 'images/places/hampi.jpg', imageAlt: 'Balanced boulders and a temple tower in Hampi' },
-  { name: 'Cherrapunji', region: 'Meghalaya', when: 'jul 2024', note: 'Rain, root bridges, and a grandmother’s folk songs.', image: 'images/places/meghalaya.jpg', imageAlt: 'Green hills, clouds and a waterfall in Meghalaya' },
-  { name: 'Rann of Kutch', region: 'Gujarat', when: 'feb 2025', note: 'White salt to the horizon under a full moon.', image: 'images/places/kutch.jpg', imageAlt: 'The white salt desert of Kutch under a full moon' },
-  { name: 'Darjeeling', region: 'West Bengal', when: 'apr 2024', note: 'Tea gardens, a toy train and Kanchenjunga at 5 a.m.', image: 'images/places/darjeeling.jpg', imageAlt: 'Tea gardens and the toy train below snow peaks at dawn' },
+  { name: 'Ladakh', region: 'Jammu & Kashmir', when: 'jun 2025', note: 'Prayer flags, butter tea and a monastery that hums at dawn.', image: unsplash('photo-1636993053871-61eff06ccd36', 900), imageAlt: 'A white hillside monastery below snow peaks in Ladakh' },
+  { name: 'Varanasi', region: 'Uttar Pradesh', when: 'nov 2024', note: 'A boatman who remembers every flood since 1978.', image: unsplash('photo-1608412525537-662195e817c5', 900), imageAlt: 'Old ghat buildings rising above the Ganga in Varanasi' },
+  { name: 'Jaisalmer', region: 'Rajasthan', when: 'jan 2025', note: 'A golden fort, and a haveli with forty-two windows.', image: unsplash('photo-1713349881676-594b95a5742b', 900), imageAlt: 'The walls of Jaisalmer fort above the golden city' },
+  { name: 'Alleppey', region: 'Kerala', when: 'aug 2024', note: 'Slow backwaters and a kitchen that smelled of coconut.', image: unsplash('photo-1661174607003-d9d36388c916', 900), imageAlt: 'A houseboat among coconut palms on the Kerala backwaters' },
+  { name: 'Hampi', region: 'Karnataka', when: 'dec 2023', note: 'Boulders balanced like a question nobody answered.', image: unsplash('photo-1620766182966-c6eb5ed2b788', 900), imageAlt: 'The gopuram of Virupaksha temple rising over the ruins of Hampi' },
+  { name: 'Cherrapunji', region: 'Meghalaya', when: 'jul 2024', note: 'Rain, root bridges, and a grandmother’s folk songs.', image: unsplash('photo-1637043765564-a071ff91a09f', 900), imageAlt: 'A tall waterfall dropping into a green gorge in Meghalaya' },
+  { name: 'Rann of Kutch', region: 'Gujarat', when: 'feb 2025', note: 'White salt to the horizon under a full moon.', image: unsplash('photo-1706013729724-caada9be0f97', 900), imageAlt: 'The white salt flats of the Rann of Kutch under a pale sky' },
+  { name: 'Darjeeling', region: 'West Bengal', when: 'apr 2024', note: 'Tea gardens, a toy train and Kanchenjunga at 5 a.m.', image: unsplash('photo-1677858741808-c843c4fcb81f', 900), imageAlt: 'A path through a Darjeeling tea garden with a lone tall tree' },
 ];
 
-/** The photo journal grid. Images live in public/images/journal/. */
+/** The photo journal grid. Stock photos from Unsplash for now (see unsplash.ts). */
 export const JOURNAL: JournalPhoto[] = [
-  { image: 'images/journal/doorway.jpg', alt: 'A blue arched doorway in a terracotta wall with a marigold garland', caption: 'a door someone painted blue for luck', place: 'jodhpur', shape: 'tall' },
-  { image: 'images/journal/spices.jpg', alt: 'Cones of coloured spices at a market stall', caption: 'the spice lane, 7 a.m.', place: 'old delhi', shape: 'wide' },
-  { image: 'images/journal/chai.jpg', alt: 'Glasses of chai on a tin tray beside a kettle', caption: 'the chai that started every conversation', place: 'lansdowne', shape: 'square' },
-  { image: 'images/journal/cassette.jpg', alt: 'A cassette tape labelled nani’s stories', caption: 'nani’s stories, side a', place: 'home', shape: 'square' },
-  { image: 'images/journal/train.jpg', alt: 'Hills seen through the barred window of a train', caption: 'window seat, sleeper class', place: 'konkan railway', shape: 'tall' },
-  { image: 'images/journal/flags.jpg', alt: 'Strings of prayer flags against a blue sky', caption: 'flags carrying prayers into the wind', place: 'leh', shape: 'wide' },
-  { image: 'images/journal/kites.jpg', alt: 'Colourful kites in a pale sky', caption: 'uttarayan, from a rooftop', place: 'ahmedabad', shape: 'square' },
-  { image: 'images/journal/lanterns.jpg', alt: 'Paper lanterns hanging in a row', caption: 'lanterns before diwali', place: 'jaipur', shape: 'tall' },
-  { image: 'images/journal/nets.jpg', alt: 'Chinese fishing nets silhouetted at sunset', caption: 'the nets come up at sunset', place: 'kochi', shape: 'wide' },
+  { image: unsplash('photo-1601828856153-c1d09e7c42c3', 1400), alt: 'A pale blue door under a carved arch in a white wall', caption: 'a door someone painted blue for luck', place: 'jodhpur', shape: 'tall' },
+  { image: unsplash('photo-1646344108679-4ddd700cd862', 1400), alt: 'A spice seller behind trays of spices at a market', caption: 'the spice lane, 7 a.m.', place: 'old delhi', shape: 'wide' },
+  { image: unsplash('photo-1619581073186-5b4ae1b0caad', 1400), alt: 'Clay kulhad cups filled with chai', caption: 'the chai that started every conversation', place: 'lansdowne', shape: 'square' },
+  { image: unsplash('photo-1494232410401-ad00d5433cfa', 1400), alt: 'A cassette tape on a white table', caption: 'nani’s stories, side a', place: 'home', shape: 'square' },
+  { image: unsplash('photo-1685120280925-c8c3697c73ee', 1400), alt: 'Palm trees seen through a train window', caption: 'window seat, sleeper class', place: 'konkan railway', shape: 'tall' },
+  { image: unsplash('photo-1709554565257-6eeea817ea82', 1400), alt: 'Prayer flags above a still mountain lake', caption: 'flags carrying prayers into the wind', place: 'leh', shape: 'wide' },
+  { image: unsplash('photo-1579156959079-5ea399f88a99', 1400), alt: 'A single kite against a violet evening sky', caption: 'uttarayan, from a rooftop', place: 'ahmedabad', shape: 'square' },
+  { image: unsplash('photo-1665554123673-37c156c866ae', 1400), alt: 'Colourful lanterns hanging at a market stall', caption: 'lanterns before diwali', place: 'jaipur', shape: 'tall' },
+  { image: unsplash('photo-1583558257444-cfba032b49ea', 1400), alt: 'A Chinese fishing net silhouetted at sunset', caption: 'the nets come up at sunset', place: 'kochi', shape: 'wide' },
 ];
 
 export const QUALIFICATIONS: Qualification[] = [

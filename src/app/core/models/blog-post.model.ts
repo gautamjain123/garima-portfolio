@@ -15,7 +15,7 @@ export interface BlogPost {
   date: string;
   /** Minutes */
   readTime: number;
-  /** Path under /public, e.g. 'images/blog/governance.jpg'. Falls back to a styled placeholder if missing. */
+  /** Path under /public (e.g. 'images/blog/boatman.jpg') or a full image URL. Falls back to a styled placeholder if it fails to load. */
   image: string;
   imageAlt: string;
   featured: boolean;

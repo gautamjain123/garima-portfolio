@@ -22,7 +22,7 @@ export class SeoService {
   update(config: SeoConfig): void {
     const fullTitle = config.title === DEFAULT_TITLE ? config.title : `${config.title} — Garima Jain`;
     const url = `${PROFILE.siteUrl}${config.path}`;
-    const image = `${PROFILE.siteUrl}/${config.image ?? 'images/og-cover.jpg'}`;
+    const image = this.absolute(config.image ?? 'images/og-cover.jpg');
 
     this.meta.removeTag("name='robots'");
     this.title.setTitle(fullTitle);
@@ -62,7 +62,7 @@ export class SeoService {
       '@type': 'BlogPosting',
       headline: post.title,
       description: post.excerpt,
-      image: `${PROFILE.siteUrl}/${post.image}`,
+      image: this.absolute(post.image),
       datePublished: post.date,
       dateModified: post.date,
       articleSection: post.category,
@@ -89,6 +89,11 @@ export class SeoService {
       address: { '@type': 'PostalAddress', addressLocality: 'New Delhi', addressCountry: 'IN' },
       sameAs: PROFILE.socials.map((s) => s.url),
     };
+  }
+
+  /** Local paths ('images/…') become absolute on the site; external URLs pass through. */
+  private absolute(image: string): string {
+    return /^https?:\/\//.test(image) ? image : `${PROFILE.siteUrl}/${image}`;
   }
 
   private setCanonical(url: string): void {

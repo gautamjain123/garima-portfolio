@@ -38,6 +38,7 @@
 .nav__dot { color: var(--c-accent); }
 
 .nav__desktop { display: none; justify-self: end; align-items: center; gap: 28px; @include m.laptop { display: flex; } }
+.nav__desktop .btn { --btn-h: 40px; }
 .nav__links { display: flex; gap: 26px; }
 .nav__link {
   font-size: 14px;
@@ -57,7 +58,7 @@
   position: relative;
   z-index: 2;
   justify-self: end;
-  height: 44px;
+  height: 40px;
   padding: 0 18px;
   border: 1px solid currentColor;
   border-radius: var(--r-pill);

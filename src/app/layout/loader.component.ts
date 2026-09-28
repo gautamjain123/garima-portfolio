@@ -40,11 +40,13 @@ export class LoaderComponent implements AfterViewInit {
     }
     const gsap = this.motion.gsap;
     gsap
-      .timeline({ onComplete: () => this.finish() })
+      .timeline({ onComplete: () => this.done.set(true) })
       .from(this.mono()!.nativeElement, { opacity: 0, scale: 0.8, duration: 0.4 })
       .to(this.mono()!.nativeElement, { opacity: 0, scale: 0.6, duration: 0.2 }, '+=0.05')
       .fromTo(this.name()!.nativeElement, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.3 }, '<0.05')
-      .to(this.root()!.nativeElement, { yPercent: -100, duration: 0.7, ease: 'power4.inOut' }, '+=0.05');
+      .to(this.root()!.nativeElement, { yPercent: -100, duration: 0.7, ease: 'power4.inOut' }, '+=0.05')
+      // Start the page's entrance while the curtain is still lifting, so there's no empty beat.
+      .add(() => this.finished.emit(), '<0.3');
   }
 
   private finish(): void {

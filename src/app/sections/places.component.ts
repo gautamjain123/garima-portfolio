@@ -145,7 +145,7 @@ export class PlacesComponent implements AfterViewInit, OnDestroy {
   private readonly sizeCards = (): void => {
     const root = this.root().nativeElement;
     const head = root.querySelector('.places__head')!.getBoundingClientRect().height;
-    const navH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 96;
+    const navH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-h')) || 72;
     const chrome = navH + 8 + 24 + 28; // section padding + gap between heading and strip
     // Two passes: the text under each image re-wraps once the card width changes.
     for (let pass = 0; pass < 2; pass++) {

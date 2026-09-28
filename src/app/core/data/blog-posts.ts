@@ -1,4 +1,5 @@
 import { BlogPost } from '../models/blog-post.model';
+import { unsplash } from './unsplash';
 
 /**
  * Local blog data. Replace with a CMS later — see BlogService.
@@ -15,8 +16,8 @@ export const BLOG_POSTS: BlogPost[] = [
     category: 'People',
     date: '2026-09-12',
     readTime: 7,
-    image: 'images/blog/boatman.jpg',
-    imageAlt: 'A wooden boat on the Ganga in front of the Varanasi ghats',
+    image: unsplash('photo-1584005609799-94866308b1c0', 1600),
+    imageAlt: 'A boatman rowing a wooden boat on the Ganga',
     featured: true,
     tags: ['Varanasi', 'Oral History'],
     content: `
@@ -38,8 +39,8 @@ export const BLOG_POSTS: BlogPost[] = [
     category: 'Food',
     date: '2026-08-28',
     readTime: 6,
-    image: 'images/blog/kitchen.jpg',
-    imageAlt: 'A brass pot on a stove in a warm, cluttered kitchen',
+    image: unsplash('photo-1601387434127-20979856e76e', 1600),
+    imageAlt: 'A roti being turned on a hot tawa',
     featured: false,
     tags: ['Family', 'Oral History'],
     content: `
@@ -56,8 +57,8 @@ export const BLOG_POSTS: BlogPost[] = [
     category: 'Places',
     date: '2026-08-10',
     readTime: 5,
-    image: 'images/blog/haveli.jpg',
-    imageAlt: 'Carved sandstone windows of a haveli in Jaisalmer',
+    image: unsplash('photo-1674842654443-8b9b57c19d18', 1600),
+    imageAlt: 'The carved sandstone facade of a haveli in Jaisalmer',
     featured: false,
     content: `
 <p>The haveli sits so close to its neighbour that the two families can pass a cup of tea across the lane without leaving their windows.</p>
@@ -72,8 +73,8 @@ export const BLOG_POSTS: BlogPost[] = [
     category: 'Culture',
     date: '2026-07-22',
     readTime: 4,
-    image: 'images/blog/tea.jpg',
-    imageAlt: 'Rows of tea bushes and a woven basket on a hillside',
+    image: unsplash('photo-1602020277972-fd160de66021', 1600),
+    imageAlt: 'Tea pluckers among the bushes of a tea garden',
     featured: false,
     content: `
 <p>I heard the song before I saw anyone — a call and a reply drifting up between the rows of tea.</p>
@@ -88,8 +89,8 @@ export const BLOG_POSTS: BlogPost[] = [
     category: 'Photo Essays',
     date: '2026-07-05',
     readTime: 3,
-    image: 'images/blog/doors.jpg',
-    imageAlt: 'A row of painted wooden doors in an old Delhi lane',
+    image: unsplash('photo-1763390324918-496c025f73e2', 1600),
+    imageAlt: 'A carved stone archway around an old wooden door',
     featured: false,
     content: `
 <p>I started photographing doors because they were the only thing in Chandni Chowk that stood still long enough. [Continue writing…]</p>
@@ -103,8 +104,8 @@ export const BLOG_POSTS: BlogPost[] = [
     category: 'Reflections',
     date: '2026-06-18',
     readTime: 5,
-    image: 'images/blog/slow-train.jpg',
-    imageAlt: 'A train crossing a bridge through green hills',
+    image: unsplash('photo-1707848394382-55d51db733c3', 1600),
+    imageAlt: 'A narrow-gauge train on a curving hillside track',
     featured: false,
     content: `
 <p>The fastest way to see a place is to fly in and out. The fastest way to know one is to miss the bus back. [Continue writing…]</p>

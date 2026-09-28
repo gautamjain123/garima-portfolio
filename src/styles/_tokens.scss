@@ -109,6 +109,6 @@ $bp-desktop: 1440px;
   --d-base: 0.45s;
   --d-slow: 0.9s;
 
-  --nav-h: 96px;
-  @media (max-width: #{$bp-laptop - 1}) { --nav-h: 72px; }
+  --nav-h: 72px;
+  @media (max-width: #{$bp-laptop - 1}) { --nav-h: 60px; }
 }
