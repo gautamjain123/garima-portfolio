@@ -18,7 +18,7 @@
           </li>
         }
       </ul>
-      <a routerLink="/contact" class="btn btn--sm" appMagnetic>contact</a>
+      <a routerLink="/contact" class="btn btn--sm btn--solid" appMagnetic>contact</a>
     </nav>
 
     <button
@@ -36,7 +36,7 @@
 
 <div
   id="mobile-drawer"
-  class="drawer"
+  class="drawer band--indigo"
   [class.drawer--open]="open()"
   [attr.aria-hidden]="!open()"
   [attr.inert]="open() ? null : ''"

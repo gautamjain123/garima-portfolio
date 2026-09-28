@@ -38,17 +38,17 @@
   &--wide { @include m.tablet { grid-column: 1 / -1; } }
   label { font-size: 13px; color: var(--c-dim); }
   input, textarea {
-    width: 100%; min-height: 52px; border: 0; border-bottom: 1px solid #333; border-radius: 0;
+    width: 100%; min-height: 52px; border: 0; border-bottom: 1px solid color-mix(in srgb, currentColor 30%, transparent); border-radius: 0;
     background: transparent; font-size: clamp(1.125rem, 1rem + 0.5vw, 1.5rem); padding: 8px 0;
     transition: border-color var(--d-fast);
-    &::placeholder { color: #55514b; }
+    &::placeholder { color: var(--c-dim); opacity: 0.6; }
     &:focus { outline: none; border-color: var(--c-accent); }
     &:focus-visible { outline: 2px solid var(--c-accent); outline-offset: 4px; }
   }
   textarea { resize: vertical; min-height: 96px; }
-  &--error input, &--error textarea { border-color: #ff7a6b; }
+  &--error input, &--error textarea { border-color: #b3261e; }
 }
-.field__err { font-size: 13px; color: #ff9a8e; }
+.field__err { font-size: 13px; color: #b3261e; }
 .form__hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .form__foot { display: flex; justify-content: space-between; align-items: center; gap: 16px; @include m.tablet { grid-column: 1 / -1; } }
 .form__status { font-size: 14px; color: var(--c-accent); }

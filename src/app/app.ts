@@ -20,7 +20,7 @@ import { MotionService } from './core/services/motion.service';
     <main id="main" tabindex="-1">
       <router-outlet />
     </main>
-    <app-footer />
+    <app-footer class="band band--indigo" />
   `,
   styles: `main:focus { outline: none; }`,
 })

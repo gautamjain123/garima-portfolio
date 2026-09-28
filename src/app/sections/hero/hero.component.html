@@ -5,6 +5,8 @@
   </div>
 
   <figure class="hero__portrait">
+    <span class="hero__sun hero__sun--big" aria-hidden="true"></span>
+    <span class="hero__sun hero__sun--small" aria-hidden="true"></span>
     <figcaption class="hero__fig mono">
       <span>fig. 01 — new delhi</span>
       <span class="hero__hint" aria-hidden="true">{{ lens.full() ? hint.full : hint.mono }}</span>
@@ -26,8 +28,8 @@
   </figure>
 
   <h1 id="hero-title" class="hero__name" aria-label="Garima Jain">
-    @for (word of nameWords; track $index) {
-      <span class="hero__word" aria-hidden="true">
+    @for (word of nameWords; track $index; let last = $last) {
+      <span class="hero__word" [class.hero__word--mark]="last" aria-hidden="true">
         @for (ch of word; track $index) {
           <span class="hero__char">{{ ch }}</span>
         }
@@ -37,7 +39,7 @@
 
   <div class="hero__meta">
     <p class="hero__role"><span>ias aspirant &amp;</span>&nbsp;<span class="it">curious mind</span></p>
-    <p class="hero__tags"><span>policy</span> · <span>society</span> · <span>service</span></p>
+    <p class="hero__tags"><span class="t1">policy</span> · <span class="t2">society</span> · <span class="t3">service</span></p>
     <a routerLink="/" fragment="manifest" class="hero__scroll">scroll <span aria-hidden="true">↓</span></a>
   </div>
 </section>

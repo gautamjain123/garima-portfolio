@@ -37,6 +37,41 @@ mark { background: none; color: var(--c-fg); }
 
 :focus-visible { outline: 2px solid var(--c-accent); outline-offset: 4px; border-radius: 2px; }
 
+// ── Colour bands ───────────────────────────────────────────
+// Put `band band--<colour>` on a section's host element; everything inside
+// re-reads the --c-* tokens, so no component needs to know its colour.
+.band { display: block; background: var(--c-bg); color: var(--c-fg); }
+.band--terracotta {
+  @include tokens.band(
+    $bg: #d9653b, $surface: #cf5c33, $fg: #1d1a16, $muted: #2a170e, $dim: #2a170e,
+    $faint: #f3a987, $line: #b9532e, $line-soft: #c85d34, $accent: #fff4e4
+  );
+}
+.band--teal {
+  @include tokens.band(
+    $bg: #186b64, $surface: #1f766e, $fg: #fbf3e6, $muted: #d3e7e2, $dim: #c8e0da,
+    $faint: #4e948c, $line: #2e7f77, $line-soft: #237169, $accent: #f7be52
+  );
+}
+.band--marigold {
+  @include tokens.band(
+    $bg: #f2b544, $surface: #e9a935, $fg: #1d1a16, $muted: #3f300d, $dim: #4d3b12,
+    $faint: #c98a1a, $line: #d69b2e, $line-soft: #e3a83a, $accent: #8f2e10
+  );
+}
+.band--pink {
+  @include tokens.band(
+    $bg: #e86a92, $surface: #df5f88, $fg: #1d1a16, $muted: #3a1624, $dim: #45192b,
+    $faint: #f5afc6, $line: #cf5a80, $line-soft: #de6389, $accent: #1f2766
+  );
+}
+.band--indigo {
+  @include tokens.band(
+    $bg: #2e3a8c, $surface: #36439a, $fg: #fbf3e6, $muted: #d2d6f0, $dim: #b9bfe6,
+    $faint: #5c68b5, $line: #4450a0, $line-soft: #3a4696, $accent: #f7be52
+  );
+}
+
 // ── Utilities ──────────────────────────────────────────────
 .container { @include m.container; }
 .it { @include m.serif-accent; }
@@ -85,7 +120,7 @@ mark { background: none; color: var(--c-fg); }
 
   &--solid, &--dark, &--pink, &--teal, &--wine { background: var(--c-fg); color: var(--c-bg); }
   &--solid:hover, &--dark:hover, &--pink:hover, &--teal:hover, &--wine:hover { background: var(--c-accent); border-color: var(--c-accent); }
-  &--ghost, &--line, &--light, &--marigold { border-color: #333; color: var(--c-fg); }
+  &--ghost, &--line, &--light, &--marigold { border-color: color-mix(in srgb, currentColor 30%, transparent); color: var(--c-fg); }
 
   &--sm { --btn-h: 44px; padding: 0 20px; font-size: 0.8125rem; }
   &--lg { --btn-h: 60px; padding: 0 32px; font-size: 1.0625rem; }
@@ -102,7 +137,7 @@ mark { background: none; color: var(--c-fg); }
 
 .chip {
   display: inline-flex; align-items: center; min-height: 36px; padding: 0 14px;
-  border: 1px solid #333; border-radius: var(--r-pill);
+  border: 1px solid color-mix(in srgb, currentColor 35%, transparent); border-radius: var(--r-pill);
   font-size: 13px; color: var(--c-muted); text-transform: lowercase;
   transition: background var(--d-fast), color var(--d-fast), border-color var(--d-fast);
   &:hover { border-color: var(--c-fg); color: var(--c-fg); }

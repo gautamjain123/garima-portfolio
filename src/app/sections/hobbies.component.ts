@@ -38,8 +38,7 @@ import { ImageFrameComponent } from '../shared/image-frame.component';
       @include m.laptop { grid-template-columns: 2fr 1fr 1fr 1.4fr; gap: 16px; } }
     .hobbies__photo { display: flex; flex-direction: column; gap: 10px; }
     .hobbies__img { position: relative; border-radius: var(--r-img); overflow: hidden; aspect-ratio: 4 / 5;
-      app-image-frame { position: absolute; inset: 0; filter: grayscale(1); transition: filter .6s var(--ease-out); } }
-    .hobbies__photo:hover app-image-frame { filter: none; }
+      app-image-frame { position: absolute; inset: 0; } }
     .hobbies__photo:nth-child(2) .hobbies__img { aspect-ratio: 3 / 4; }
     .hobbies__photo:nth-child(4) .hobbies__img { aspect-ratio: 1; }
     .hobbies__cap { font-size: 13px; color: var(--c-muted); }

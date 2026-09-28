@@ -28,14 +28,14 @@ import { SeoService } from '../core/services/seo.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <app-hero />
-    <app-about />
-    <app-interests />
+    <app-about class="band band--terracotta" />
+    <app-interests class="band band--teal" />
     <app-qualification-timeline />
-    <app-currently-learning />
+    <app-currently-learning class="band band--indigo" />
     <app-blog-preview />
-    <app-hobbies />
+    <app-hobbies class="band band--pink" />
     <app-books />
-    <app-philosophy />
+    <app-philosophy class="band band--marigold" />
     <app-contact />
   `,
 })

@@ -48,6 +48,8 @@ export class HeroComponent implements OnDestroy {
         .from('.hero__char', { yPercent: 110, duration: 1.1, stagger: 0.035, clearProps: 'transform' })
         .fromTo('.hero__photo', { clipPath: 'inset(100% 0 0 0)' }, { clipPath: 'inset(0% 0 0 0)', duration: 1.3, ease: 'power4.inOut', clearProps: 'clipPath' }, 0.1)
         .from('.hero__photo-inner', { scale: 1.25, duration: 1.8, ease: 'power3.out' }, 0.1)
+        .from('.hero__sun', { scale: 0, duration: 1.2, stagger: 0.15, ease: 'back.out(1.4)' }, 0.6)
+        .fromTo('.hero__word--mark', { '--mark': 0 }, { '--mark': 1, duration: 0.9, ease: 'power3.inOut' }, 0.9)
         .from('.hero__meta > *, .hero__coords, .hero__fig', { opacity: 0, y: 16, duration: 0.8, stagger: 0.08 }, '-=0.7')
         .add(() => this.lens().bloom(0.2), '-=0.4');
 

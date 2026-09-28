@@ -16,8 +16,8 @@ import { MotionService } from '../core/services/motion.service';
     .cursor {
       position: fixed; left: 0; top: 0; z-index: 9999;
       width: 10px; height: 10px; margin: -5px 0 0 -5px;
-      border-radius: 999px; background: var(--c-fg);
-      mix-blend-mode: difference;
+      border-radius: 999px; background: #fff;
+      mix-blend-mode: difference; /* inverts whatever colour band it is over */
       pointer-events: none; display: none; align-items: center; justify-content: center;
       transition: width .35s var(--ease-out), height .35s var(--ease-out), margin .35s var(--ease-out), opacity .3s;
     }

@@ -7,7 +7,7 @@ import { MotionService } from '../core/services/motion.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     @if (!done()) {
-      <div #root class="loader" role="status" aria-label="Loading">
+      <div #root class="loader band--marigold" role="status" aria-label="Loading">
         <span #mono class="loader__mono">g<span style="color: var(--c-accent)">.</span></span>
         <span #name class="loader__name">garima jain</span>
       </div>

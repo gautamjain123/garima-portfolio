@@ -32,7 +32,7 @@
 
 .article__hero {
   @include m.container;
-  app-image-frame { aspect-ratio: 4 / 3; border-radius: var(--r-img); filter: grayscale(1); @include m.tablet { aspect-ratio: 16 / 7; } }
+  app-image-frame { aspect-ratio: 4 / 3; border-radius: var(--r-img); @include m.tablet { aspect-ratio: 16 / 7; } }
 }
 
 // ── Body ───────────────────────────────────────────────────
@@ -59,7 +59,7 @@
 }
 .share__row { display: flex; gap: 8px; }
 .share__btn {
-  width: 44px; height: 44px; border: 1px solid #333; border-radius: 999px; background: none;
+  width: 44px; height: 44px; border: 1px solid color-mix(in srgb, currentColor 30%, transparent); border-radius: 999px; background: none;
   display: grid; place-items: center; font-size: 13px; color: var(--c-fg);
   transition: background var(--d-fast), color var(--d-fast);
   &:hover { background: var(--c-fg); color: var(--c-bg); }
@@ -70,7 +70,7 @@
   max-width: var(--measure);
   font-size: clamp(17px, 1rem + 0.25vw, 20px);
   line-height: 1.75;
-  color: #cfcbc3;
+  color: var(--c-muted);
 
   ::ng-deep {
     > * + * { margin-top: 1.4em; }
@@ -105,7 +105,7 @@
   @include m.laptop { padding-left: calc(var(--gutter) + var(--rail) + 56px); }
 }
 .tags { display: flex; flex-wrap: wrap; gap: 6px; }
-.tag { min-height: 34px; padding: 0 14px; border: 1px solid #333; border-radius: 999px; font-size: 13px; color: var(--c-muted);
+.tag { min-height: 34px; padding: 0 14px; border: 1px solid color-mix(in srgb, currentColor 35%, transparent); border-radius: 999px; font-size: 13px; color: var(--c-muted);
   display: inline-flex; align-items: center; text-transform: lowercase; }
 .bio { display: flex; gap: 16px; align-items: baseline; border-top: 1px solid var(--c-line); padding-top: 24px; max-width: var(--measure); }
 .bio__name { font-weight: 600; font-size: 18px; white-space: nowrap; }

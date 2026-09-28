@@ -29,13 +29,13 @@ import { SeoService } from '../core/services/seo.service';
       emphasis="preparing."
       lede="An aspirant, a reader, a slightly obsessive note-taker — and someone who believes public service begins with paying attention."
     />
-    <app-about />
+    <app-about class="band band--terracotta" />
     <app-journey />
-    <app-interests />
-    <app-currently-learning />
-    <app-hobbies />
+    <app-interests class="band band--teal" />
+    <app-currently-learning class="band band--indigo" />
+    <app-hobbies class="band band--pink" />
     <app-books />
-    <app-philosophy />
+    <app-philosophy class="band band--marigold" />
   `,
 })
 export default class AboutPage implements OnInit {

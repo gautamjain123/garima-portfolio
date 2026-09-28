@@ -1,42 +1,67 @@
 // ─────────────────────────────────────────────────────────────
-// Design tokens — "gravity"
-// Near-black canvas, warm off-white type, one marigold accent.
+// Design tokens — "storybook"
+// Cream paper, ink type, and bold colour bands drawn from Indian
+// textiles: marigold, terracotta, teal, pink and indigo.
 // Huge lowercase grotesk, italic serif for emphasis, hairlines only.
+//
+// Components only read the semantic --c-* tokens. A `.band--*` class
+// (styles.scss) redefines them for a whole section, so the same
+// component reads correctly on cream or on any colour.
 // ─────────────────────────────────────────────────────────────
 
 $bp-tablet: 768px;
 $bp-laptop: 1024px;
 $bp-desktop: 1440px;
 
+/** Declares one colour context. Every pairing is checked for WCAG AA. */
+@mixin band($bg, $surface, $fg, $muted, $dim, $faint, $line, $line-soft, $accent) {
+  --c-bg: #{$bg};
+  --c-surface: #{$surface};
+  --c-fg: #{$fg};
+  --c-muted: #{$muted};     // secondary text
+  --c-dim: #{$dim};         // labels, captions
+  --c-faint: #{$faint};     // decorative only: separators, ghost words
+  --c-line: #{$line};       // hairlines
+  --c-line-soft: #{$line-soft};
+  --c-accent: #{$accent};   // italic emphasis, active + hover states
+}
+
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 
-  // Core palette
-  --c-bg: #101010;
-  --c-surface: #171717;
-  --c-surface-2: #1e1e1e;
-  --c-fg: #edeae3;          // primary text
-  --c-muted: #a6a097;       // secondary text (AA on bg)
-  --c-dim: #8a857d;         // labels, captions (AA for 14px+ on bg)
-  --c-faint: #4a4742;       // decorative only: separators, ghost words
-  --c-line: #262626;        // hairlines
-  --c-line-soft: #1e1e1e;
-  --c-accent: #f2b544;      // marigold — used sparingly
+  // Palette
+  --p-cream: #f6efe3;
+  --p-paper: #fbf3e6;
+  --p-ink: #1d1a16;
+  --p-marigold: #f2b544;
+  --p-terracotta: #d9653b;
+  --p-terracotta-deep: #b8461f;
+  --p-teal: #186b64;
+  --p-pink: #e86a92;
+  --p-indigo: #2e3a8c;
 
-  // Legacy aliases so any older styles stay coherent in the dark theme
+  // Default context: cream paper
+  @include band(
+    $bg: #f6efe3, $surface: #efe4d2, $fg: #1d1a16, $muted: #554c41, $dim: #6b6154,
+    $faint: #c4b59e, $line: #dccdb6, $line-soft: #e8dcc8, $accent: #b8461f
+  );
+  --c-surface-2: #e6d8c2;
+  --c-pop: var(--p-marigold); // decorative marigold: underlines, dots, the sun
+
+  // Legacy aliases so any older styles stay coherent
   --c-cream: var(--c-bg);
   --c-ivory: var(--c-bg);
   --c-white: var(--c-surface);
   --c-paper: var(--c-surface);
   --c-ink: var(--c-fg);
   --c-ink-2: var(--c-muted);
-  --c-on-dark: var(--c-fg);
-  --c-on-dark-muted: var(--c-muted);
+  --c-on-dark: var(--p-paper);
+  --c-on-dark-muted: #d2d6f0;
   --c-dark-line: var(--c-line);
-  --c-teal: var(--c-accent);
-  --c-teal-text: var(--c-accent);
+  --c-teal: var(--p-teal);
+  --c-teal-text: var(--p-teal);
   --c-pink-text: var(--c-accent);
-  --c-marigold: var(--c-accent);
+  --c-marigold: var(--p-marigold);
   --c-marigold-text: var(--c-accent);
   --c-saffron-text: var(--c-accent);
   --c-wine: var(--c-accent);

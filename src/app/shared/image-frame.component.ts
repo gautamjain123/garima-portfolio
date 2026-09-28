@@ -5,7 +5,7 @@ export type FrameTone = 'teal' | 'saffron' | 'pink' | 'marigold' | 'mint' | 'blu
 /**
  * Editorial image with a graceful placeholder.
  * Drop the real file at the given `src` (under /public) and it appears;
- * until then a dark, hatched panel with a caption is shown instead.
+ * until then a hatched panel with a caption is shown instead.
  */
 @Component({
   selector: 'app-image-frame',
@@ -46,7 +46,7 @@ export type FrameTone = 'teal' | 'saffron' | 'pink' | 'marigold' | 'mint' | 'blu
       transition: transform 0.9s var(--ease-out);
     }
     .frame__placeholder {
-      background-image: repeating-linear-gradient(135deg, rgba(255,255,255,.035) 0 1px, transparent 1px 12px);
+      background-image: repeating-linear-gradient(135deg, color-mix(in srgb, currentColor 14%, transparent) 0 1px, transparent 1px 12px);
     }
     .frame__note {
       position: absolute;

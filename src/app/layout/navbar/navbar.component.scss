@@ -9,12 +9,12 @@
   border-bottom: 1px solid transparent;
 
   &--scrolled {
-    background: rgba(16, 16, 16, 0.72);
+    background: rgba(246, 239, 227, 0.82);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     border-color: var(--c-line-soft);
   }
-  &--open { background: transparent; backdrop-filter: none; border-color: transparent; color: var(--c-bg); }
+  &--open { background: transparent; backdrop-filter: none; border-color: transparent; color: var(--p-paper); }
 }
 
 .nav__inner {
@@ -67,13 +67,13 @@
   @include m.laptop { display: none; }
 }
 
-// Drawer — a light "negative" panel for contrast
+// Drawer — an indigo panel (the template adds `band--indigo`)
 .drawer {
   position: fixed;
   inset: 0;
   z-index: 90;
-  background: var(--c-fg);
-  color: var(--c-bg);
+  background: var(--c-bg);
+  color: var(--c-fg);
   padding: calc(var(--nav-h) + 32px) var(--gutter) 28px;
   display: flex;
   flex-direction: column;
@@ -95,9 +95,9 @@
   line-height: 1.02;
   font-weight: 700;
   letter-spacing: -0.055em;
-  &--it { @include m.serif-accent; color: var(--c-bg); letter-spacing: -0.01em; }
+  &--it { @include m.serif-accent; letter-spacing: -0.01em; }
 }
 .drawer__foot { margin-top: auto; display: flex; flex-direction: column; gap: 14px; }
 .drawer__mail { font-size: 18px; font-weight: 600; }
-.drawer__socials { display: flex; justify-content: space-between; font-size: 14px; color: #4a4742;
+.drawer__socials { display: flex; justify-content: space-between; font-size: 14px; color: var(--c-muted);
   a { display: inline-block; padding: 10px 0; } }
