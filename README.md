@@ -31,11 +31,12 @@ Images are referenced by path and **fall back to a styled, captioned placeholder
 ```
 public/images/garima-portrait.jpg      ← hero portrait, 4:5, ~1600px tall
 public/images/og-cover.jpg             ← social share image, 1200×630
-public/images/places/ladakh.jpg …      ← see PLACES in site-content.ts (3:4)
-public/images/journal/doorway.jpg …    ← see JOURNAL in site-content.ts
 public/images/hobbies/reading.jpg …    ← see HOBBIES in site-content.ts
-public/images/blog/boatman.jpg …       ← see each post's `image`
 ```
+
+Places, the photo journal and blog posts currently use free Unsplash photos linked via
+`unsplash('photo-…')` (`src/app/core/data/unsplash.ts`). To use your own, replace a call with a
+local path such as `'images/places/ladakh.jpg'` and put the file in `public/`.
 
 Book covers: add `cover: 'images/books/why-nations-fail.jpg'` to a book in `BOOKS`; otherwise a typographic cover is drawn.
 
