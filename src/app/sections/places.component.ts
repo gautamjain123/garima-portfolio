@@ -1,4 +1,6 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnDestroy, inject, viewChild } from '@angular/core';
+import { NgTemplateOutlet } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { PLACES } from '../core/data/site-content';
 import { MotionService } from '../core/services/motion.service';
@@ -12,7 +14,7 @@ import { ImageFrameComponent } from '../shared/image-frame.component';
  */
 @Component({
   selector: 'app-places',
-  imports: [RevealDirective, ImageFrameComponent],
+  imports: [RevealDirective, ImageFrameComponent, RouterLink, NgTemplateOutlet],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <section #root id="places" class="places" aria-labelledby="places-title">
@@ -30,16 +32,26 @@ import { ImageFrameComponent } from '../shared/image-frame.component';
         <ol #track class="places__track">
           @for (p of places; track p.name; let i = $index) {
             <li class="place is-zoomable">
-              <div class="place__img"><app-image-frame [src]="p.image" [alt]="p.imageAlt" [placeholder]="p.name" /></div>
-              <p class="place__meta mono"><span>{{ (i + 1).toString().padStart(2, '0') }}</span><span>{{ p.region.toLowerCase() }} · {{ p.when }}</span></p>
-              <h3 class="place__name">{{ p.name.toLowerCase() }}</h3>
-              <p class="place__note">{{ p.note }}</p>
+              @if (p.story) {
+                <a class="place__link" [routerLink]="['/blog', p.story]" data-cursor="READ">
+                  <ng-container *ngTemplateOutlet="card; context: { $implicit: p, i: i }" />
+                </a>
+              } @else {
+                <ng-container *ngTemplateOutlet="card; context: { $implicit: p, i: i }" />
+              }
             </li>
           }
           <li class="place place--end" aria-hidden="true"><span class="it">…and the road goes on.</span></li>
         </ol>
       </div>
     </section>
+
+    <ng-template #card let-p let-i="i">
+      <div class="place__img"><app-image-frame [src]="p.image" [alt]="p.imageAlt" [placeholder]="p.name" /></div>
+      <p class="place__meta mono"><span>{{ (i + 1).toString().padStart(2, '0') }}</span><span>{{ p.region.toLowerCase() }} · {{ p.when }}</span></p>
+      <h3 class="place__name">{{ p.name.toLowerCase() }}@if (p.story) {<span class="place__arrow" aria-hidden="true"> ↗</span>}</h3>
+      <p class="place__note">{{ p.note }}</p>
+    </ng-template>
   `,
   styles: `
     @use 'mixins' as m;
@@ -90,7 +102,11 @@ import { ImageFrameComponent } from '../shared/image-frame.component';
     }
     .place:nth-child(even) .place__img { @include m.laptop { aspect-ratio: 4 / 5; margin-top: 40px; } }
     .place__meta { display: flex; justify-content: space-between; gap: 12px; font-size: 12px; color: var(--c-dim); margin-top: 6px; }
-    .place__name { font-size: clamp(2rem, 1.2rem + 2.4vw, 3.25rem); font-weight: 700; letter-spacing: -0.045em; line-height: 0.95; }
+    .place__link { display: flex; flex-direction: column; gap: 10px; color: inherit;
+      &:hover .place__name { color: var(--c-accent); }
+      &:hover .place__arrow { transform: translate(3px, -3px); } }
+    .place__arrow { display: inline-block; font-size: 0.6em; vertical-align: 0.35em; transition: transform var(--d-base) var(--ease-out); }
+    .place__name { transition: color var(--d-fast); font-size: clamp(2rem, 1.2rem + 2.4vw, 3.25rem); font-weight: 700; letter-spacing: -0.045em; line-height: 0.95; }
     .place__note { font-size: 15px; line-height: 1.5; color: var(--c-muted); max-width: 34ch;
       display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
     .place--end {

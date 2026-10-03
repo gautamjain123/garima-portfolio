@@ -4,7 +4,6 @@
  * Everything in square brackets [like this] is a placeholder.
  * ─────────────────────────────────────────────────────────────
  */
-import { unsplash } from './unsplash';
 import { Book, Hobby, Interest, JournalPhoto, JourneyStage, Place, Profile, Qualification, Stat } from '../models/content.model';
 
 export const PROFILE: Profile = {
@@ -30,38 +29,40 @@ export const ABOUT = {
   ],
 };
 
-/** Placeholder figures — replace with your own. Animated as counters. */
+/** Counters under the manifest — from the Braj day (2 October 2026). Animated on scroll. */
 export const STATS: Stat[] = [
-  { value: 18, label: 'states wandered' },
-  { value: 60, suffix: '+', label: 'conversations recorded' },
-  { value: 2400, suffix: '+', label: 'photographs kept' },
+  { value: 3, label: 'towns in one day in braj' },
+  { value: 4, label: 'aartis before midnight' },
+  { value: 24, label: 'photographs from that day' },
 ];
+
+/** Photos from the Braj essay, in public/images/blog/braj/. */
+const braj = (file: string): string => `images/blog/braj/${file}.jpg`;
+const BRAJ_STORY = 'braj-a-day-that-refused-the-clock';
 
 /**
- * The horizontal "places" strip. Stock photos from Unsplash for now (see unsplash.ts).
+ * The horizontal "places" strip — the stops of the Braj day, with your own photos.
+ * Add a new place per trip; `story` links the card to its blog post.
  */
 export const PLACES: Place[] = [
-  { name: 'Ladakh', region: 'Jammu & Kashmir', when: 'jun 2025', note: 'Prayer flags, butter tea and a monastery that hums at dawn.', image: unsplash('photo-1636993053871-61eff06ccd36', 900), imageAlt: 'A white hillside monastery below snow peaks in Ladakh' },
-  { name: 'Varanasi', region: 'Uttar Pradesh', when: 'nov 2024', note: 'A boatman who remembers every flood since 1978.', image: unsplash('photo-1608412525537-662195e817c5', 900), imageAlt: 'Old ghat buildings rising above the Ganga in Varanasi' },
-  { name: 'Jaisalmer', region: 'Rajasthan', when: 'jan 2025', note: 'A golden fort, and a haveli with forty-two windows.', image: unsplash('photo-1713349881676-594b95a5742b', 900), imageAlt: 'The walls of Jaisalmer fort above the golden city' },
-  { name: 'Alleppey', region: 'Kerala', when: 'aug 2024', note: 'Slow backwaters and a kitchen that smelled of coconut.', image: unsplash('photo-1661174607003-d9d36388c916', 900), imageAlt: 'A houseboat among coconut palms on the Kerala backwaters' },
-  { name: 'Hampi', region: 'Karnataka', when: 'dec 2023', note: 'Boulders balanced like a question nobody answered.', image: unsplash('photo-1620766182966-c6eb5ed2b788', 900), imageAlt: 'The gopuram of Virupaksha temple rising over the ruins of Hampi' },
-  { name: 'Cherrapunji', region: 'Meghalaya', when: 'jul 2024', note: 'Rain, root bridges, and a grandmother’s folk songs.', image: unsplash('photo-1637043765564-a071ff91a09f', 900), imageAlt: 'A tall waterfall dropping into a green gorge in Meghalaya' },
-  { name: 'Rann of Kutch', region: 'Gujarat', when: 'feb 2025', note: 'White salt to the horizon under a full moon.', image: unsplash('photo-1706013729724-caada9be0f97', 900), imageAlt: 'The white salt flats of the Rann of Kutch under a pale sky' },
-  { name: 'Darjeeling', region: 'West Bengal', when: 'apr 2024', note: 'Tea gardens, a toy train and Kanchenjunga at 5 a.m.', image: unsplash('photo-1677858741808-c843c4fcb81f', 900), imageAlt: 'A path through a Darjeeling tea garden with a lone tall tree' },
+  { name: 'Gokul', region: 'Mathura, UP', when: 'oct 2026', note: 'Every house, a shrine. Every householder, a priest. In every home, a Meera.', image: braj('gokul-courtyard'), imageAlt: 'An old stone courtyard in Gokul with peeling plaster and a small shrine', story: BRAJ_STORY },
+  { name: 'Raman Reti', region: 'Mathura, UP', when: 'oct 2026', note: 'An aarti that was less a ritual than a force. A hand at the back of the soul, saying rise.', image: braj('raman-reti-elephant'), imageAlt: 'A temple elephant with saffron markings and a silk cloth on its back', story: BRAJ_STORY },
+  { name: 'Barsana', region: 'Mathura, UP', when: 'oct 2026', note: '1½ hours became 3½ — and we arrived at the exact minute of the aarti.', image: braj('barsana-temple'), imageAlt: 'Crowds at the gateway of the Shri Ladli Ji temple in Barsana', story: BRAJ_STORY },
+  { name: 'Vrindavan', region: 'Mathura, UP', when: 'oct 2026', note: 'My clock was useless here, held up before Radha-Krishna’s.', image: braj('vrindavan-gateway'), imageAlt: 'A marble gateway in Vrindavan with a carved arch and crowds below', story: BRAJ_STORY },
+  { name: 'Yamuna', region: 'Vrindavan, UP', when: 'oct 2026', note: 'Small flames adrift on black water. Beautiful, and part of the problem.', image: braj('yamuna-boats'), imageAlt: 'Painted boats at the edge of the Yamuna at night', story: BRAJ_STORY },
 ];
 
-/** The photo journal grid. Stock photos from Unsplash for now (see unsplash.ts). */
+/** The photo journal grid — single frames from the road, captioned in a line. */
 export const JOURNAL: JournalPhoto[] = [
-  { image: unsplash('photo-1601828856153-c1d09e7c42c3', 1400), alt: 'A pale blue door under a carved arch in a white wall', caption: 'a door someone painted blue for luck', place: 'jodhpur', shape: 'tall' },
-  { image: unsplash('photo-1646344108679-4ddd700cd862', 1400), alt: 'A spice seller behind trays of spices at a market', caption: 'the spice lane, 7 a.m.', place: 'old delhi', shape: 'wide' },
-  { image: unsplash('photo-1619581073186-5b4ae1b0caad', 1400), alt: 'Clay kulhad cups filled with chai', caption: 'the chai that started every conversation', place: 'lansdowne', shape: 'square' },
-  { image: unsplash('photo-1494232410401-ad00d5433cfa', 1400), alt: 'A cassette tape on a white table', caption: 'nani’s stories, side a', place: 'home', shape: 'square' },
-  { image: unsplash('photo-1685120280925-c8c3697c73ee', 1400), alt: 'Palm trees seen through a train window', caption: 'window seat, sleeper class', place: 'konkan railway', shape: 'tall' },
-  { image: unsplash('photo-1709554565257-6eeea817ea82', 1400), alt: 'Prayer flags above a still mountain lake', caption: 'flags carrying prayers into the wind', place: 'leh', shape: 'wide' },
-  { image: unsplash('photo-1579156959079-5ea399f88a99', 1400), alt: 'A single kite against a violet evening sky', caption: 'uttarayan, from a rooftop', place: 'ahmedabad', shape: 'square' },
-  { image: unsplash('photo-1665554123673-37c156c866ae', 1400), alt: 'Colourful lanterns hanging at a market stall', caption: 'lanterns before diwali', place: 'jaipur', shape: 'tall' },
-  { image: unsplash('photo-1583558257444-cfba032b49ea', 1400), alt: 'A Chinese fishing net silhouetted at sunset', caption: 'the nets come up at sunset', place: 'kochi', shape: 'wide' },
+  { image: braj('gokul-shrine-door'), alt: 'Deities dressed in silk behind a plain wooden door', caption: 'behind one plain wooden door, the lord of the universe, waiting in silk', place: 'gokul', shape: 'tall' },
+  { image: braj('barsana-crowd'), alt: 'Devotees raising phones and hands towards a distant sanctum', caption: 'phones lifted, hands lifted higher', place: 'barsana', shape: 'wide' },
+  { image: braj('gokul-white-cow'), alt: 'A white cow with red thread at her muzzle beside stalls of painted images of God', caption: 'as if she too came to pray', place: 'gokul', shape: 'square' },
+  { image: braj('gokul-saffron-knots'), alt: 'Saffron cloth knotted around a tree beside a temple spire', caption: 'hope, tied by hand, one wish at a time', place: 'gokul', shape: 'square' },
+  { image: braj('vrindavan-circle-dance'), alt: 'Women holding hands and dancing in a circle on chequered marble', caption: 'barefoot on chequered marble, nobody a stranger', place: 'vrindavan', shape: 'tall' },
+  { image: braj('barsana-darshan'), alt: 'A glimpse of the deity in blue silk above raised hands', caption: 'blue silk, red and gold borders, and a forest of raised hands', place: 'barsana', shape: 'wide' },
+  { image: braj('vrindavan-gaushala'), alt: 'A woman resting her hand on a cow’s brow in the gaushala at night', caption: 'a hand on a cow’s warm brow, and nothing else needs saying', place: 'vrindavan', shape: 'square' },
+  { image: braj('vrindavan-night-lanes'), alt: 'A woman seated on a ledge in a lane at night, a carved wall glowing behind her', caption: 'a carved wall glowing like a held breath', place: 'vrindavan', shape: 'tall' },
+  { image: braj('yamuna-diyas'), alt: 'Small floating lamps adrift on the black water of the Yamuna', caption: 'small flames adrift on black water', place: 'yamuna', shape: 'wide' },
 ];
 
 export const QUALIFICATIONS: Qualification[] = [
@@ -139,9 +140,10 @@ export const BOOKS: Book[] = [
 /** Spun on the orbit globe as "next on the map". */
 export const CURRENTLY_EXPLORING: string[] = ['Spiti', 'Majuli', 'Ziro', 'Chettinad', 'Gokarna'];
 
+/** From the opening of the Braj essay. The last two words are set in italic. */
 export const PHILOSOPHY = {
-  quote: 'Every place has a story it tells visitors.',
-  quoteEmphasis: 'I go looking for the one it keeps for friends.',
+  quote: 'Some roads lead to a place.',
+  quoteEmphasis: 'This one led out of time.',
 };
 
 /** Manifest statements — each line: [bold part, ghosted part]. */

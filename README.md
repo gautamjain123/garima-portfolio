@@ -32,11 +32,11 @@ Images are referenced by path and **fall back to a styled, captioned placeholder
 public/images/garima-portrait.jpg      ← hero portrait, 4:5, ~1600px tall
 public/images/og-cover.jpg             ← social share image, 1200×630
 public/images/hobbies/reading.jpg …    ← see HOBBIES in site-content.ts
+public/images/blog/<trip>/…            ← a story's photos (e.g. blog/braj/); also used by PLACES and JOURNAL
 ```
 
-Places, the photo journal and blog posts currently use free Unsplash photos linked via
-`unsplash('photo-…')` (`src/app/core/data/unsplash.ts`). To use your own, replace a call with a
-local path such as `'images/places/ladakh.jpg'` and put the file in `public/`.
+Photos straight off a phone are large: resize to ~1200px on the long edge (and strip location
+metadata) before adding them.
 
 Book covers: add `cover: 'images/books/why-nations-fail.jpg'` to a book in `BOOKS`; otherwise a typographic cover is drawn.
 

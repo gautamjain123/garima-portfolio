@@ -67,6 +67,8 @@ export interface Place {
   note: string;
   image: string;
   imageAlt: string;
+  /** Slug of a blog post about this place — the card links to it. */
+  story?: string;
 }
 
 /** One frame in the photo journal. `shape` sets its span in the grid. */

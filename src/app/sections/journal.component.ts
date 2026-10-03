@@ -12,7 +12,7 @@ import { ImageFrameComponent } from '../shared/image-frame.component';
     <section id="journal" class="journal" aria-labelledby="journal-title">
       <div class="journal__rail">
         <p class="label">(04) photo journal</p>
-        <p class="journal__intro">small moments from the road — doors, kitchens, trains and the people who let me sit a while.</p>
+        <p class="journal__intro">single frames from the road — shrines, crowds, cows, and the people who let me sit a while.</p>
       </div>
       <div class="journal__body">
         <h2 id="journal-title" class="journal__title" appReveal>seen <em>along the way.</em></h2>
