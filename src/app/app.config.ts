@@ -6,6 +6,7 @@ import {
   withViewTransitions,
 } from '@angular/router';
 import { routes } from './app.routes';
+import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -18,9 +19,11 @@ export const appConfig: ApplicationConfig = {
       withViewTransitions({
         skipInitialTransition: true,
         onViewTransitionCreated: ({ transition }) => {
-          if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) transition.skipTransition();
+          if (window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+            transition.skipTransition();
         },
       }),
     ),
+    provideClientHydration(withEventReplay()),
   ],
 };

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, signal } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { PROFILE } from '../../core/data/site-content';
 import { MagneticDirective } from '../../core/directives/magnetic.directive';
@@ -14,6 +14,8 @@ type Status = 'idle' | 'sending' | 'sent' | 'error';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ContactComponent {
+  /** True on the /contact page, where the title becomes the page's h1. */
+  readonly asPage = input(false);
   protected readonly profile = PROFILE;
   protected readonly tripSubject = encodeURIComponent('Planning a journey');
   protected readonly status = signal<Status>('idle');

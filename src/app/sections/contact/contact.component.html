@@ -2,7 +2,12 @@
   <p class="label">(08) contact</p>
 
   <a [href]="'mailto:' + profile.email" class="contact__cta" appReveal>
-    <h2 id="contact-title" class="contact__title">let’s <em>meet</em> up!</h2>
+    <!-- On the /contact page this is the page's one h1; on the home page it's a section h2. -->
+    @if (asPage()) {
+      <h1 id="contact-title" class="contact__title">let’s <em>meet</em> up!</h1>
+    } @else {
+      <h2 id="contact-title" class="contact__title">let’s <em>meet</em> up!</h2>
+    }
   </a>
 
   <div class="contact__grid">

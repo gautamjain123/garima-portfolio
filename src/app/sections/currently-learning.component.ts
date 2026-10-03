@@ -187,7 +187,7 @@ export class CurrentlyLearningComponent implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    cancelAnimationFrame(this.raf);
+    if (this.raf) cancelAnimationFrame(this.raf); // raf is only ever set in the browser
     this.cleanup.forEach((f) => f());
   }
 }

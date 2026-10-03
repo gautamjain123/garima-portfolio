@@ -86,6 +86,13 @@ Inspired by the minimal, physics-playful aesthetic of studio portfolios like gra
 
 Tokens live in `src/styles/_tokens.scss`; layout helpers (`rail-section`, `heading`, `label`) in `src/styles/_mixins.scss`.
 
+## SEO
+
+- **Prerendered:** every page (including each story, listed automatically from `blog-posts.ts`) is built to static HTML (`src/app/app.routes.server.ts`, `outputMode: "static"`), so search engines and link previews see the full text and tags without running JavaScript. The app then hydrates in the browser.
+- **Per page:** title, description, canonical URL, Open Graph + Twitter cards, `robots`, and JSON-LD (`WebSite`, `Person`, `BlogPosting`, `CollectionPage`, `BreadcrumbList`) — all in `SeoService`.
+- **Domain:** set once in `PROFILE.siteUrl` (`site-content.ts`). Canonicals, share images, `sitemap.xml` and `robots.txt` all follow it; the sitemap (with image entries) is regenerated before every build.
+- **Share card:** `public/images/og-cover.jpg` (1200×630).
+
 ## Accessibility & SEO
 
 Semantic landmarks, one `h1` per page, skip link, visible focus rings, keyboard-operable interests grid and mobile drawer (Esc to close, focus returned), ARIA on progress bar/form status, AA colour contrast. SEO: per-route title/description/OG/canonical via `SeoService`, `Person` JSON-LD on the home page, `BlogPosting` JSON-LD on articles, `robots.txt` and `sitemap.xml`.

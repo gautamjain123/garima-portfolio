@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Meta } from '@angular/platform-browser';
 import { SeoService } from '../core/services/seo.service';
 
 @Component({
@@ -28,9 +27,8 @@ import { SeoService } from '../core/services/seo.service';
 })
 export default class NotFoundPage implements OnInit {
   private readonly seo = inject(SeoService);
-  private readonly meta = inject(Meta);
   ngOnInit(): void {
     this.seo.update({ title: 'Page not found', description: 'This page could not be found.', path: '/404' });
-    this.meta.updateTag({ name: 'robots', content: 'noindex' });
+    this.seo.noindex();
   }
 }

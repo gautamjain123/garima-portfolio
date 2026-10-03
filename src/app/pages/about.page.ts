@@ -43,7 +43,10 @@ export default class AboutPage implements OnInit {
   ngOnInit(): void {
     this.seo.update({
       title: 'About',
-      description: 'About Garima Jain — traveller and storyteller collecting oral histories, photographs and reflections on people, places and cultures.',
+      description:
+        'About Garima Jain — a traveller and storyteller collecting oral histories, photographs and reflections on people, places and cultures across India.',
+      image: 'images/garima-portrait.jpg',
+      imageAlt: 'Garima Jain beside a red wooden cottage door in the hills',
       path: '/about',
       type: 'profile',
     });

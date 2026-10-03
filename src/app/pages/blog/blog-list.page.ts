@@ -94,10 +94,14 @@ export default class BlogListPage implements OnInit {
   });
 
   ngOnInit(): void {
-    this.seo.update({
-      title: 'Stories from the road',
-      description: 'Oral histories, photo essays and travel stories by Garima Jain — people, places, food and culture across India.',
-      path: '/blog',
-    });
+    this.seo.collection(
+      {
+        title: 'Stories from the road',
+        description:
+          'Oral histories, photo essays and travel stories by Garima Jain — from Nizamuddin Dargah in Delhi to Gokul, Barsana and Vrindavan in Braj.',
+        path: '/blog',
+      },
+      this.all(),
+    );
   }
 }

@@ -125,7 +125,7 @@ export class ColorLensDirective implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    cancelAnimationFrame(this.raf);
+    if (this.raf) cancelAnimationFrame(this.raf); // raf is only ever set in the browser
     this.motion.gsap.killTweensOf(this.lens);
     this.cleanup.forEach((fn) => fn());
   }

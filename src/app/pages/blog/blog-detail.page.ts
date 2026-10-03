@@ -149,7 +149,7 @@ export default class BlogDetailPage implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    cancelAnimationFrame(this.scrollRaf);
+    if (this.scrollRaf) cancelAnimationFrame(this.scrollRaf); // only set in the browser
     clearTimeout(this.correction);
     this.seo.clearArticle();
   }
