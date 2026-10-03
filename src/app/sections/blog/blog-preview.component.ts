@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { BLOG_CATEGORIES } from '../../core/models/blog-post.model';
@@ -16,7 +16,7 @@ import { BlogCardComponent } from './blog-card.component';
         <p class="label">(06) stories</p>
         <p class="blog__intro">people, places, kitchens and questions — written down before they slip away.</p>
         <ul class="blog__chips" aria-label="Browse by category">
-          @for (c of categories; track c) {
+          @for (c of categories(); track c) {
             <li><a class="chip" routerLink="/blog" [queryParams]="{ category: c }">{{ c.toLowerCase() }}</a></li>
           }
         </ul>
@@ -46,11 +46,13 @@ import { BlogCardComponent } from './blog-card.component';
       @include m.laptop { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 48px 28px; }
     }
     .blog__hero { @include m.tablet { grid-column: 1 / -1; } @include m.laptop { grid-column: span 2; grid-row: span 2; } }
+    .blog__hero:only-child { @include m.laptop { grid-column: 1 / -1; } }
     .blog__all { align-self: flex-start; }
   `,
 })
 export class BlogPreviewComponent {
   private readonly blog = inject(BlogService);
-  protected readonly categories = BLOG_CATEGORIES;
   protected readonly posts = toSignal(this.blog.getAll(), { initialValue: [] });
+  /** Only categories that have at least one story. */
+  protected readonly categories = computed(() => BLOG_CATEGORIES.filter((c) => this.posts().some((p) => p.category === c)));
 }

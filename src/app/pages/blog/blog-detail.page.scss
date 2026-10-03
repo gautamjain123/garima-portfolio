@@ -92,8 +92,37 @@
       font-size: clamp(28px, 3vw, 52px); line-height: 1.08; color: var(--c-fg);
       p::before { content: '“'; } p::after { content: '”'; }
     }
-    figure img { width: 100%; border-radius: var(--r-img); }
-    figcaption { font-size: 13px; color: var(--c-dim); margin-top: 10px; }
+    figure img { width: 100%; height: auto; border-radius: var(--r-img); }
+    figcaption { font-size: 13px; line-height: 1.5; color: var(--c-dim); margin-top: 10px; }
+
+    // ── Photo-essay pieces (see the markup notes in blog-posts.ts) ──
+    p.lede { font-family: var(--f-serif); font-style: italic; font-size: clamp(30px, 3.4vw, 52px); line-height: 1.05; color: var(--c-fg); }
+    .kicker {
+      margin-top: 3.2em; font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.08em;
+      text-transform: lowercase; color: var(--c-accent);
+      + h2 { margin-top: 0.25em; font-size: clamp(40px, 5vw, 72px); letter-spacing: -0.045em; }
+    }
+    .deva { margin-top: 0.1em; font-size: clamp(22px, 2vw, 30px); line-height: 1.2; color: var(--c-dim); }
+    h3 { font-family: var(--f-serif); font-style: italic; font-weight: 400; font-size: clamp(24px, 2.2vw, 32px); letter-spacing: -0.01em; text-transform: none; }
+
+    // Photos may run wider than the text column on large screens.
+    .pair, figure.wide { @include m.laptop { margin-right: calc(-1 * min(240px, max(0px, (100vw - 1180px) / 2))); } }
+    .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: start; @include m.tablet { gap: 16px; }
+      figure { margin: 0; } img { aspect-ratio: 3 / 4; object-fit: cover; } }
+    figure.tall { img { width: auto; max-width: 100%; max-height: 82svh; } }
+
+    .stat { font-size: clamp(32px, 4vw, 56px); font-weight: 700; letter-spacing: -0.04em; line-height: 1; color: var(--c-accent); }
+    .verse {
+      margin-block: 2em; padding: 28px clamp(20px, 3vw, 36px); border-radius: var(--r-img);
+      background: var(--c-surface); color: var(--c-fg);
+      p { font-family: var(--f-serif); font-style: italic; font-size: clamp(22px, 2vw, 30px); line-height: 1.2; }
+      p[lang='hi'] { font-family: inherit; font-style: normal; font-size: clamp(24px, 2.2vw, 34px); font-weight: 600; color: var(--c-accent); }
+      p + p { margin-top: 0.4em; }
+      p[lang='hi']:not(:first-child) { margin-top: 1.1em; }
+      cite { display: block; margin-top: 14px; font-size: 13px; font-style: normal; color: var(--c-dim); }
+    }
+    .sign-off { margin-top: 1.1em; font-family: var(--f-serif); font-style: italic; font-size: clamp(44px, 6vw, 88px); line-height: 1; color: var(--c-accent); }
+    .sign-off--small { margin-top: 0.3em; font-size: clamp(24px, 2.4vw, 36px); color: var(--c-fg); }
   }
 }
 

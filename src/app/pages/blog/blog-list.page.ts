@@ -23,7 +23,7 @@ import { PageHeaderComponent } from '../../shared/page-header.component';
           <li>
             <a class="chip" routerLink="/blog" [class.is-active]="!activeCategory()" [attr.aria-current]="!activeCategory() ? 'page' : null">all</a>
           </li>
-          @for (c of categories; track c) {
+          @for (c of categories(); track c) {
             <li>
               <a
                 class="chip"
@@ -65,6 +65,7 @@ import { PageHeaderComponent } from '../../shared/page-header.component';
       @include m.laptop { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 48px 28px; }
     }
     .list__hero { @include m.tablet { grid-column: 1 / -1; } @include m.laptop { grid-column: span 2; grid-row: span 2; } }
+    .list__hero:only-child { @include m.laptop { grid-column: 1 / -1; } }
     .list__empty { grid-column: 1 / -1; }
     .list__empty { padding: 40px 0; color: var(--c-muted); font-size: var(--t-lead); }
   `,
@@ -75,9 +76,9 @@ export default class BlogListPage implements OnInit {
 
   private readonly blog = inject(BlogService);
   private readonly seo = inject(SeoService);
-  protected readonly categories = BLOG_CATEGORIES;
-
   private readonly all = toSignal(this.blog.getAll(), { initialValue: [] });
+  /** Only categories that have at least one story. */
+  protected readonly categories = computed(() => BLOG_CATEGORIES.filter((c) => this.all().some((p) => p.category === c)));
   protected readonly featured = toSignal(this.blog.getFeatured());
 
   protected readonly activeCategory = computed<BlogCategory | null>(() => {
