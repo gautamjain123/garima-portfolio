@@ -56,7 +56,7 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
     this.ctx = gsap.context(() => {
       this.intro = gsap
         .timeline({ paused: true, defaults: { ease: 'power4.out' } })
-        .from('.hero__char', { yPercent: 110, duration: 1.1, stagger: 0.035, clearProps: 'transform' })
+        .from('.hero__char', { yPercent: 135, duration: 1.1, stagger: 0.035, clearProps: 'transform' })
         .fromTo('.hero__photo', { clipPath: 'inset(100% 0 0 0)' }, { clipPath: 'inset(0% 0 0 0)', duration: 1.3, ease: 'power4.inOut', clearProps: 'clipPath' }, 0.1)
         .from('.hero__photo-inner', { scale: 1.25, duration: 1.8, ease: 'power3.out' }, 0.1)
         .from('.hero__sun', { scale: 0, duration: 1.2, stagger: 0.15, ease: 'back.out(1.4)' }, 0.6)

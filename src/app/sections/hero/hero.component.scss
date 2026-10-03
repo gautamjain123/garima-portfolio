@@ -38,20 +38,24 @@
     position: absolute;
     right: var(--gutter);
     top: calc(var(--nav-h) + 20px);
-    width: clamp(320px, 30vw, 460px);
+    // 30vw wide, but never so tall that the plate runs into the meta row at the bottom
+    // (≈ caption 30px + meta row 140px + gaps), whatever the screen height.
+    width: clamp(240px, min(30vw, calc((100svh - var(--nav-h) - 230px) * 0.75)), 460px);
   }
 }
 
 .hero__fig {
   display: flex;
+  flex-wrap: wrap; // on a narrow plate the hint drops to a second line instead of overflowing
   justify-content: space-between;
-  gap: 16px;
+  gap: 2px 16px;
   font-size: 11px;
   letter-spacing: 0.04em;
   color: var(--c-dim);
   white-space: nowrap;
 }
 .hero__hint {
+  margin-left: auto;
   color: var(--c-accent);
   @media (prefers-reduced-motion: reduce) { display: none; } // photo is simply shown in colour
 }
@@ -151,7 +155,9 @@
   column-gap: 0.22em;
   pointer-events: none; // the lens keeps working where the name crosses the portrait
 }
-.hero__word { display: inline-flex; overflow: hidden; padding-bottom: 0.06em; position: relative; }
+// Each word is a mask for the slide-up entrance. It extends 0.24em below the line box so the
+// descenders of g and j aren't clipped; the negative margin keeps the layout where it was.
+.hero__word { display: inline-flex; overflow: hidden; padding-bottom: 0.24em; margin-bottom: -0.18em; position: relative; }
 // Marigold marker stroke under the surname, drawn in during the intro.
 .hero__word--mark::before {
   content: '';
@@ -159,7 +165,7 @@
   z-index: -1;
   left: -0.02em;
   right: -0.04em;
-  bottom: 0.13em;
+  bottom: 0.31em; // 0.13em above the line box, plus the word's extra 0.18em mask padding
   height: 0.17em;
   background: var(--c-pop);
   transform-origin: 0 50%;
