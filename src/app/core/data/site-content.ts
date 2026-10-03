@@ -4,7 +4,7 @@
  * Everything in square brackets [like this] is a placeholder.
  * ─────────────────────────────────────────────────────────────
  */
-import { Book, Hobby, Interest, JournalPhoto, JourneyStage, Place, Profile, Qualification, Stat } from '../models/content.model';
+import { Book, Hobby, Interest, JournalPhoto, Place, Profile, Qualification, Stat } from '../models/content.model';
 
 export const PROFILE: Profile = {
   name: 'Garima Jain',
@@ -66,45 +66,62 @@ export const JOURNAL: JournalPhoto[] = [
   { image: braj('yamuna-diyas'), alt: 'Small floating lamps adrift on the black water of the Yamuna', caption: 'small flames adrift on black water', place: 'yamuna', shape: 'wide' },
 ];
 
-export const QUALIFICATIONS: Qualification[] = [
+/**
+ * The education page (/qualifications).
+ * Anything inside [square brackets] is a placeholder: it's shown in a muted, dashed style
+ * until you replace it with the real detail.
+ */
+
+/** How the work is done — the methods named in the fieldwork. */
+export const PRACTICE: { title: string; description: string }[] = [
+  { title: 'Oral histories', description: 'Long, unhurried conversations — recorded before the stories quietly slip away.' },
+  { title: 'Street photography', description: 'Nothing staged. Whatever was in front of the camera, in a public, crowded place.' },
+  { title: 'Sound recording', description: 'The bells, the qawwali, the market — environmental sound as part of the record.' },
+  { title: 'Short video interviews', description: 'A few minutes with the people who keep a place running.' },
+  { title: 'Participant observation', description: 'Standing in the lane at dusk and watching it happen, rather than only asking about it.' },
+  { title: 'Field notebook', description: 'Sensory fieldnotes written the same day — the smells, the crowd, the questions still open.' },
+];
+
+/** Fieldwork so far, newest first. `story` links to the blog post. */
+export const FIELDWORK: { period: string; title: string; place: string; description: string; story: string }[] = [
   {
-    period: '2025 —',
-    tag: 'In progress',
-    title: 'UPSC Preparation',
-    institution: 'Civil Services Examination',
-    description: 'Full-time preparation for Prelims and Mains, with [Optional Subject] as the optional paper.',
-    current: true,
+    period: 'oct 2026',
+    title: 'Braj: a day that refused the clock',
+    place: 'Gokul · Barsana · Vrindavan',
+    description: 'A photo essay across three towns and four aartis in a single day — twenty-four photographs.',
+    story: 'braj-a-day-that-refused-the-clock',
   },
   {
-    period: '20XX',
-    tag: 'Certification',
-    title: 'Certificate in Public Policy',
-    institution: '[Institution / Online Programme]',
-    description: 'Optional entry — a short course, fellowship or internship that shaped your interests.',
-  },
-  {
-    period: '20XX – 20XX',
-    tag: 'Undergraduate',
-    title: 'B.A. (Hons.) Political Science',
-    institution: '[University Name], New Delhi',
-    description:
-      'Coursework in Indian political thought, comparative governance and public administration. [Add grades, dissertation or highlights.]',
-  },
-  {
-    period: '20XX',
-    tag: 'School',
-    title: 'Higher Secondary Education',
-    institution: '[School Name], [City]',
-    description: 'Humanities stream — History, Political Science, Economics and English.',
+    period: 'sep 2026',
+    title: 'Nizamuddin Dargah: an oral history',
+    place: 'Nizamuddin Basti, Delhi',
+    description: 'Music, market and mannat at a living Sufi shrine — field photography, sensory fieldnotes and open research questions.',
+    story: 'nizamuddin-dargah-oral-history',
   },
 ];
 
-export const JOURNEY: JourneyStage[] = [
-  { numeral: 'I', title: 'Foundation', description: 'NCERTs, newspapers and the habit of reading every day.' },
-  { numeral: 'II', title: 'Understanding', description: 'Connecting polity, history and economy into one picture.' },
-  { numeral: 'III', title: 'Preparation', description: 'Answer writing, revision cycles, mock tests and honest feedback.', current: true },
-  { numeral: 'IV', title: 'Reflection', description: 'Learning from each attempt; keeping the why in view.' },
-  { numeral: 'V', title: 'Service', description: 'Turning understanding into work that reaches people.' },
+export const QUALIFICATIONS: Qualification[] = [
+  {
+    period: '[20XX – 20XX]',
+    tag: 'Degree',
+    title: '[Your degree, e.g. B.A. (Hons.) Sociology]',
+    institution: '[University], [City]',
+    description: '[Subjects, a dissertation or project, and what it taught you about people and places.]',
+  },
+  {
+    period: '[20XX]',
+    tag: 'Course',
+    title: '[A course or workshop, e.g. oral history or documentary photography]',
+    institution: '[Institution or programme]',
+    description: '[Optional — delete this entry if you don’t need it.]',
+  },
+  {
+    period: '[20XX]',
+    tag: 'School',
+    title: 'Higher secondary education',
+    institution: '[School], [City]',
+    description: '[Stream and subjects.]',
+  },
 ];
 
 /** "What catches my eye" — the dot-separated word run. (`icon` is unused by the current design.) */
