@@ -38,25 +38,39 @@
     position: absolute;
     right: var(--gutter);
     top: calc(var(--nav-h) + 20px);
-    // 30vw wide, but never so tall that the plate runs into the meta row at the bottom
-    // (≈ caption 30px + meta row 140px + gaps), whatever the screen height.
-    width: clamp(240px, min(30vw, calc((100svh - var(--nav-h) - 230px) * 0.75)), 460px);
+    width: clamp(320px, 30vw, 460px);
   }
 }
 
 .hero__fig {
-  display: flex;
-  flex-wrap: wrap; // on a narrow plate the hint drops to a second line instead of overflowing
-  justify-content: space-between;
-  gap: 2px 16px;
   font-size: 11px;
   letter-spacing: 0.04em;
   color: var(--c-dim);
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
+
+// "hover to see in colour" sits on the photo itself, so it can never run off the screen.
 .hero__hint {
-  margin-left: auto;
-  color: var(--c-accent);
+  position: absolute;
+  z-index: 3;
+  top: 12px;
+  right: 12px;
+  max-width: calc(100% - 24px);
+  padding: 6px 11px;
+  border-radius: var(--r-pill);
+  background: rgba(29, 26, 22, 0.55);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  color: var(--p-paper);
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
   @media (prefers-reduced-motion: reduce) { display: none; } // photo is simply shown in colour
 }
 
@@ -185,7 +199,39 @@
   .it { font-size: 1.18em; } span { display: inline-block; } }
 .hero__tags { font-size: clamp(1.125rem, 1rem + 0.6vw, 1.375rem); color: var(--c-faint); span { display: inline-block; font-weight: 500; }
   .t1 { color: var(--p-terracotta-deep); } .t2 { color: var(--p-teal); } .t3 { color: var(--p-indigo); } }
-.hero__scroll { font-size: 14px; color: var(--c-muted); display: none; background: none; border: 0; padding: 4px 0; cursor: pointer;
-  @include m.tablet { display: block; justify-self: end; text-align: right; }
-  span { display: inline-block; transition: transform var(--d-base) var(--ease-out); }
-  &:hover { color: var(--c-fg); span { transform: translateY(3px); } } }
+// The call to action: a solid pill that stays above the portrait where the two overlap.
+.hero__scroll {
+  position: relative;
+  z-index: 3;
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 6px;
+  height: 52px;
+  padding: 0 8px 0 22px;
+  border: 0;
+  border-radius: var(--r-pill);
+  background: var(--c-fg);
+  color: var(--c-bg);
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 10px 30px -12px rgba(29, 26, 22, 0.45);
+  transition: background var(--d-fast), color var(--d-fast), transform var(--d-base) var(--ease-out);
+  @include m.tablet { justify-self: end; margin-top: 0; }
+  &:hover { background: var(--c-pop); color: var(--c-fg); transform: translateY(-2px); }
+}
+.hero__scroll-arrow {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--c-pop);
+  color: var(--c-fg);
+  font-size: 16px;
+  animation: hero-nudge 1.8s var(--ease-in-out) infinite;
+  .hero__scroll:hover & { background: var(--c-fg); color: var(--c-pop); }
+}
+@keyframes hero-nudge { 0%, 100% { transform: translateY(-2px); } 50% { transform: translateY(3px); } }

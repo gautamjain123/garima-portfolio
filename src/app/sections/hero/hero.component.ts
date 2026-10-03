@@ -23,7 +23,7 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
   private readonly lens = viewChild.required(ColorLensDirective);
   private readonly motion = inject(MotionService);
   protected readonly hint = this.motion.isFinePointer
-    ? { mono: 'hover to see in colour ↗', full: 'click for b/w' }
+    ? { mono: 'hover to see in colour', full: 'click for b/w' }
     : { mono: 'tap for colour', full: 'tap for b/w' };
   private ctx?: gsap.Context;
   private intro?: gsap.core.Timeline;
@@ -61,7 +61,7 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
         .from('.hero__photo-inner', { scale: 1.25, duration: 1.8, ease: 'power3.out' }, 0.1)
         .from('.hero__sun', { scale: 0, duration: 1.2, stagger: 0.15, ease: 'back.out(1.4)' }, 0.6)
         .fromTo('.hero__word--mark', { '--mark': 0 }, { '--mark': 1, duration: 0.9, ease: 'power3.inOut' }, 0.9)
-        .from('.hero__meta > *, .hero__coords, .hero__fig', { opacity: 0, y: 16, duration: 0.8, stagger: 0.08 }, '-=0.7')
+        .from('.hero__meta > *, .hero__coords, .hero__fig', { opacity: 0, y: 16, duration: 0.8, stagger: 0.08, clearProps: 'transform' }, '-=0.7')
         .add(() => this.lens().bloom(0.2), '-=0.4');
 
       gsap.to('.hero__photo-inner', {

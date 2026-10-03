@@ -7,11 +7,9 @@
   <figure class="hero__portrait">
     <span class="hero__sun hero__sun--big" aria-hidden="true"></span>
     <span class="hero__sun hero__sun--small" aria-hidden="true"></span>
-    <figcaption class="hero__fig mono">
-      <span>fig. 01 — somewhere in the hills</span>
-      <span class="hero__hint" aria-hidden="true">{{ lens.full() ? hint.full : hint.mono }}</span>
-    </figcaption>
+    <figcaption class="hero__fig mono">fig. 01 — somewhere in the hills</figcaption>
     <div class="hero__photo" appColorLens #lens="colorLens" [origin]="[0.5, 0.36]">
+      <span class="hero__hint" aria-hidden="true">{{ lens.full() ? hint.full : hint.mono }}</span>
       <div class="hero__layer">
         <div class="hero__photo-inner">
           <img class="hero__img" [src]="portrait" alt="Portrait of Garima Jain, smiling, with pine-covered hills behind her" fetchpriority="high" decoding="async" />
@@ -40,6 +38,6 @@
   <div class="hero__meta">
     <p class="hero__role"><span>traveller &amp;</span>&nbsp;<span class="it">storyteller</span></p>
     <p class="hero__tags"><span class="t1">people</span> · <span class="t2">places</span> · <span class="t3">stories</span></p>
-    <button type="button" class="hero__scroll" (click)="toPlaces()">see the places <span aria-hidden="true">↓</span></button>
+    <button type="button" class="hero__scroll" (click)="toPlaces()">see the places <span class="hero__scroll-arrow" aria-hidden="true">↓</span></button>
   </div>
 </section>
