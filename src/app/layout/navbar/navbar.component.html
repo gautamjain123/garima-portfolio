@@ -6,15 +6,18 @@
       <ul class="nav__links">
         @for (item of items; track item.label) {
           <li>
-            <a
-              class="nav__link"
-              [routerLink]="item.link"
-              [fragment]="item.fragment"
-              routerLinkActive="is-active"
-              [routerLinkActiveOptions]="item.exact || item.fragment ? exactMatch : subsetMatch"
-              [ariaCurrentWhenActive]="item.fragment ? false : 'page'"
-              >{{ item.label }}</a
-            >
+            @if (item.fragment) {
+              <a class="nav__link" href="/" (click)="goSection($event, item.fragment)">{{ item.label }}</a>
+            } @else {
+              <a
+                class="nav__link"
+                [routerLink]="item.link"
+                routerLinkActive="is-active"
+                [routerLinkActiveOptions]="item.exact ? exactMatch : subsetMatch"
+                ariaCurrentWhenActive="page"
+                >{{ item.label }}</a
+              >
+            }
           </li>
         }
       </ul>
@@ -49,9 +52,11 @@
       @for (item of items; track item.label; let i = $index; let first = $first) {
         <li class="drawer__item" [style.--i]="i">
           @if (first) {
-            <a #firstDrawerLink class="drawer__link" [routerLink]="item.link" [fragment]="item.fragment" (click)="close(false)">{{ item.label }}</a>
+            <a #firstDrawerLink class="drawer__link" [routerLink]="item.link" (click)="close(false)">{{ item.label }}</a>
+          } @else if (item.fragment) {
+            <a class="drawer__link" href="/" (click)="goSection($event, item.fragment)">{{ item.label }}</a>
           } @else {
-            <a class="drawer__link" [routerLink]="item.link" [fragment]="item.fragment" (click)="close(false)">{{ item.label }}</a>
+            <a class="drawer__link" [routerLink]="item.link" (click)="close(false)">{{ item.label }}</a>
           }
         </li>
       }

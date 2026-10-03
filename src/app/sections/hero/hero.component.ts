@@ -1,14 +1,14 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnDestroy, effect, inject, viewChild } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { PROFILE } from '../../core/data/site-content';
 import { PointerCoordsDirective } from '../../core/directives/pointer-coords.directive';
 import { IntroService } from '../../core/services/intro.service';
 import { MotionService } from '../../core/services/motion.service';
 import { ColorLensDirective } from '../../core/directives/color-lens.directive';
+import { scrollToSection } from '../../core/scroll';
 
 @Component({
   selector: 'app-hero',
-  imports: [RouterLink, ColorLensDirective, PointerCoordsDirective],
+  imports: [ColorLensDirective, PointerCoordsDirective],
   templateUrl: './hero.component.html',
   styleUrl: './hero.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -69,6 +69,10 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
         scrollTrigger: { trigger: el, start: 'top top', end: 'bottom top', scrub: true },
       });
     }, el);
+  }
+
+  protected toPlaces(): void {
+    scrollToSection('places');
   }
 
   ngOnDestroy(): void {

@@ -13,6 +13,7 @@ import { filter } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MagneticDirective } from '../../core/directives/magnetic.directive';
 import { PROFILE } from '../../core/data/site-content';
+import { scrollToSection } from '../../core/scroll';
 
 interface NavItem {
   label: string;
@@ -48,8 +49,10 @@ export class NavbarComponent {
     { label: 'stories', link: '/blog' },
   ];
 
+  private readonly router = inject(Router);
+
   constructor() {
-    inject(Router)
+    this.router
       .events.pipe(filter((e) => e instanceof NavigationEnd), takeUntilDestroyed())
       .subscribe(() => this.close(false));
   }
@@ -62,6 +65,26 @@ export class NavbarComponent {
   @HostListener('document:keydown.escape')
   onEscape(): void {
     if (this.open()) this.close();
+  }
+
+  /**
+   * Section links (places, journal) scroll in code instead of using #fragments. They are plain
+   * href links, not routerLinks: a routerLink to the page you're already on would re-navigate
+   * and jump back to the top. From another page we go home first, then scroll.
+   */
+  goSection(event: MouseEvent, id: string): void {
+    event.preventDefault();
+    this.close(false);
+    if (scrollToSection(id)) return;
+    void this.router.navigateByUrl('/').then(() => {
+      let tries = 0;
+      const attempt = () => {
+        // Wait past the app's post-navigation ScrollTrigger refresh (~120ms) so pin positions are final.
+        if (this.doc.getElementById(id)) setTimeout(() => scrollToSection(id), 300);
+        else if (tries++ < 40) setTimeout(attempt, 100);
+      };
+      attempt();
+    });
   }
 
   toggle(): void {

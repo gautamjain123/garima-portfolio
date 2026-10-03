@@ -179,5 +179,7 @@
   .it { font-size: 1.18em; } span { display: inline-block; } }
 .hero__tags { font-size: clamp(1.125rem, 1rem + 0.6vw, 1.375rem); color: var(--c-faint); span { display: inline-block; font-weight: 500; }
   .t1 { color: var(--p-terracotta-deep); } .t2 { color: var(--p-teal); } .t3 { color: var(--p-indigo); } }
-.hero__scroll { font-size: 14px; color: var(--c-muted); display: none; @include m.tablet { display: block; text-align: right; }
-  &:hover { color: var(--c-fg); } }
+.hero__scroll { font-size: 14px; color: var(--c-muted); display: none; background: none; border: 0; padding: 4px 0; cursor: pointer;
+  @include m.tablet { display: block; justify-self: end; text-align: right; }
+  span { display: inline-block; transition: transform var(--d-base) var(--ease-out); }
+  &:hover { color: var(--c-fg); span { transform: translateY(3px); } } }
