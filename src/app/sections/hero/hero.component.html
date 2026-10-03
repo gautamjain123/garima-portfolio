@@ -7,12 +7,12 @@
   <figure class="hero__portrait">
     <span class="hero__sun hero__sun--big" aria-hidden="true"></span>
     <span class="hero__sun hero__sun--small" aria-hidden="true"></span>
-    <figcaption class="hero__fig mono">fig. 01 — somewhere in the hills</figcaption>
-    <div class="hero__photo" appColorLens #lens="colorLens" [origin]="[0.5, 0.36]">
+    <figcaption class="hero__fig mono">fig. 01 — a red door in the hills</figcaption>
+    <div class="hero__photo" appColorLens #lens="colorLens" [origin]="[0.74, 0.52]">
       <span class="hero__hint" aria-hidden="true">{{ lens.full() ? hint.full : hint.mono }}</span>
       <div class="hero__layer">
         <div class="hero__photo-inner">
-          <img class="hero__img" [src]="portrait" alt="Portrait of Garima Jain, smiling, with pine-covered hills behind her" fetchpriority="high" decoding="async" />
+          <img class="hero__img" [src]="portrait" alt="Garima Jain in a sun hat and black dress, leaning against a red wooden cottage with a slate roof" fetchpriority="high" decoding="async" />
         </div>
       </div>
       <div class="hero__layer hero__layer--color" aria-hidden="true">
