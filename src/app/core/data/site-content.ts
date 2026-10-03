@@ -50,6 +50,7 @@ export const PLACES: Place[] = [
   { name: 'Barsana', region: 'Mathura, UP', when: 'oct 2026', note: '1½ hours became 3½ — and we arrived at the exact minute of the aarti.', image: braj('barsana-temple'), imageAlt: 'Crowds at the gateway of the Shri Ladli Ji temple in Barsana', story: BRAJ_STORY },
   { name: 'Vrindavan', region: 'Mathura, UP', when: 'oct 2026', note: 'My clock was useless here, held up before Radha-Krishna’s.', image: braj('vrindavan-gateway'), imageAlt: 'A marble gateway in Vrindavan with a carved arch and crowds below', story: BRAJ_STORY },
   { name: 'Yamuna', region: 'Vrindavan, UP', when: 'oct 2026', note: 'Small flames adrift on black water. Beautiful, and part of the problem.', image: braj('yamuna-boats'), imageAlt: 'Painted boats at the edge of the Yamuna at night', story: BRAJ_STORY },
+  { name: 'Nizamuddin Dargah', region: 'Delhi', when: 'sep 2026', note: 'Four hundred metres of rose petals and attar, and a crowd of shoppers that becomes a crowd of pilgrims.', image: 'images/blog/nizamuddin/inner-gate.jpg', imageAlt: 'The mirrored archway near the inner gates of Nizamuddin Dargah, chadars hanging beyond', story: 'nizamuddin-dargah-oral-history' },
 ];
 
 /** The photo journal grid — single frames from the road, captioned in a line. */

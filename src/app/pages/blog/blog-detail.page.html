@@ -7,7 +7,7 @@
       <p class="article__cat">
         <a routerLink="/blog" [queryParams]="{ category: p.category }">{{ p.category.toLowerCase() }}</a>
       </p>
-      <h1 class="article__title" itemprop="headline" appReveal>{{ p.title.toLowerCase() }}</h1>
+      <h1 class="article__title" [class.article__title--long]="p.title.length > 44" itemprop="headline" appReveal>{{ p.title.toLowerCase() }}</h1>
       <p class="article__intro" itemprop="description" appReveal>{{ p.excerpt }}</p>
       <div class="article__byline" appReveal>
         <span class="article__author" itemprop="author" itemscope itemtype="https://schema.org/Person">
