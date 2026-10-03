@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DOCUMENT, OnDestroy, computed, effect, inject, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DOCUMENT, HostListener, OnDestroy, computed, effect, inject, input, signal } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -63,6 +63,62 @@ export default class BlogDetailPage implements OnDestroy {
   protected readonly content = computed<SafeHtml>(() => this.sanitizer.bypassSecurityTrustHtml(this.prepared().html));
   protected readonly toc = computed(() => this.prepared().toc);
 
+  /** The chapter currently being read (highlighted in the contents list). */
+  protected readonly activeId = signal<string | null>(null);
+  private scrollRaf = 0;
+  private correction?: ReturnType<typeof setTimeout>;
+
+  /**
+   * Contents navigation without URL fragments: scroll to the heading in code, leaving room
+   * for the fixed navbar, then re-check once scrolling settles in case anything above it
+   * changed height on the way (late-loading photos) and correct the last few pixels.
+   */
+  protected goTo(id: string): void {
+    const target = this.doc.getElementById(id);
+    if (!target) return;
+    // Land on the small "chapter two" label above the heading when there is one.
+    const prev = target.previousElementSibling;
+    const anchor = prev?.classList.contains('kicker') ? prev : target;
+    const smooth = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const top = () => anchor.getBoundingClientRect().top + window.scrollY - this.offset();
+    this.activeId.set(id);
+    window.scrollTo({ top: top(), behavior: smooth ? 'smooth' : 'auto' });
+
+    clearTimeout(this.correction);
+    let settled = false;
+    const settle = () => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(this.correction);
+      if (Math.abs(top() - window.scrollY) > 4) window.scrollTo({ top: top(), behavior: 'auto' });
+      target.setAttribute('tabindex', '-1');
+      target.focus({ preventScroll: true }); // screen readers continue from the chapter
+    };
+    if ('onscrollend' in window) window.addEventListener('scrollend', settle, { once: true });
+    this.correction = setTimeout(settle, smooth ? 900 : 50); // fallback, and for browsers without scrollend
+  }
+
+  /** Highlights the last chapter heading that has passed under the navbar. */
+  @HostListener('window:scroll')
+  protected trackActive(): void {
+    cancelAnimationFrame(this.scrollRaf);
+    this.scrollRaf = requestAnimationFrame(() => {
+      const line = this.offset() + 48;
+      let current: string | null = null;
+      for (const t of this.toc()) {
+        const el = this.doc.getElementById(t.id);
+        if (el && el.getBoundingClientRect().top <= line) current = t.id;
+      }
+      this.activeId.set(current);
+    });
+  }
+
+  /** Navbar height plus a little breathing room above the heading. */
+  private offset(): number {
+    const nav = parseFloat(getComputedStyle(this.doc.documentElement).getPropertyValue('--nav-h')) || 72;
+    return nav + 24;
+  }
+
   protected readonly shareUrl = computed(() => `${PROFILE.siteUrl}/blog/${this.post()?.slug ?? ''}`);
   protected readonly copied = signal(false);
 
@@ -93,6 +149,8 @@ export default class BlogDetailPage implements OnDestroy {
   }
 
   ngOnDestroy(): void {
+    cancelAnimationFrame(this.scrollRaf);
+    clearTimeout(this.correction);
     this.seo.clearArticle();
   }
 }

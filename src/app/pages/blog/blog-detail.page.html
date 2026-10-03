@@ -32,7 +32,10 @@
             <p class="rail__label">contents</p>
             <ol>
               @for (t of toc(); track t.id) {
-                <li><a [routerLink]="[]" [fragment]="t.id">{{ t.text }}</a></li>
+                <li>
+                  <button type="button" class="toc__link" [class.is-active]="activeId() === t.id"
+                    [attr.aria-current]="activeId() === t.id ? 'location' : null" (click)="goTo(t.id)">{{ t.text }}</button>
+                </li>
               }
             </ol>
           </nav>

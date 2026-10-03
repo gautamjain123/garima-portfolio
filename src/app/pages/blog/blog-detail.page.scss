@@ -53,9 +53,14 @@
   @include m.laptop { display: block; }
   ol { display: flex; flex-direction: column; gap: 10px; counter-reset: toc; }
   li { counter-increment: toc; }
-  a { font-size: 14px; line-height: 1.4; color: var(--c-muted); text-transform: lowercase;
+  .toc__link {
+    background: none; border: 0; padding: 2px 0; text-align: left; cursor: pointer;
+    font-size: 14px; line-height: 1.4; color: var(--c-muted); text-transform: lowercase;
+    transition: color var(--d-fast);
     &::before { content: '0' counter(toc) ' '; color: var(--c-dim); font-family: var(--f-mono); font-size: 12px; }
-    &:hover { color: var(--c-accent); } }
+    &:hover { color: var(--c-accent); }
+    &.is-active { color: var(--c-fg); font-weight: 600; &::before { color: var(--c-accent); } }
+  }
 }
 .share__row { display: flex; gap: 8px; }
 .share__btn {
@@ -109,7 +114,9 @@
     .pair, figure.wide { @include m.laptop { margin-right: calc(-1 * min(240px, max(0px, (100vw - 1180px) / 2))); } }
     .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: start; @include m.tablet { gap: 16px; }
       figure { margin: 0; } img { aspect-ratio: 3 / 4; object-fit: cover; } }
-    figure.tall { img { width: auto; max-width: 100%; max-height: 82svh; } }
+    // Portraits are kept within the screen height. A definite height + the width/height
+    // attributes' ratio reserve the box before the photo loads, so the page never jumps.
+    figure.tall img { @include m.tablet { width: auto; max-width: 100%; height: min(82svh, 960px); object-fit: cover; } }
 
     .stat { font-size: clamp(32px, 4vw, 56px); font-weight: 700; letter-spacing: -0.04em; line-height: 1; color: var(--c-accent); }
     .verse {
