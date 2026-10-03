@@ -98,6 +98,19 @@ export default class BlogDetailPage implements OnDestroy {
     this.correction = setTimeout(settle, smooth ? 900 : 50); // fallback, and for browsers without scrollend
   }
 
+  /**
+   * A place card can open this story at a chapter: it passes `{ section: 'barsana' }` as router
+   * state (no #fragment in the URL). Once the article has rendered — and after the router's own
+   * scroll-to-top — we scroll to that chapter, then clear the request so a reload starts at the top.
+   */
+  private openRequestedSection(): void {
+    if (typeof window === 'undefined') return;
+    const section = (history.state as { section?: string } | null)?.section;
+    if (!section) return;
+    history.replaceState({ ...history.state, section: undefined }, '');
+    setTimeout(() => this.goTo(section), 350);
+  }
+
   /** Highlights the last chapter heading that has passed under the navbar. */
   @HostListener('window:scroll')
   protected trackActive(): void {
@@ -126,7 +139,10 @@ export default class BlogDetailPage implements OnDestroy {
     effect(() => {
       const p = this.post();
       this.slugChecked.set(true);
-      if (p) this.seo.article(p);
+      if (p) {
+        this.seo.article(p);
+        this.openRequestedSection();
+      }
     });
   }
 

@@ -69,6 +69,8 @@ export interface Place {
   imageAlt: string;
   /** Slug of a blog post about this place — the card links to it. */
   story?: string;
+  /** Chapter heading id inside that story (e.g. 'barsana'); the story opens scrolled to it. */
+  section?: string;
 }
 
 /** One frame in the photo journal. `shape` sets its span in the grid. */

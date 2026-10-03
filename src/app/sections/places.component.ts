@@ -33,7 +33,7 @@ import { ImageFrameComponent } from '../shared/image-frame.component';
           @for (p of places; track p.name; let i = $index) {
             <li class="place is-zoomable">
               @if (p.story) {
-                <a class="place__link" [routerLink]="['/blog', p.story]" data-cursor="READ">
+                <a class="place__link" [routerLink]="['/blog', p.story]" [state]="p.section ? { section: p.section } : {}" data-cursor="READ">
                   <ng-container *ngTemplateOutlet="card; context: { $implicit: p, i: i }" />
                 </a>
               } @else {
