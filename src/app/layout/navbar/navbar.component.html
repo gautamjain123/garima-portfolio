@@ -1,6 +1,9 @@
 <header class="nav" [class.nav--scrolled]="scrolled()" [class.nav--open]="open()">
   <div class="nav__inner">
-    <a routerLink="/" class="nav__brand" aria-label="Garima Jain — home">garima<span class="nav__dot">.</span></a>
+    <a routerLink="/" class="nav__brand" aria-label="Garima Jain — home">
+      <span class="nav__place" aria-hidden="true">new delhi · stories</span>
+      <span class="nav__name">garima<span class="nav__dot">.</span></span>
+    </a>
 
     <nav class="nav__desktop" aria-label="Primary">
       <ul class="nav__links">
