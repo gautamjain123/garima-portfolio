@@ -85,7 +85,7 @@ ${pair(
 <p>It was less a ritual than a force. A hand at the back of the soul, saying <em>rise</em>. And I rose.</p>
 <p>Durkheim called it the collective conscience: the fire that starts when strangers begin to feel as one. Dancing. Chanting. Clapping. The crowd pressed in, and it did not feel like noise.</p>
 <p>The heat, the sweat, the shoulders against mine. I did not endure them. I embraced them.</p>
-<blockquote class="pull-quote"><p>In Delhi I hate every one of these things. Here, I was happy to burn in them. What changed?</p></blockquote>
+<blockquote class="pull-quote"><p>In Delhi I avoid every one of these things. Here, I was happy to burn in them. What changed?</p></blockquote>
 ${photo('raman-reti-elephant', 'A temple elephant with saffron markings and a silk cloth on its back', 'Saffron on its brow, silk on its back, it stands as calm as a temple pillar while the whole world sways around it.', 'tall')}
 
 <p class="kicker">chapter two</p>
