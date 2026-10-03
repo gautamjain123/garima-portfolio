@@ -15,6 +15,7 @@ type Status = 'idle' | 'sending' | 'sent' | 'error';
 })
 export class ContactComponent {
   protected readonly profile = PROFILE;
+  protected readonly tripSubject = encodeURIComponent('Planning a journey');
   protected readonly status = signal<Status>('idle');
 
   private readonly fb = inject(NonNullableFormBuilder);

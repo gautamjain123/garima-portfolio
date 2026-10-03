@@ -12,7 +12,7 @@ export const PROFILE: Profile = {
   location: 'New Delhi · India',
   intro:
     'I collect stories — through oral histories, conversations, photographs and reflections on people, places and cultures.',
-  email: 'hello@garimajain.in', // [replace]
+  email: 'garimajaingov@gmail.com',
   siteUrl: 'https://garimajain.in', // [replace]
   socials: [
     { label: 'LinkedIn', url: 'https://www.linkedin.com/in/[handle]' },

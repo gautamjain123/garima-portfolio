@@ -9,8 +9,17 @@
     <div class="contact__side">
       <a [href]="'mailto:' + profile.email" class="btn btn--solid btn--lg" appMagnetic>{{ profile.email }}</a>
       <p class="contact__text">
-        An interesting idea, a book recommendation, a good debate — or simply hello.
+        A story you think I should hear, a place worth the detour — or simply hello.
       </p>
+      <aside class="trips" aria-labelledby="trips-title">
+        <p class="trips__kicker mono">also —</p>
+        <h3 id="trips-title" class="trips__title">I curate journeys for <em>explorers</em>, not tourists.</h3>
+        <p class="trips__text">
+          Slow routes, the lane behind the landmark, the aarti you’d only find by arriving late, and someone to share
+          chai with when you get there. If you’d rather understand a place than tick it off, let’s plan it together.
+        </p>
+        <a class="trips__link" [href]="'mailto:' + profile.email + '?subject=' + tripSubject">plan a journey <span aria-hidden="true">↗</span></a>
+      </aside>
       <ul class="contact__links">
         @for (s of profile.socials; track s.label) {
           <li>

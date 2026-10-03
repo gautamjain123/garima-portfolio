@@ -29,6 +29,31 @@
 .contact__side { display: flex; flex-direction: column; gap: 24px; align-items: flex-start; }
 .contact__side .btn { text-transform: none; }
 .contact__text { font-size: var(--t-body-lg); color: var(--c-muted); max-width: 420px; line-height: 1.6; }
+// Travel itineraries: a small card set apart from the general hello.
+.trips {
+  width: 100%;
+  max-width: 460px;
+  padding: 22px 24px 24px;
+  border-left: 3px solid var(--c-pop);
+  border-radius: 0 var(--r-img) var(--r-img) 0;
+  background: var(--c-surface);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.trips__kicker { font-size: 12px; color: var(--c-accent); letter-spacing: 0.06em; }
+.trips__title {
+  font-size: clamp(1.375rem, 1.1rem + 0.9vw, 1.75rem); font-weight: 600; line-height: 1.15; letter-spacing: -0.025em;
+  em { @include m.serif-accent; font-size: 1.12em; letter-spacing: -0.01em; }
+}
+.trips__text { font-size: 15px; line-height: 1.6; color: var(--c-muted); }
+.trips__link {
+  align-self: flex-start; margin-top: 4px; font-size: 15px; font-weight: 600; color: var(--c-fg);
+  border-bottom: 1px solid var(--c-pop); padding-bottom: 2px;
+  span { display: inline-block; transition: transform var(--d-base) var(--ease-out); }
+  &:hover { color: var(--c-accent); span { transform: translate(3px, -3px); } }
+}
+
 .contact__links { display: flex; flex-wrap: wrap; gap: 8px 24px; font-size: 15px;
   a { color: var(--c-muted); display: inline-block; padding: 6px 0; &:hover { color: var(--c-accent); } } }
 
