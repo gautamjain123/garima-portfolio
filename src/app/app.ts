@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, afterNextRender, inject } from '@angular/core';
+import { loadClarity } from './core/analytics';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { filter } from 'rxjs';
 import { NavbarComponent } from './layout/navbar/navbar.component';
@@ -28,6 +29,8 @@ export class App {
   protected readonly intro = inject(IntroService);
 
   constructor() {
+    // Analytics loads after the first render, in the browser only (and only in production — see analytics.ts).
+    afterNextRender(() => loadClarity());
     const motion = inject(MotionService);
     // Recalculate ScrollTrigger positions after each route renders
     inject(Router)

@@ -52,7 +52,7 @@ const parts = (s: string): Part[] =>
       </div>
       <ol class="quals__list" appReveal="stagger">
         @for (q of items; track $index) {
-          <li class="quals__row">
+          <li class="quals__row" [class.is-current]="q.current">
             <span class="quals__year mono">
               @for (p of split(q.period); track $index) {<span [class.ph]="p.placeholder">{{ p.text }}</span>}
             </span>
@@ -96,6 +96,10 @@ const parts = (s: string): Part[] =>
     }
     .quals__row--link:hover { color: var(--c-accent); @include m.laptop { padding-left: 16px; }
       .quals__arrow { transform: translate(3px, -3px); } }
+    .quals__row.is-current { .quals__year { color: var(--c-accent); }
+      .quals__year::before { content: ''; display: inline-block; width: 7px; height: 7px; margin-right: 8px; border-radius: 50%;
+        background: var(--c-accent); vertical-align: 1px; animation: pulse-dot 2.2s ease-in-out infinite; } }
+    @keyframes pulse-dot { 50% { opacity: 0.35; } }
     .quals__arrow { display: inline-block; font-size: 0.7em; transition: transform var(--d-base) var(--ease-out); }
     .quals__year { font-size: 14px; color: var(--c-dim); }
     .quals__main { display: flex; flex-direction: column; gap: 8px; }
