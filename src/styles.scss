@@ -5,6 +5,9 @@
 *, *::before, *::after { box-sizing: border-box; }
 
 html {
+  // Scrolling still works (wheel, touch, keys); only the bar itself is hidden.
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
   scroll-padding-top: calc(var(--nav-h) + 16px);
