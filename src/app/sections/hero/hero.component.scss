@@ -219,7 +219,7 @@
   cursor: pointer;
   box-shadow: 0 10px 30px -12px rgba(29, 26, 22, 0.45);
   transition: background var(--d-fast), color var(--d-fast), transform var(--d-base) var(--ease-out);
-  @include m.tablet { justify-self: end; margin-top: 0; }
+  @include m.tablet { justify-self: end; margin-top: 0; margin-right: clamp(20px, 2.5vw, 40px); }
   &:hover { background: var(--c-pop); color: var(--c-fg); transform: translateY(-2px); }
 }
 .hero__scroll-arrow {
