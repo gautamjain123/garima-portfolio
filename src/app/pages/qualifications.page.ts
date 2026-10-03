@@ -22,7 +22,8 @@ export default class QualificationsPage implements OnInit {
   ngOnInit(): void {
     this.seo.update({
       title: 'Education & practice',
-      description: 'Garima Jain’s fieldwork methods — oral history, street photography, sound recording — her documentation projects and her education.',
+      description:
+        'Garima Jain — MSc International Social and Public Policy (LSE), BA (Hons) Political Science (Lady Shri Ram College), UPSC aspirant — and the fieldwork methods behind her stories.',
       path: '/qualifications',
     });
   }

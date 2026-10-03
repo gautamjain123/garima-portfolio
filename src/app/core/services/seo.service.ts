@@ -174,7 +174,11 @@ export class SeoService {
       url: PROFILE.siteUrl,
       image: this.absolute('images/garima-portrait.jpg'),
       email: `mailto:${PROFILE.email}`,
-      knowsAbout: ['Oral history', 'Travel writing', 'Documentary photography', 'Sufi shrines', 'Braj', 'Indian culture'],
+      alumniOf: [
+        { '@type': 'CollegeOrUniversity', name: 'London School of Economics and Political Science' },
+        { '@type': 'CollegeOrUniversity', name: 'Lady Shri Ram College for Women' },
+      ],
+      knowsAbout: ['Public policy', 'Political science', 'Oral history', 'Travel writing', 'Documentary photography', 'Sufi shrines', 'Braj', 'Indian culture'],
       ...(sameAs.length ? { sameAs } : {}),
     };
   }

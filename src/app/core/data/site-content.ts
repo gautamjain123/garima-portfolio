@@ -100,27 +100,29 @@ export const FIELDWORK: { period: string; title: string; place: string; descript
   },
 ];
 
+/** Newest first. `period` years are still placeholders — fill them in. */
 export const QUALIFICATIONS: Qualification[] = [
   {
+    period: 'ongoing',
+    tag: 'Preparing',
+    title: 'Civil Services (UPSC)',
+    institution: 'Union Public Service Commission',
+    description: 'Preparing for the Civil Services Examination.',
+    current: true,
+  },
+  {
     period: '[20XX – 20XX]',
-    tag: 'Degree',
-    title: '[Your degree, e.g. B.A. (Hons.) Sociology]',
-    institution: '[University], [City]',
-    description: '[Subjects, a dissertation or project, and what it taught you about people and places.]',
+    tag: 'Postgraduate',
+    title: 'MSc International Social and Public Policy',
+    institution: 'London School of Economics and Political Science',
+    description: 'Master’s degree in international social and public policy.',
   },
   {
-    period: '[20XX]',
-    tag: 'Course',
-    title: '[A course or workshop, e.g. oral history or documentary photography]',
-    institution: '[Institution or programme]',
-    description: '[Optional — delete this entry if you don’t need it.]',
-  },
-  {
-    period: '[20XX]',
-    tag: 'School',
-    title: 'Higher secondary education',
-    institution: '[School], [City]',
-    description: '[Stream and subjects.]',
+    period: '[20XX – 20XX]',
+    tag: 'Undergraduate',
+    title: 'BA (Hons) Political Science',
+    institution: 'Lady Shri Ram College for Women, University of Delhi',
+    description: 'Undergraduate degree in political science.',
   },
 ];
 
