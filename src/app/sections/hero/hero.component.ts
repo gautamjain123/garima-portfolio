@@ -63,7 +63,8 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
         .from('.hero__sun', { scale: 0, duration: 1.2, stagger: 0.15, ease: 'back.out(1.4)' }, 0.6)
         .fromTo('.hero__word--mark', { '--mark': 0 }, { '--mark': 1, duration: 0.9, ease: 'power3.inOut' }, 0.9)
         .from('.hero__meta > *, .hero__coords, .hero__fig', { opacity: 0, y: 16, duration: 0.8, stagger: 0.08, clearProps: 'transform' }, '-=0.7')
-        .add(() => this.lens().bloom(0.2), '-=0.4');
+        .add(() => this.lens().bloom(0.2), '-=0.4')
+        .add(() => this.scheduleFit());
 
       gsap.to('.hero__photo-inner', {
         yPercent: 7, ease: 'none',
@@ -103,18 +104,27 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
     if (!frame || !img || !words.length) return;
 
     root.style.setProperty('--name-fit', '1');
-    const face = this.faceRect(frame, img);
-    if (!face) return;
+    const face = this.faceRect(frame, img); // null in the stacked (phone/tablet) layout
+    const coords = root.querySelector<HTMLElement>('.hero__coords');
+    const coordsFloat = coords && getComputedStyle(coords).position === 'absolute';
+    const contentRight = root.getBoundingClientRect().right - parseFloat(getComputedStyle(root).paddingRight);
 
-    for (let fit = 1; fit >= 0.5; fit -= 0.025) {
-      root.style.setProperty('--name-fit', fit.toFixed(3));
+    // The name has to satisfy all three, whatever the screen, zoom or browser font size:
+    // stay off her face, stay below the coordinates, and stay inside the page.
+    const ok = (): boolean => {
       const fs = parseFloat(getComputedStyle(words[0]).fontSize);
-      const hits = words.some((w) => {
-        const r = w.getBoundingClientRect();
-        // ignore the mask's extra space below the letters (0.24em)
-        return r.left < face.right && r.right > face.left && r.top < face.bottom && r.bottom - fs * 0.24 > face.top;
-      });
-      if (!hits) return;
+      const boxes = words.map((w) => w.getBoundingClientRect());
+      // ignore the mask's extra space below the letters (0.24em)
+      const onFace = !!face && boxes.some((r) => r.left < face.right && r.right > face.left && r.top < face.bottom && r.bottom - fs * 0.24 > face.top);
+      const top = Math.min(...boxes.map((r) => r.top));
+      const underCoords = !coordsFloat || top >= coords!.getBoundingClientRect().bottom + 16;
+      const inside = Math.max(...boxes.map((r) => r.right)) <= contentRight + 2;
+      return !onFace && underCoords && inside;
+    };
+
+    for (let fit = 1; fit >= 0.4; fit -= 0.025) {
+      root.style.setProperty('--name-fit', fit.toFixed(3));
+      if (ok()) return;
     }
   };
 
@@ -151,11 +161,13 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
     this.resizeObserver.observe(root);
     root.querySelector('.hero__img')?.addEventListener('load', this.scheduleFit);
     void document.fonts?.ready.then(this.scheduleFit);
+    window.addEventListener('resize', this.scheduleFit); // browser zoom and font-size changes
     this.scheduleFit();
   }
 
   ngOnDestroy(): void {
     this.resizeObserver?.disconnect();
+    if (typeof window !== 'undefined') window.removeEventListener('resize', this.scheduleFit);
     if (this.fitRaf) cancelAnimationFrame(this.fitRaf);
     this.ctx?.revert();
   }

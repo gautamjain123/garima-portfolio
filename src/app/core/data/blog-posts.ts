@@ -25,6 +25,19 @@ const photosIn =
 
 const photo = photosIn('braj');
 const nz = photosIn('nizamuddin');
+const rm = photosIn('remedies');
+
+/** A two-column remedies table: [for, remedy] rows. */
+const remedies = (rows: [string, string][], head: [string, string] = ['For', 'Remedy']): string =>
+  `<div class="table-wrap"><table><thead><tr><th>${head[0]}</th><th>${head[1]}</th></tr></thead><tbody>${rows
+    .map(([a, b]) => `<tr><td>${a}</td><td>${b}</td></tr>`)
+    .join('')}</tbody></table></div>`;
+
+/** A safety note that follows an unsafe practice. */
+const caution = (text: string): string => `<aside class="caution"><strong>Caution.</strong> ${text}</aside>`;
+
+/** One region's illustration (1400×788). */
+const region = (file: string, alt: string): string => rm(file, alt, '', 'wide', 1400, 788).replace('<figcaption></figcaption>', '');
 
 const pair = (a: string, b: string): string => `<div class="pair">${a}${b}</div>`;
 
@@ -36,6 +49,181 @@ const questions = (items: string[]): string =>
   `<aside class="questions"><p class="questions__title">questions still open</p><ul>${items.map((q) => `<li>${q}</li>`).join('')}</ul></aside>`;
 
 export const BLOG_POSTS: BlogPost[] = [
+  {
+    id: 3,
+    slug: 'told-not-written-home-remedies',
+    title: 'Told, not written: home remedies from Tamil Nadu to Kashmir',
+    excerpt:
+      'Remedies that travelled by voice, from an older person in a kitchen to a younger one — recorded across nine regions, from a Diwali jam in Tamil Nadu to a village in Uri where the road ends.',
+    category: 'Culture',
+    date: '2026-10-04',
+    readTime: 9,
+    image: 'images/blog/remedies/tamil-nadu.jpg',
+    imageAlt: 'Illustration of a brass pot of herbal jam with jaggery, spices and a diya',
+    featured: false,
+    tags: ['Home remedies', 'Oral History', 'Tamil Nadu', 'Kerala', 'Rajasthan', 'Kashmir'],
+    content: `
+<p class="lede">None of these remedies was meant for paper.</p>
+<p>They travelled by voice, from an older person in a kitchen to a younger one, and they disappear the same way: one generation just stops asking.</p>
+<p>I am writing them down because otherwise the romance of these things will go away. I have kept everything I was given, including the remedies that do not work and the few that are dangerous. Some are worth keeping, and some are only worth remembering.</p>
+<aside class="note-card">
+<p class="note-card__kicker">a note to the reader</p>
+<p class="note-card__title">Before it is too late</p>
+<p>I am not making this only for you to read, or even to use. I am making it so that you run to your grandparents and ask them these things before it is too late. Mine are no longer with me. If you are lucky enough to still have yours, I urge you to sit down and speak to them. It will be a day you cherish for the rest of your life. Please don’t miss out.</p>
+<p><strong>This one’s for my dadi dadu, together in eternity. I love you and miss you every day.</strong></p>
+</aside>
+<h3>The route</h3>
+<p>This record runs south to north across nine regions: Tamil Nadu, Kerala, Karnataka, Madhya Pradesh, Rajasthan, Haryana, Uttar Pradesh, Uttarakhand and Kashmir. It ends at a village in Uri, where the road stops.</p>
+<p>Each remedy is set down as it was told. Where a practice is unsafe, a caution follows it.</p>
+
+<p class="kicker">first, one from home</p>
+<h2>My chachi’s coffee mask</h2>
+<p>Before the journey, one from my own family. This is my chachi’s recipe for a last-minute, party-ready glow-up. It is my emergency contraband and nature’s very own concealer: it costs zero, and the finish is pure Estée Lauder.</p>
+${rm('coffee-mask', 'A face covered in a dark coffee mask', 'The coffee mask, mid-glow.', 'tall', 995, 1200)}
+<ol>
+<li>Roast coffee on a pan.</li>
+<li>Add tomato juice, only a little.</li>
+<li>Add sugar, for the exfoliation.</li>
+<li>Add a little honey, for moisture.</li>
+<li>Add milk, for that sun-like glow.</li>
+</ol>
+<p>And voilà.</p>
+
+<p class="kicker">tamil nadu</p>
+<h2>Diwali Marundhu</h2>
+<p>Diwali Marundhu, also called Deepavali Legiyam, is a herbal jam eaten after the festival to help digest the sweets and heavy food.</p>
+${region('tamil-nadu', 'Illustration of a brass pot of herbal jam with jaggery, spices and a diya')}
+${remedies(
+  [
+    ['Coriander seeds', '2 tablespoons'],
+    ['Black peppercorns', '2 tablespoons'],
+    ['Cumin seeds (jeeragam)', '1 tablespoon'],
+    ['Carom seeds (omam)', '1 teaspoon'],
+    ['Dry ginger powder (sukku)', '¼ to ¾ teaspoon, or a small piece'],
+    ['Sitharathai (greater galangal)', '¼ inch piece'],
+    ['Cardamom', '1 pod'],
+    ['Jaggery, grated or powdered', '½ cup'],
+    ['Water, for syrup and grinding', '¼ to ½ cup'],
+    ['Gingelly (sesame) oil', '2 tablespoons'],
+    ['Ghee', '1 teaspoon'],
+  ],
+  ['Ingredient', 'Quantity'],
+)}
+<ol>
+<li>Dry-roast the spices and grind them fine.</li>
+<li>Melt the jaggery in the water to make a syrup.</li>
+<li>Stir the ground spices into the syrup.</li>
+<li>Add the sesame oil and ghee, and keep stirring until it thickens into a jam.</li>
+</ol>
+<p>A little is eaten after the sweets. The telling I recorded gave the ingredients only. The method above is the common one, and every household has its own.</p>
+
+<p class="kicker">kerala</p>
+<h2>The kitchen as beauty shelf</h2>
+<p>In Kerala the remedies I recorded are for the skin, made from what the kitchen already holds.</p>
+${region('kerala', 'Illustration of red sandalwood paste and butter on a banana leaf')}
+${remedies([
+  ['Pimples', 'Rakt chandan (red sandalwood) mixed with water, or a little makhan (fresh butter)'],
+  ['A pimple on the eye', 'A paste of moong (green gram)'],
+])}
+
+<p class="kicker">karnataka</p>
+<h2>Warmth and care</h2>
+<p>Karnataka treats a cold with pepper and heat, and gives menstruation a full ritual of care.</p>
+${region('karnataka', 'Illustration of pepper rasam, sesame laddus, betel leaves and a brass pot')}
+${remedies([
+  ['A cold', 'Black pepper rasam, drunk hot'],
+  ['Womanhood and menstruation', 'A laddu of black sesame seeds and jaggery; a head bath with castor oil and massages; a hot bath from a brass pot'],
+  ['A cold in babies', 'A warmed betel leaf (paan) laid on the chest; eucalyptus oil rubbed on the underside of the feet or the chest'],
+])}
+${caution('Doctors advise keeping eucalyptus oil away from young babies. A baby with a cold and trouble breathing needs a paediatrician.')}
+
+<p class="kicker">madhya pradesh</p>
+<h2>Baghelkhand</h2>
+<p>In Baghelkhand the remedies I recorded are all for infants.</p>
+${region('baghelkhand', 'Illustration of a pillow stuffed with mustard seeds, turmeric and a small bowl')}
+${remedies([
+  ['A round head', 'A pillow stuffed with mustard seeds, so that the baby’s head stays round'],
+  ['A baby’s appetite', 'Haldi (turmeric) mixed with breast milk, dabbed on the baby’s nails'],
+])}
+${caution('Doctors advise keeping anything soft or loose out of a baby’s cot. A pillow can be a suffocation risk.')}
+
+<p class="kicker">rajasthan</p>
+<h2>The desert kitchen</h2>
+<p>Rajasthan’s remedies begin with the loo, the burning summer wind, and run on to belief, wounds, hair and skin.</p>
+${region('rajasthan', 'Illustration of hair oil simmering in an iron kadai with amla, onion and coconut')}
+${remedies([
+  ['Heat stroke from the loo', 'Mehendi (henna) applied to the feet; onions, eaten'],
+  ['Warding off spirits', 'Mustard seeds, a piece of metal, or an iron knife kept at the waist'],
+  ['A urinary infection', 'Chai-paani, exactly as it was told to me'],
+  ['Boils', 'Pigeon droppings'],
+  ['Cuts and bleeding', 'Beedi paper'],
+  ['Hair', 'An oil made in a loha kadai (iron pan): coconut oil with methi, amla, pyaaz, kalaunji, kadi patta and shikakai'],
+  ['Winter skin', 'A cream of glycerin, lemon and gulab jal (rose water)'],
+  ['Lips', 'Naabhi (navel) oil'],
+  ['Ear pain', 'Sarson ka tel (mustard oil)'],
+])}
+${caution('Heat stroke is an emergency: move the person to shade, cool them with water and get to a hospital. A urinary infection needs a doctor. Droppings or beedi paper on a wound can cause infection, so press a clean cloth on bleeding and have it seen. Ear pain that lingers, or comes with fever or discharge, needs a doctor.')}
+
+<p class="kicker">haryana</p>
+<h2>Small comforts</h2>
+<p>Haryana’s remedies are for the everyday: a blocked nose, a cough, a child who has swallowed a coin.</p>
+${region('haryana', 'Illustration of carom seeds roasting on a tawa beside ghee and salt')}
+${remedies([
+  ['A blocked nose', 'Roasted ajwain (carom seeds), its smoke breathed in'],
+  ['A cough', 'Desi ghee with salt, applied to the chest and back'],
+  ['A coin stuck in the throat', 'A firm beating on the back, as told'],
+])}
+${caution('A swallowed coin, or anything choking a child, is an emergency. Call for help and get to a hospital quickly.')}
+
+<p class="kicker">uttar pradesh</p>
+<h2>“To open the artery”</h2>
+<p>Uttar Pradesh gave me one remedy, and its name is its claim: “to open the artery.”</p>
+${region('uttar-pradesh', 'Illustration of betel leaves, garlic and ginger crushed in a mortar')}
+<ul>
+<li>2 Bangala paan (betel leaves)</li>
+<li>2 garlic cloves</li>
+<li>A little ginger</li>
+</ul>
+<p>All three are crushed together and licked. People believed in it. Nobody measured it, and nobody wrote it down.</p>
+${caution('This is a traditional belief only. Chest pain or breathlessness needs a doctor at once.')}
+
+<p class="kicker">uttarakhand</p>
+<h2>Herbs of the hills</h2>
+<p>In Uttarakhand the medicine comes off the hillside.</p>
+${region('uttarakhand', 'Illustration of hill herbs and young barley below snow mountains')}
+${remedies([
+  ['Swelling and insect bites', 'The juice of gandharayan, a hill herb'],
+  ['Pus, in the ear and elsewhere', 'The juice of young green jawar (barley)'],
+  ['Toothache', 'Timur, also called pejbal'],
+  ['Dandruff', 'Reetha'],
+])}
+${caution('Discharge from the ear needs a doctor, and a lasting toothache needs a dentist.')}
+
+<p class="kicker">kashmir</p>
+<h2>The cold country</h2>
+<p>In Kashmir the cold brings colds, coughs and headaches, and the steep hills bring injuries.</p>
+${region('kashmir', 'Illustration of a copper samovar with cinnamon, black pepper and walnuts')}
+${remedies([
+  ['Headache', 'A paste of dry ginger, spread on the forehead'],
+  ['Cold and cough', 'Black pepper tea infused with cinnamon'],
+  ['Stomach ache', 'Tethwan, a wild herb (<em>Artemisia absinthium</em>, wormwood)'],
+  ['Pain low in the belly', 'The smoke of mustard oil, breathed in, or a massage with hot mustard oil'],
+  ['Wounds', 'A paste of turmeric with mustard oil or walnut oil'],
+  ['A broken bone or joint', 'Splints of willow (<em>Salix</em>) sticks, bound with boiled oil and turmeric'],
+  ['Snakebite', 'Naswar, a smokeless tobacco, pressed on the bite in the hope of easing the venom'],
+])}
+${caution('Wormwood is strong, and should be avoided in pregnancy and in large amounts. Naswar does not neutralise venom. Snakebite needs a hospital and antivenom, fast.')}
+
+<p class="kicker">uri</p>
+<h2>Where the road ends</h2>
+<p>These remedies are used less and less. From what I have read, they now live mostly in remote and tribal places, where no clinic is near.</p>
+<p>In one village in Uri, a frontier town in Kashmir, the road ends. Doctors are few, and pregnant women suffer most. A woman in labour is given a soup of wild grass. Nobody knows if it is safe, and many women die for want of proper care.</p>
+<blockquote class="pull-quote"><p>A remedy that is a comfort in one kitchen is the only option in another.</p></blockquote>
+<p>I keep that village beside the romance.</p>
+<h3>A note on this record</h3>
+<p><em>This is a record of heritage and carries no medical advice. Please read the cautions, and see a doctor for anything serious. The regions were transcribed from handwritten notes, and a few words may be read differently from how they were meant. Corrections are welcome.</em></p>
+`,
+  },
   {
     id: 1,
     slug: 'braj-a-day-that-refused-the-clock',

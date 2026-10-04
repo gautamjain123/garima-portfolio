@@ -2,13 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://garima-portfolio-three.vercel.app/</loc>
-    <lastmod>2026-10-02</lastmod>
+    <lastmod>2026-10-04</lastmod>
     <priority>1.0</priority>
     <image:image><image:loc>https://garima-portfolio-three.vercel.app/images/garima-portrait.jpg</image:loc></image:image>
   </url>
   <url>
     <loc>https://garima-portfolio-three.vercel.app/blog</loc>
-    <lastmod>2026-10-02</lastmod>
+    <lastmod>2026-10-04</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
@@ -22,6 +22,21 @@
   <url>
     <loc>https://garima-portfolio-three.vercel.app/contact</loc>
     <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://garima-portfolio-three.vercel.app/blog/told-not-written-home-remedies</loc>
+    <lastmod>2026-10-04</lastmod>
+    <priority>0.8</priority>
+    <image:image><image:loc>https://garima-portfolio-three.vercel.app/images/blog/remedies/tamil-nadu.jpg</image:loc></image:image>
+    <image:image><image:loc>https://garima-portfolio-three.vercel.app/images/blog/remedies/coffee-mask.jpg</image:loc></image:image>
+    <image:image><image:loc>https://garima-portfolio-three.vercel.app/images/blog/remedies/kerala.jpg</image:loc></image:image>
+    <image:image><image:loc>https://garima-portfolio-three.vercel.app/images/blog/remedies/karnataka.jpg</image:loc></image:image>
+    <image:image><image:loc>https://garima-portfolio-three.vercel.app/images/blog/remedies/baghelkhand.jpg</image:loc></image:image>
+    <image:image><image:loc>https://garima-portfolio-three.vercel.app/images/blog/remedies/rajasthan.jpg</image:loc></image:image>
+    <image:image><image:loc>https://garima-portfolio-three.vercel.app/images/blog/remedies/haryana.jpg</image:loc></image:image>
+    <image:image><image:loc>https://garima-portfolio-three.vercel.app/images/blog/remedies/uttar-pradesh.jpg</image:loc></image:image>
+    <image:image><image:loc>https://garima-portfolio-three.vercel.app/images/blog/remedies/uttarakhand.jpg</image:loc></image:image>
+    <image:image><image:loc>https://garima-portfolio-three.vercel.app/images/blog/remedies/kashmir.jpg</image:loc></image:image>
   </url>
   <url>
     <loc>https://garima-portfolio-three.vercel.app/blog/braj-a-day-that-refused-the-clock</loc>

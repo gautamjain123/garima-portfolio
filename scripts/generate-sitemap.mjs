@@ -14,7 +14,7 @@ const entries = posts.split(/\r?\n  \{\r?\n    id:/).slice(1).map((block) => ({
   slug: block.match(/slug: '(.+?)'/)?.[1],
   date: block.match(/date: '(.+?)'/)?.[1],
   cover: block.match(/image: '(.+?)'/)?.[1],
-  photos: [...block.matchAll(/(?:photo|nz)\('([^']+)'/g)].map((m) => m[1]),
+  photos: [...block.matchAll(/(?:photo|nz|rm|region)\('([^']+)'/g)].map((m) => m[1]),
   dir: block.match(/images\/blog\/([^/]+)\//)?.[1],
 })).filter((p) => p.slug);
 
