@@ -55,7 +55,13 @@ import { ImageFrameComponent } from '../shared/image-frame.component';
   `,
   styles: `
     @use 'mixins' as m;
-    :host { display: block; overflow: hidden; }
+    // overflow-x: clip (not hidden) so the sticky section below still sticks.
+    :host { display: block; overflow-x: clip; }
+    // Sticky scroll: the host grows by the strip's sideways distance (--pin-distance, set in JS)
+    // and the section sticks to the top while the page scrolls through that extra height.
+    // Nothing is moved in the DOM, so Angular's view of the page stays intact.
+    :host(.is-pinned) { height: calc(100svh + var(--pin-distance, 0px)); }
+    :host(.is-pinned) .places { position: sticky; top: 0; height: 100svh; box-sizing: border-box; }
     .places {
       padding-block: var(--section-y);
       border-top: 1px solid var(--c-line-soft);
@@ -135,11 +141,19 @@ export class PlacesComponent implements OnDestroy {
   private ctx?: gsap.Context;
 
   constructor() {
-    // The pin wraps <section> in a new element. Doing that while Angular is still hydrating the
-    // prerendered HTML makes it lose track of the section and render a second copy, so the pin
-    // is only set up after the first render has fully completed.
     afterNextRender(() => this.setupPin());
   }
+
+  /** How far the strip has to slide sideways; the host gets that much extra scroll height. */
+  private distance(): number {
+    return Math.max(0, this.track().nativeElement.scrollWidth - this.viewport().nativeElement.clientWidth);
+  }
+
+  /** Size the cards for this screen, then give the host the scroll height the slide needs. */
+  private readonly layout = (): void => {
+    this.sizeCards();
+    this.host.style.setProperty('--pin-distance', `${this.distance()}px`);
+  };
 
   private setupPin(): void {
     // Pinned sideways scroll on every screen, phones included. It falls back to a native swipe
@@ -149,27 +163,27 @@ export class PlacesComponent implements OnDestroy {
     // Mobile browsers resize the viewport as the address bar slides; don't re-layout the pin for that.
     ScrollTrigger.config({ ignoreMobileResize: true });
     const track = this.track().nativeElement;
-    const distance = () => Math.max(0, track.scrollWidth - this.viewport().nativeElement.clientWidth);
-    if (distance() <= 0) return;
+    if (this.distance() <= 0) return;
 
     this.host.classList.add('is-pinned');
-    this.sizeCards();
-    ScrollTrigger.addEventListener('refreshInit', this.sizeCards);
+    this.layout();
+    ScrollTrigger.addEventListener('refreshInit', this.layout);
     this.ctx = gsap.context(() => {
+      // No `pin`: the section is position: sticky (see styles). The tween only slides the track
+      // while the page scrolls through the host's extra height.
       gsap.to(track, {
-        x: () => -distance(),
+        x: () => -this.distance(),
         ease: 'none',
         scrollTrigger: {
-          trigger: this.root().nativeElement,
+          trigger: this.host,
           start: 'top top',
-          end: () => `+=${distance()}`,
-          pin: true,
-          anticipatePin: 1,
+          end: 'bottom bottom',
           scrub: 0.6,
           invalidateOnRefresh: true,
         },
       });
     }, this.host);
+    ScrollTrigger.refresh();
   }
 
   /**
@@ -197,7 +211,7 @@ export class PlacesComponent implements OnDestroy {
   };
 
   ngOnDestroy(): void {
-    ScrollTrigger.removeEventListener('refreshInit', this.sizeCards);
+    ScrollTrigger.removeEventListener('refreshInit', this.layout);
     this.ctx?.revert();
   }
 }
