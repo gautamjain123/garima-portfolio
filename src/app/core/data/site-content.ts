@@ -13,7 +13,7 @@ export const PROFILE: Profile = {
   intro:
     'I collect stories — through oral histories, conversations, photographs and reflections on people, places and cultures.',
   email: 'garimajaingov@gmail.com',
-  siteUrl: 'https://garimajain.in', // [replace]
+  siteUrl: 'https://garima-portfolio-three.vercel.app',
   socials: [
     { label: 'LinkedIn', url: 'https://www.linkedin.com/in/[handle]' },
     { label: 'Instagram', url: 'https://www.instagram.com/[handle]' },
