@@ -8,8 +8,8 @@ import { MotionService } from '../core/services/motion.service';
   template: `
     @if (!done()) {
       <div #root class="loader band--marigold" role="status" aria-label="Loading">
-        <span #mono class="loader__mono">g<span style="color: var(--c-accent)">.</span></span>
-        <span #name class="loader__name">garima jain</span>
+        <span #mono class="loader__mono">G<span style="color: var(--c-accent)">.</span></span>
+        <span #name class="loader__name">GARIMA JAIN</span>
       </div>
     }
   `,
@@ -22,7 +22,7 @@ import { MotionService } from '../core/services/motion.service';
     }
     .loader__mono, .loader__name { grid-area: 1 / 1; }
     .loader__mono { font-size: 96px; line-height: 1; }
-    .loader__name { font-size: clamp(56px, 10vw, 140px); opacity: 0; }
+    .loader__name { font-size: clamp(44px, 8.5vw, 120px); letter-spacing: -0.04em; opacity: 0; white-space: nowrap; }
   `,
 })
 export class LoaderComponent implements AfterViewInit {

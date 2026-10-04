@@ -59,7 +59,7 @@
 }
 .nav__place { font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.04em; color: var(--c-dim); line-height: 1;
   .nav--open & { color: inherit; opacity: 0.7; } }
-.nav__name { display: flex; font-size: 22px; font-weight: 700; letter-spacing: -0.035em; line-height: 1.05; white-space: nowrap; }
+.nav__name { display: flex; font-size: 20px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.05; white-space: nowrap; }
 
 // Hover (or keyboard focus) reveals the surname: "garima." → "garima jain."
 .nav__surname {

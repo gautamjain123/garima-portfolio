@@ -8,7 +8,7 @@ import { PROFILE } from '../../core/data/site-content';
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <footer class="footer">
-      <span class="footer__copy">© {{ year }} garima jain — collected along the way.</span>
+      <span class="footer__copy">© {{ year }} GARIMA JAIN — collected along the way.</span>
       <nav class="footer__links" aria-label="Footer">
         <a routerLink="/about">about</a>
         <a routerLink="/blog">stories</a>

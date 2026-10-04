@@ -159,11 +159,12 @@
   position: relative;
   z-index: 2;
   margin: 0;
-  font-size: var(--t-mega);
+  // Capitals are wider than lowercase, so the name runs ~12% smaller to keep the same footprint.
+  font-size: calc(var(--t-mega) * 0.88);
   font-weight: 700;
-  line-height: 0.82;
-  letter-spacing: -0.065em;
-  text-transform: lowercase;
+  line-height: 0.86;
+  letter-spacing: -0.05em;
+  text-transform: uppercase;
   display: flex;
   flex-wrap: wrap;
   column-gap: 0.22em;

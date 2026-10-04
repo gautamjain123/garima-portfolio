@@ -15,8 +15,8 @@ import { scrollToSection } from '../../core/scroll';
 })
 export class HeroComponent implements AfterViewInit, OnDestroy {
   protected readonly profile = PROFILE;
-  /** "garima jain" → [['g','a',…], ['j','a',…]] — each letter animates in on its own. */
-  protected readonly nameWords = PROFILE.name.toLowerCase().split(' ').map((w) => w.split(''));
+  /** "GARIMA JAIN" → [['G','A',…], ['J','A',…]] — each letter animates in on its own. */
+  protected readonly nameWords = PROFILE.name.toUpperCase().split(' ').map((w) => w.split(''));
   protected readonly portrait = 'images/garima-portrait.jpg';
 
   private readonly root = viewChild.required<ElementRef<HTMLElement>>('root');

@@ -12,7 +12,7 @@ import { RevealDirective } from '../core/directives/reveal.directive';
         <blockquote class="philosophy__quote" appReveal>
           “{{ q.quote.toLowerCase() }} {{ lead }} <em>{{ tail }}</em>”
         </blockquote>
-        <figcaption class="philosophy__by" appReveal="fade" [revealDelay]="0.2">— garima jain</figcaption>
+        <figcaption class="philosophy__by" appReveal="fade" [revealDelay]="0.2">— GARIMA JAIN</figcaption>
       </figure>
     </section>
   `,
