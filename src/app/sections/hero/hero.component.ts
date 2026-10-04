@@ -47,6 +47,7 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
    */
   ngAfterViewInit(): void {
     this.build();
+    this.watchLayout();
   }
 
   private build(): void {
@@ -75,7 +76,87 @@ export class HeroComponent implements AfterViewInit, OnDestroy {
     scrollToSection('places');
   }
 
+  // ── Keep the name off her face ─────────────────────────────
+
+  /**
+   * Where her face (hat to chin, with a margin) sits in the portrait, as fractions of the
+   * original image. Update this if the hero photo changes.
+   */
+  private static readonly FACE = { x0: 0.6, x1: 0.88, y0: 0.42, y1: 0.63 };
+  /** Scroll parallax moves the photo down by up to 7% of its frame (see build()). */
+  private static readonly PARALLAX = 0.07;
+
+  private resizeObserver?: ResizeObserver;
+  private fitRaf = 0;
+
+  /**
+   * On wide screens the name runs across the bottom of the portrait. After every layout change
+   * (load, font swap, resize, rotation) this checks whether either word would cover her face,
+   * and if so steps the name's size down (via --name-fit) until it's clear. It measures the
+   * word boxes rather than the letters, so it isn't fooled by the letters' entrance animation.
+   */
+  private readonly fitName = (): void => {
+    const root = this.root().nativeElement;
+    const words = [...root.querySelectorAll<HTMLElement>('.hero__word')];
+    const frame = root.querySelector<HTMLElement>('.hero__photo');
+    const img = root.querySelector<HTMLImageElement>('.hero__img');
+    if (!frame || !img || !words.length) return;
+
+    root.style.setProperty('--name-fit', '1');
+    const face = this.faceRect(frame, img);
+    if (!face) return;
+
+    for (let fit = 1; fit >= 0.5; fit -= 0.025) {
+      root.style.setProperty('--name-fit', fit.toFixed(3));
+      const fs = parseFloat(getComputedStyle(words[0]).fontSize);
+      const hits = words.some((w) => {
+        const r = w.getBoundingClientRect();
+        // ignore the mask's extra space below the letters (0.24em)
+        return r.left < face.right && r.right > face.left && r.top < face.bottom && r.bottom - fs * 0.24 > face.top;
+      });
+      if (!hits) return;
+    }
+  };
+
+  /** The face box in screen pixels, from the frame's untransformed layout and object-fit: cover. */
+  private faceRect(frame: HTMLElement, img: HTMLImageElement): { left: number; right: number; top: number; bottom: number } | null {
+    const nw = img.naturalWidth, nh = img.naturalHeight;
+    if (!nw || !nh) return null;
+    const f = frame.getBoundingClientRect();
+    if (!f.width || getComputedStyle(frame.closest('.hero__portrait')!).position !== 'absolute') return null; // stacked layout: no overlap possible
+    // .hero__photo-inner extends 8% above the frame (inset: -8% 0 0)
+    const box = { left: f.left, top: f.top - f.height * 0.08, w: f.width, h: f.height * 1.08 };
+    const s = Math.max(box.w / nw, box.h / nh);
+    const dw = nw * s, dh = nh * s;
+    const ox = box.left + (box.w - dw) * 0.5; // object-position: 50% 70%
+    const oy = box.top + (box.h - dh) * 0.7;
+    const F = HeroComponent.FACE;
+    return {
+      left: ox + F.x0 * dw,
+      right: ox + F.x1 * dw,
+      top: oy + F.y0 * dh,
+      bottom: oy + F.y1 * dh + box.h * HeroComponent.PARALLAX,
+    };
+  }
+
+  private scheduleFit = (): void => {
+    cancelAnimationFrame(this.fitRaf);
+    this.fitRaf = requestAnimationFrame(this.fitName);
+  };
+
+  private watchLayout(): void {
+    if (typeof window === 'undefined') return;
+    const root = this.root().nativeElement;
+    this.resizeObserver = new ResizeObserver(this.scheduleFit);
+    this.resizeObserver.observe(root);
+    root.querySelector('.hero__img')?.addEventListener('load', this.scheduleFit);
+    void document.fonts?.ready.then(this.scheduleFit);
+    this.scheduleFit();
+  }
+
   ngOnDestroy(): void {
+    this.resizeObserver?.disconnect();
+    if (this.fitRaf) cancelAnimationFrame(this.fitRaf);
     this.ctx?.revert();
   }
 }

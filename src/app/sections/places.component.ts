@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component, ElementRef, OnDestroy, inject, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, OnDestroy, afterNextRender, inject, viewChild } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -9,8 +9,8 @@ import { ImageFrameComponent } from '../shared/image-frame.component';
 
 /**
  * "Places that stayed with me" — a strip of tall destination cards.
- * Desktop: the section pins and vertical scroll drives the strip sideways.
- * Touch / reduced motion: a native horizontal swipe with snap points.
+ * On every screen the section pins and vertical scroll drives the strip sideways.
+ * Reduced motion (or a very short screen): a native horizontal swipe with snap points.
  */
 @Component({
   selector: 'app-places',
@@ -79,11 +79,19 @@ import { ImageFrameComponent } from '../shared/image-frame.component';
       &:focus-visible { outline-offset: -4px; }
     }
     :host(.is-pinned) .places__viewport { overflow: visible; scroll-snap-type: none; }
-    // Pinned: a compact heading leaves more of the screen for the pictures.
-    :host(.is-pinned) .places { gap: 28px; padding-bottom: 24px; }
-    :host(.is-pinned) .places__title { font-size: clamp(2.5rem, 1rem + 2.8vw, 4.25rem); }
-    :host(.is-pinned) .place__name { font-size: clamp(1.75rem, 1rem + 1.6vw, 2.75rem); }
-    :host(.is-pinned) .place:nth-child(even) .place__img { margin-top: 28px; }
+    // Pinned (any screen): the section fills the screen, with a compact heading so the
+    // pictures get the room. Card width comes from --card-w, measured in sizeCards().
+    :host(.is-pinned) .places {
+      min-height: 100svh; justify-content: center;
+      gap: clamp(18px, 3vh, 28px); padding-block: calc(var(--nav-h) + 8px) 24px;
+    }
+    :host(.is-pinned) .places__head { gap: 10px; @include m.laptop { gap: 56px; } }
+    :host(.is-pinned) .places__title { font-size: clamp(2rem, 1rem + 2.8vw, 4.25rem); }
+    :host(.is-pinned) .place { width: var(--card-w); }
+    :host(.is-pinned) .place__name { font-size: clamp(1.5rem, 1rem + 1.6vw, 2.75rem); }
+    // Short screens (small phones, landscape tablets): one-line notes leave more height for photos.
+    @media (max-height: 700px) { :host(.is-pinned) .place__note { -webkit-line-clamp: 1; } :host(.is-pinned) .places__count { display: none; } }
+    :host(.is-pinned) .place:nth-child(even) .place__img { aspect-ratio: 3 / 4; margin-top: 0; @include m.laptop { margin-top: 28px; } }
     .places__track {
       display: flex; gap: clamp(16px, 2vw, 32px); width: max-content;
       padding-inline: var(--gutter);
@@ -116,7 +124,7 @@ import { ImageFrameComponent } from '../shared/image-frame.component';
     }
   `,
 })
-export class PlacesComponent implements AfterViewInit, OnDestroy {
+export class PlacesComponent implements OnDestroy {
   protected readonly places = PLACES;
 
   private readonly root = viewChild.required<ElementRef<HTMLElement>>('root');
@@ -126,10 +134,20 @@ export class PlacesComponent implements AfterViewInit, OnDestroy {
   private readonly motion = inject(MotionService);
   private ctx?: gsap.Context;
 
-  ngAfterViewInit(): void {
-    // Pin only where a whole card fits on screen; otherwise it stays a native sideways scroll.
-    if (!this.motion.canAnimate || !this.motion.isFinePointer || window.innerWidth < 1024 || window.innerHeight < 640) return;
+  constructor() {
+    // The pin wraps <section> in a new element. Doing that while Angular is still hydrating the
+    // prerendered HTML makes it lose track of the section and render a second copy, so the pin
+    // is only set up after the first render has fully completed.
+    afterNextRender(() => this.setupPin());
+  }
+
+  private setupPin(): void {
+    // Pinned sideways scroll on every screen, phones included. It falls back to a native swipe
+    // only for reduced motion or a screen too short to show a card (e.g. a phone held sideways).
+    if (!this.motion.canAnimate || window.innerHeight < 420) return;
     const gsap = this.motion.gsap;
+    // Mobile browsers resize the viewport as the address bar slides; don't re-layout the pin for that.
+    ScrollTrigger.config({ ignoreMobileResize: true });
     const track = this.track().nativeElement;
     const distance = () => Math.max(0, track.scrollWidth - this.viewport().nativeElement.clientWidth);
     if (distance() <= 0) return;
@@ -146,6 +164,7 @@ export class PlacesComponent implements AfterViewInit, OnDestroy {
           start: 'top top',
           end: () => `+=${distance()}`,
           pin: true,
+          anticipatePin: 1,
           scrub: 0.6,
           invalidateOnRefresh: true,
         },
@@ -170,8 +189,10 @@ export class PlacesComponent implements AfterViewInit, OnDestroy {
           (c) => c.getBoundingClientRect().height - c.querySelector('.place__img')!.getBoundingClientRect().height,
         ),
       );
-      const imgH = Math.min(560, Math.max(180, window.innerHeight - chrome - head - text));
-      this.host.style.setProperty('--card-w', `${Math.round(imgH * 0.75)}px`);
+      const imgH = Math.min(560, Math.max(160, window.innerHeight - chrome - head - text));
+      // On narrow screens the width is the limit: ~78% of the screen, so the next card peeks in.
+      const w = Math.min(imgH * 0.75, window.innerWidth * 0.78);
+      this.host.style.setProperty('--card-w', `${Math.round(w)}px`);
     }
   };
 

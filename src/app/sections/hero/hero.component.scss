@@ -3,6 +3,7 @@
 .hero {
   @include m.container;
   position: relative;
+  overflow-x: clip; // the decorative circles may overhang the portrait, never the page
   min-height: min(100svh, 1000px);
   padding-top: calc(var(--nav-h) + 24px);
   padding-bottom: clamp(32px, 4vw, 64px);
@@ -160,7 +161,9 @@
   z-index: 2;
   margin: 0;
   // Capitals are wider than lowercase, so the name runs ~12% smaller to keep the same footprint.
-  font-size: calc(var(--t-mega) * 0.88);
+  // --name-fit (set by the hero component) shrinks the name just enough to keep it off her face.
+  // The 17vw cap keeps the longer word ("GARIMA", ~4.9em wide) inside narrow phone screens.
+  font-size: min(calc(var(--t-mega) * 0.88 * var(--name-fit, 1)), 17vw);
   font-weight: 700;
   line-height: 0.86;
   letter-spacing: -0.05em;
