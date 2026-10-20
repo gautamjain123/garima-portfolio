@@ -1,14 +1,16 @@
 import { ChangeDetectionStrategy, Component, inject, input, signal } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { PROFILE } from '../../core/data/site-content';
+import { RouterLink } from '@angular/router';
+import { PROFILE, TRIPS_PHOTO } from '../../core/data/site-content';
 import { MagneticDirective } from '../../core/directives/magnetic.directive';
 import { RevealDirective } from '../../core/directives/reveal.directive';
+import { ImageFrameComponent } from '../../shared/image-frame.component';
 
 type Status = 'idle' | 'sending' | 'sent' | 'error';
 
 @Component({
   selector: 'app-contact',
-  imports: [ReactiveFormsModule, MagneticDirective, RevealDirective],
+  imports: [ReactiveFormsModule, RouterLink, MagneticDirective, RevealDirective, ImageFrameComponent],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -18,6 +20,7 @@ export class ContactComponent {
   readonly asPage = input(false);
   protected readonly profile = PROFILE;
   protected readonly tripSubject = encodeURIComponent('Planning a journey');
+  protected readonly tripsPhoto = TRIPS_PHOTO;
   protected readonly status = signal<Status>('idle');
 
   private readonly fb = inject(NonNullableFormBuilder);

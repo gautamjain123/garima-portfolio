@@ -17,6 +17,10 @@
         A story you think I should hear, a place worth the detour — or simply hello.
       </p>
       <aside class="trips" aria-labelledby="trips-title">
+        <a class="trips__photo" [routerLink]="['/blog', tripsPhoto.story]" data-cursor="READ">
+          <app-image-frame [src]="tripsPhoto.image" [alt]="tripsPhoto.alt" />
+          <span class="trips__photo-cap mono">{{ tripsPhoto.caption }} <span aria-hidden="true">↗</span></span>
+        </a>
         <p class="trips__kicker mono">also —</p>
         <h3 id="trips-title" class="trips__title">I curate journeys for <em>explorers</em>, not tourists.</h3>
         <p class="trips__text">

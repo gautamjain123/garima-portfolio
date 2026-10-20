@@ -4,7 +4,7 @@
  * Everything in square brackets [like this] is a placeholder.
  * ─────────────────────────────────────────────────────────────
  */
-import { Book, Hobby, Interest, JournalPhoto, Place, Profile, Qualification, Stat } from '../models/content.model';
+import { Book, Hobby, Interest, JournalPhoto, Place, Profile, Qualification, Stat, StoryPhoto } from '../models/content.model';
 
 export const PROFILE: Profile = {
   name: 'Garima Jain',
@@ -54,18 +54,54 @@ export const PLACES: Place[] = [
   { name: 'Nizamuddin Dargah', region: 'Delhi', when: 'sep 2026', note: 'Four hundred metres of rose petals and attar, and a crowd of shoppers that becomes a crowd of pilgrims.', image: 'images/blog/nizamuddin/inner-gate.jpg', imageAlt: 'The mirrored archway near the inner gates of Nizamuddin Dargah, chadars hanging beyond', story: 'nizamuddin-dargah-oral-history' },
 ];
 
-/** The photo journal grid — single frames from the road, captioned in a line. */
+/** Photos from the Yakten and Nizamuddin stories. */
+const yk = (file: string): string => `images/blog/yakten/${file}.jpg`;
+const nz = (file: string): string => `images/blog/nizamuddin/${file}.jpg`;
+const YAKTEN_STORY = 'yakten-through-my-lens';
+const NIZAMUDDIN_STORY = 'nizamuddin-dargah-oral-history';
+const REMEDIES_STORY = 'told-not-written-home-remedies';
+const remedy = (file: string): string => `images/blog/remedies/${file}.jpg`;
+
+/** The photo journal grid — single frames from the road, captioned in a line. Each opens its story. */
 export const JOURNAL: JournalPhoto[] = [
-  { image: braj('gokul-shrine-door'), alt: 'Deities dressed in silk behind a plain wooden door', caption: 'behind one plain wooden door, the lord of the universe, waiting in silk', place: 'gokul', shape: 'tall' },
-  { image: braj('barsana-crowd'), alt: 'Devotees raising phones and hands towards a distant sanctum', caption: 'phones lifted, hands lifted higher', place: 'barsana', shape: 'wide' },
-  { image: braj('gokul-white-cow'), alt: 'A white cow with red thread at her muzzle beside stalls of painted images of God', caption: 'as if she too came to pray', place: 'gokul', shape: 'square' },
-  { image: braj('gokul-saffron-knots'), alt: 'Saffron cloth knotted around a tree beside a temple spire', caption: 'hope, tied by hand, one wish at a time', place: 'gokul', shape: 'square' },
-  { image: braj('vrindavan-circle-dance'), alt: 'Women holding hands and dancing in a circle on chequered marble', caption: 'barefoot on chequered marble, nobody a stranger', place: 'vrindavan', shape: 'tall' },
-  { image: braj('barsana-darshan'), alt: 'A glimpse of the deity in blue silk above raised hands', caption: 'blue silk, red and gold borders, and a forest of raised hands', place: 'barsana', shape: 'wide' },
-  { image: braj('vrindavan-gaushala'), alt: 'A woman resting her hand on a cow’s brow in the gaushala at night', caption: 'a hand on a cow’s warm brow, and nothing else needs saying', place: 'vrindavan', shape: 'square' },
-  { image: braj('vrindavan-night-lanes'), alt: 'A woman seated on a ledge in a lane at night, a carved wall glowing behind her', caption: 'a carved wall glowing like a held breath', place: 'vrindavan', shape: 'tall' },
-  { image: braj('yamuna-diyas'), alt: 'Small floating lamps adrift on the black water of the Yamuna', caption: 'small flames adrift on black water', place: 'yamuna', shape: 'wide' },
+  { image: yk('didi-hug'), alt: 'A didi hugging a guest on the lane between homestays', caption: 'welcomed like family, on the lane between homestays', place: 'yakten', shape: 'tall', story: YAKTEN_STORY },
+  { image: braj('gokul-shrine-door'), alt: 'Deities dressed in silk behind a plain wooden door', caption: 'behind one plain wooden door, the lord of the universe, waiting in silk', place: 'gokul', shape: 'tall', story: BRAJ_STORY },
+  { image: nz('offering-plate'), alt: 'A plate of rose petals and a chadar held up in the lane to the Dargah', caption: 'rose petals by the plateful, on the way in', place: 'nizamuddin', shape: 'tall', story: NIZAMUDDIN_STORY },
+  { image: braj('barsana-crowd'), alt: 'Devotees raising phones and hands towards a distant sanctum', caption: 'phones lifted, hands lifted higher', place: 'barsana', shape: 'wide', story: BRAJ_STORY },
+  { image: yk('keeper-dog'), alt: 'A golden dog standing guard on a homestay porch among potted flowers', caption: 'the keeper of the porch', place: 'yakten', shape: 'tall', story: YAKTEN_STORY },
+  { image: braj('gokul-white-cow'), alt: 'A white cow with red thread at her muzzle beside stalls of painted images of God', caption: 'as if she too came to pray', place: 'gokul', shape: 'square', story: BRAJ_STORY },
+  { image: yk('corn'), alt: 'Cobs of corn hung up to dry under a roof', caption: 'the harvest, hung up to dry', place: 'yakten', shape: 'wide', story: YAKTEN_STORY },
+  { image: nz('mannat'), alt: 'A woman pressing her hand to the marble lattice where threads are tied for wishes', caption: 'a mannat, whispered into the marble lattice', place: 'nizamuddin', shape: 'tall', story: NIZAMUDDIN_STORY },
+  { image: braj('vrindavan-circle-dance'), alt: 'Women holding hands and dancing in a circle on chequered marble', caption: 'barefoot on chequered marble, nobody a stranger', place: 'vrindavan', shape: 'tall', story: BRAJ_STORY },
+  { image: yk('two-didis'), alt: 'Two didis sitting side by side and laughing', caption: 'two didis, one joke', place: 'yakten', shape: 'square', story: YAKTEN_STORY },
+  { image: braj('barsana-darshan'), alt: 'A glimpse of the deity in blue silk above raised hands', caption: 'blue silk, red and gold borders, and a forest of raised hands', place: 'barsana', shape: 'wide', story: BRAJ_STORY },
+  { image: nz('inner-gate'), alt: 'The mirrored archway near the inner gates of Nizamuddin Dargah', caption: 'a mirrored arch, and the crowd that becomes a congregation', place: 'nizamuddin', shape: 'square', story: NIZAMUDDIN_STORY },
+  { image: yk('kids-run'), alt: 'Children running across a sunlit courtyard', caption: 'evening, and the courtyard belongs to the children', place: 'yakten', shape: 'tall', story: YAKTEN_STORY },
+  { image: braj('gokul-saffron-knots'), alt: 'Saffron cloth knotted around a tree beside a temple spire', caption: 'hope, tied by hand, one wish at a time', place: 'gokul', shape: 'square', story: BRAJ_STORY },
+  { image: yk('rice-plate'), alt: 'A plate of rice, dal, greens and chutney', caption: 'lunch, cooked on the hearth next door', place: 'yakten', shape: 'wide', story: YAKTEN_STORY },
+  { image: braj('vrindavan-gaushala'), alt: 'A woman resting her hand on a cow’s brow in the gaushala at night', caption: 'a hand on a cow’s warm brow, and nothing else needs saying', place: 'vrindavan', shape: 'square', story: BRAJ_STORY },
+  { image: nz('quran-hands'), alt: 'Hands holding an open Quran in the courtyard', caption: 'a page held open in the courtyard', place: 'nizamuddin', shape: 'tall', story: NIZAMUDDIN_STORY },
+  { image: braj('vrindavan-night-lanes'), alt: 'A woman seated on a ledge in a lane at night, a carved wall glowing behind her', caption: 'a carved wall glowing like a held breath', place: 'vrindavan', shape: 'tall', story: BRAJ_STORY },
+  { image: yk('celosia'), alt: 'Crimson celosia flowers under a blue Sikkim sky', caption: 'what blooms on the hillside in october', place: 'yakten', shape: 'tall', story: YAKTEN_STORY },
+  { image: braj('yamuna-diyas'), alt: 'Small floating lamps adrift on the black water of the Yamuna', caption: 'small flames adrift on black water', place: 'yamuna', shape: 'wide', story: BRAJ_STORY },
 ];
+
+/** Under the manifest on the home page: one frame from each recent story. */
+export const ABOUT_PHOTOS: StoryPhoto[] = [
+  { image: yk('homes-selfie'), alt: 'Garima smiling in a sun hat in front of the Yakten homestays', caption: 'yakten, sikkim', story: YAKTEN_STORY },
+  { image: braj('vrindavan-circle-dance'), alt: 'Women holding hands and dancing in a circle on chequered marble', caption: 'vrindavan, braj', story: BRAJ_STORY },
+  { image: nz('rose-petals'), alt: 'A flower-seller among baskets of rose petals and bright chadars', caption: 'nizamuddin, delhi', story: NIZAMUDDIN_STORY },
+];
+
+/** Beside "I curate journeys for explorers" in the contact section. */
+export const TRIPS_PHOTO: StoryPhoto = {
+  image: yk('guests-walk'), alt: 'Guests and hosts walking together up a village lane in Yakten', caption: 'how I like to travel: yakten, sikkim', story: YAKTEN_STORY,
+};
+
+/** Beside the closing quote — the line is from the opening of the Braj essay. */
+export const PHILOSOPHY_PHOTO: StoryPhoto = {
+  image: braj('yamuna-boats'), alt: 'Painted boats at the edge of the Yamuna at night', caption: 'from “braj: a day that refused the clock”', story: BRAJ_STORY,
+};
 
 /**
  * The education page (/qualifications).
@@ -84,20 +120,42 @@ export const PRACTICE: { title: string; description: string }[] = [
 ];
 
 /** Fieldwork so far, newest first. `story` links to the blog post. */
-export const FIELDWORK: { period: string; title: string; place: string; description: string; story: string }[] = [
+export const FIELDWORK: { period: string; title: string; place: string; description: string; story: string; image: string; imageAlt: string }[] = [
+  {
+    period: 'oct 2026',
+    title: 'What drives Yakten’s happiness index',
+    place: 'Yakten, Pakyong · Sikkim',
+    description: 'A photo story in nine episodes from India’s first digital nomad village — the homestays, the didis, the daajus, the forager and the dogs.',
+    story: YAKTEN_STORY,
+    image: yk('two-didis'),
+    imageAlt: 'Two didis sitting side by side and laughing',
+  },
+  {
+    period: 'oct 2026',
+    title: 'Told, not written: home remedies',
+    place: 'Tamil Nadu to Kashmir',
+    description: 'Remedies that travelled by voice, from an older person in a kitchen to a younger one — recorded across nine regions.',
+    story: REMEDIES_STORY,
+    image: remedy('tamil-nadu'),
+    imageAlt: 'Illustration of a brass pot of herbal jam with jaggery, spices and a diya',
+  },
   {
     period: 'oct 2026',
     title: 'Braj: a day that refused the clock',
     place: 'Gokul · Barsana · Vrindavan',
     description: 'A photo essay across three towns and four aartis in a single day — twenty-four photographs.',
-    story: 'braj-a-day-that-refused-the-clock',
+    story: BRAJ_STORY,
+    image: braj('barsana-darshan'),
+    imageAlt: 'A glimpse of the deity in blue silk above raised hands',
   },
   {
     period: 'sep 2026',
     title: 'Nizamuddin Dargah: an oral history',
     place: 'Nizamuddin Basti, Delhi',
     description: 'Music, market and mannat at a living Sufi shrine — field photography, sensory fieldnotes and open research questions.',
-    story: 'nizamuddin-dargah-oral-history',
+    story: NIZAMUDDIN_STORY,
+    image: nz('dome-at-dusk'),
+    imageAlt: 'The dome of Nizamuddin Dargah lit up at dusk above the crowd',
   },
 ];
 
@@ -129,14 +187,22 @@ export const QUALIFICATIONS: Qualification[] = [
 
 /** "What catches my eye" — the dot-separated word run. (`icon` is unused by the current design.) */
 export const INTERESTS: Interest[] = [
-  { title: 'Oral Histories', description: 'The stories nobody wrote down — recorded before they quietly slip away.', icon: '' },
-  { title: 'Old Streets', description: 'Lanes that were there before the maps, and still don’t quite fit on them.', icon: '' },
-  { title: 'Kitchens', description: 'A recipe is a family history you can taste.', icon: '' },
-  { title: 'Festivals', description: 'The days a whole town agrees to be someone else for a while.', icon: '' },
-  { title: 'Handmade Things', description: 'Looms, kilns and workshops — and the hands that remember how.', icon: '' },
-  { title: 'Languages', description: 'Words that don’t translate, and the people who carry them.', icon: '' },
-  { title: 'Mountains', description: 'Places that make every plan feel pleasantly small.', icon: '' },
-  { title: 'Markets', description: 'The fastest way to learn what a town eats, wears and argues about.', icon: '' },
+  { title: 'Oral Histories', description: 'The stories nobody wrote down — recorded before they quietly slip away.', icon: '',
+    image: nz('woman-reading'), imageAlt: 'A woman reading aloud from a booklet among pilgrims at the Dargah', story: NIZAMUDDIN_STORY },
+  { title: 'Old Streets', description: 'Lanes that were there before the maps, and still don’t quite fit on them.', icon: '',
+    image: nz('lanes-at-dusk'), imageAlt: 'Incense smoke and crowds in the lanes of Nizamuddin at dusk', story: NIZAMUDDIN_STORY },
+  { title: 'Kitchens', description: 'A recipe is a family history you can taste.', icon: '',
+    image: yk('mud-stove'), imageAlt: 'A clay hearth in a Yakten kitchen, firewood stacked beside it', story: YAKTEN_STORY },
+  { title: 'Festivals', description: 'The days a whole town agrees to be someone else for a while.', icon: '',
+    image: braj('vrindavan-kirtan'), imageAlt: 'A kirtan in Vrindavan', story: BRAJ_STORY },
+  { title: 'Handmade Things', description: 'Looms, kilns and workshops — and the hands that remember how.', icon: '',
+    image: yk('market-seller'), imageAlt: 'Baskets of hand-split bamboo and dried produce at a market stall', story: YAKTEN_STORY },
+  { title: 'Languages', description: 'Words that don’t translate, and the people who carry them.', icon: '',
+    image: remedy('kashmir'), imageAlt: 'Illustration of a samovar and spices for a Kashmiri home remedy', story: REMEDIES_STORY },
+  { title: 'Mountains', description: 'Places that make every plan feel pleasantly small.', icon: '',
+    image: yk('village'), imageAlt: 'Tin roofs of Yakten village on a forested Sikkim hillside', story: YAKTEN_STORY },
+  { title: 'Markets', description: 'The fastest way to learn what a town eats, wears and argues about.', icon: '',
+    image: nz('chadar-lane'), imageAlt: 'A lane of chadar and flower stalls leading to the Dargah', story: NIZAMUDDIN_STORY },
   { title: 'Trains', description: 'Twenty strangers, one compartment, a dozen stories by morning.', icon: '' },
 ];
 

@@ -37,6 +37,18 @@ export interface Interest {
   description: string;
   /** SVG path data for a 24×24 stroke icon */
   icon: string;
+  /** A photo shown while this word is active, and the story it comes from. */
+  image?: string;
+  imageAlt?: string;
+  story?: string;
+}
+
+/** A photo that links to the story it was taken for. */
+export interface StoryPhoto {
+  image: string;
+  alt: string;
+  caption: string;
+  story: string;
 }
 
 export interface Hobby {
@@ -80,6 +92,8 @@ export interface JournalPhoto {
   caption: string;
   place: string;
   shape: 'tall' | 'wide' | 'square';
+  /** Slug of the blog post this frame comes from. */
+  story: string;
 }
 
 export interface Stat {

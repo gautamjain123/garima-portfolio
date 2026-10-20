@@ -1,18 +1,21 @@
 import { ChangeDetectionStrategy, Component, ElementRef, computed, signal, viewChild } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { JOURNAL } from '../core/data/site-content';
+import { storyTitle } from '../core/data/story-title';
 import { RevealDirective } from '../core/directives/reveal.directive';
 import { ImageFrameComponent } from '../shared/image-frame.component';
 
 /** Photo journal: a packed grid of frames; any frame opens a full-screen lightbox. */
 @Component({
   selector: 'app-journal',
-  imports: [RevealDirective, ImageFrameComponent],
+  imports: [RouterLink, RevealDirective, ImageFrameComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <section id="journal" class="journal" aria-labelledby="journal-title">
       <div class="journal__rail">
         <p class="label">(04) photo journal</p>
-        <p class="journal__intro">single frames from the road — shrines, crowds, cows, and the people who let me sit a while.</p>
+        <p class="journal__intro">single frames from the road — shrines, hearths, dogs, and the people who let me sit a while. open any frame to read the story it came from.</p>
+        <a routerLink="/blog" class="text-link">all stories <span class="arrow" aria-hidden="true">↗</span></a>
       </div>
       <div class="journal__body">
         <h2 id="journal-title" class="journal__title" appReveal>seen <em>along the way.</em></h2>
@@ -36,6 +39,9 @@ import { ImageFrameComponent } from '../shared/image-frame.component';
           <figcaption class="lb__cap">
             <span class="mono">{{ (index() + 1).toString().padStart(2, '0') }} / {{ photos.length.toString().padStart(2, '0') }} — {{ p.place }}</span>
             <span class="it">{{ p.caption }}</span>
+            <a class="lb__story" [routerLink]="['/blog', p.story]" (click)="close()">
+              read the story — {{ title(p.story) }} <span aria-hidden="true">↗</span>
+            </a>
           </figcaption>
         </figure>
         <button type="button" class="lb__btn lb__btn--prev" (click)="step(-1)" aria-label="Previous photo">←</button>
@@ -49,6 +55,7 @@ import { ImageFrameComponent } from '../shared/image-frame.component';
     .journal { @include m.rail-section; }
     .journal__rail { display: flex; flex-direction: column; gap: 18px; }
     .journal__intro { font-size: 15px; line-height: 1.6; color: var(--c-muted); max-width: 32ch; }
+    .journal__rail .text-link { align-self: flex-start; }
     .journal__body { display: flex; flex-direction: column; gap: 40px; min-width: 0; }
     .journal__title { @include m.heading(var(--t-display)); line-height: 0.88; }
 
@@ -91,6 +98,9 @@ import { ImageFrameComponent } from '../shared/image-frame.component';
     .lb__img { max-width: 100%; max-height: 78svh; object-fit: contain; border-radius: var(--r-img); margin-inline: auto; }
     .lb__cap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; font-size: 14px;
       .mono { font-size: 12px; opacity: 0.75; } .it { color: var(--p-marigold); font-size: 1.35em; } }
+    .lb__story { flex-basis: 100%; align-self: flex-start; font-size: 15px; font-weight: 600; color: var(--p-paper);
+      span { display: inline-block; transition: transform var(--d-base) var(--ease-out); }
+      &:hover { color: var(--p-marigold); span { transform: translate(3px, -3px); } } }
     .lb__btn, .lb__close {
       position: fixed; background: none; border: 1px solid color-mix(in srgb, currentColor 40%, transparent);
       color: inherit; border-radius: var(--r-pill); transition: background var(--d-fast), color var(--d-fast);
@@ -105,6 +115,7 @@ import { ImageFrameComponent } from '../shared/image-frame.component';
 })
 export class JournalComponent {
   protected readonly photos = JOURNAL;
+  protected readonly title = storyTitle;
   protected readonly index = signal(-1);
   protected readonly current = computed(() => this.photos[this.index()] ?? null);
   private readonly dialog = viewChild.required<ElementRef<HTMLDialogElement>>('dialog');

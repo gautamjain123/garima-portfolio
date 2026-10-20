@@ -1,12 +1,15 @@
 import { ChangeDetectionStrategy, Component, input } from '@angular/core';
-import { ABOUT, MANIFEST, STATS } from '../../core/data/site-content';
+import { RouterLink } from '@angular/router';
+import { ABOUT, ABOUT_PHOTOS, MANIFEST, STATS } from '../../core/data/site-content';
+import { storyTitle } from '../../core/data/story-title';
 import { CountUpDirective } from '../../core/directives/count-up.directive';
 import { RevealDirective } from '../../core/directives/reveal.directive';
+import { ImageFrameComponent } from '../../shared/image-frame.component';
 
 /** The manifest: short, bold statements with ghosted endings. */
 @Component({
   selector: 'app-about',
-  imports: [RevealDirective, CountUpDirective],
+  imports: [RouterLink, RevealDirective, CountUpDirective, ImageFrameComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <section id="manifest" class="about" aria-labelledby="about-title">
@@ -25,6 +28,20 @@ import { RevealDirective } from '../../core/directives/reveal.directive';
             <p>{{ p }}</p>
           }
         </div>
+
+        <ul class="about__photos" appReveal="stagger" aria-label="From the latest stories">
+          @for (ph of photos; track ph.image; let i = $index) {
+            <li class="about__photo about__photo--{{ i }}">
+              <a [routerLink]="['/blog', ph.story]" data-cursor="READ">
+                <app-image-frame [src]="ph.image" [alt]="ph.alt" />
+                <span class="about__photo-cap">
+                  <span class="mono">{{ ph.caption }}</span>
+                  <span class="about__photo-title">{{ title(ph.story) }} <span aria-hidden="true">↗</span></span>
+                </span>
+              </a>
+            </li>
+          }
+        </ul>
 
         @if (showStats()) {
           <dl class="about__stats" appReveal="stagger">
@@ -57,6 +74,22 @@ import { RevealDirective } from '../../core/directives/reveal.directive';
       @include m.tablet { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px; }
       p:first-child { color: var(--c-fg); }
     }
+    // Three frames from recent stories: a sideways scroll on phones, an offset row on wider screens.
+    .about__photos {
+      display: grid; grid-auto-flow: column; grid-auto-columns: 72%; gap: 12px; max-width: 1080px;
+      overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; &::-webkit-scrollbar { display: none; }
+      @include m.tablet { grid-auto-flow: row; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; overflow: visible; align-items: start; }
+    }
+    .about__photo { scroll-snap-align: start;
+      a { display: flex; flex-direction: column; gap: 12px; color: inherit; }
+      app-image-frame { aspect-ratio: 4 / 5; border-radius: var(--r-img); }
+      @include m.tablet { &--1 { margin-top: 48px; } }
+      a:hover .about__photo-title { color: var(--c-accent); }
+      a:hover app-image-frame { box-shadow: 0 18px 40px -24px rgba(29, 26, 22, 0.55); }
+    }
+    .about__photo-cap { display: flex; flex-direction: column; gap: 4px;
+      .mono { font-size: 12px; color: var(--c-dim); } }
+    .about__photo-title { font-size: 16px; font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; transition: color var(--d-fast); }
     .about__stats {
       margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
       border-top: 1px solid var(--c-line); max-width: 1080px;
@@ -75,4 +108,6 @@ export class AboutComponent {
   protected readonly about = ABOUT;
   protected readonly manifest = MANIFEST;
   protected readonly stats = STATS;
+  protected readonly photos = ABOUT_PHOTOS;
+  protected readonly title = storyTitle;
 }

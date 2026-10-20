@@ -38,7 +38,10 @@ const parts = (s: string): Part[] =>
                 <span class="quals__title">{{ f.title.toLowerCase() }} <span class="quals__arrow" aria-hidden="true">↗</span></span>
                 <span class="quals__desc">{{ f.description }}</span>
               </span>
-              <span class="quals__inst">{{ f.place }}</span>
+              <span class="quals__inst quals__inst--photo">
+                <img class="quals__thumb" [src]="f.image" [alt]="f.imageAlt" loading="lazy" decoding="async" />
+                {{ f.place }}
+              </span>
             </a>
           </li>
         }
@@ -107,6 +110,13 @@ const parts = (s: string): Part[] =>
     .quals__title { font-size: var(--t-h3); font-weight: 600; letter-spacing: -0.03em; line-height: 1.05; }
     .quals__desc { font-size: 15px; line-height: 1.6; color: var(--c-muted); max-width: 560px; }
     .quals__inst { font-size: 15px; color: var(--c-muted); }
+    .quals__inst--photo { display: flex; flex-direction: column; gap: 10px; order: -1;
+      @include m.laptop { order: 0; } }
+    // Rows with a photo: centre the text against it instead of lining up baselines.
+    .quals__row--link { @include m.laptop { align-items: center; } }
+    .quals__thumb { width: 100%; max-width: 280px; aspect-ratio: 3 / 2; object-fit: cover; border-radius: var(--r-img);
+      transition: transform var(--d-base) var(--ease-out); }
+    .quals__row--link:hover .quals__thumb { transform: scale(1.02); }
 
     // [Placeholder] text: muted with a dashed underline, so it reads as "fill this in".
     .ph { color: var(--c-dim); font-style: italic; text-decoration: underline dashed color-mix(in srgb, currentColor 45%, transparent);
