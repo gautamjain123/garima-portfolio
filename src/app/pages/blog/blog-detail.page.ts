@@ -111,6 +111,14 @@ export default class BlogDetailPage implements OnDestroy {
     setTimeout(() => this.goTo(section), 350);
   }
 
+  /** Links inside a story marked data-goto="<heading id>" jump to that chapter (no #fragment). */
+  protected onProseClick(event: MouseEvent): void {
+    const link = (event.target as Element | null)?.closest<HTMLElement>('[data-goto]');
+    if (!link) return;
+    event.preventDefault();
+    this.goTo(link.dataset['goto']!);
+  }
+
   /** Highlights the last chapter heading that has passed under the navbar. */
   @HostListener('window:scroll')
   protected trackActive(): void {

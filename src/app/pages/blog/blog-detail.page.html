@@ -55,7 +55,7 @@
         </div>
       </aside>
 
-      <div class="prose" itemprop="articleBody" [innerHTML]="content()"></div>
+      <div class="prose" itemprop="articleBody" [innerHTML]="content()" (click)="onProseClick($event)"></div>
     </div>
 
     <footer class="article__foot">

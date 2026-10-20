@@ -45,25 +45,55 @@ const YK: Record<string, [number, number]> = {
   'dog-grass': [900, 1200], 'dog-trail': [1200, 1050], dogs: [900, 1200], 'field-walk': [900, 1200],
   forager: [900, 1200], 'forest-fruit': [900, 1200], 'guests-walk': [900, 1200], homestay: [900, 1200],
   'kids-football': [1200, 809], 'kids-run': [900, 1200], 'kids-steps': [900, 1200], kitchen: [1200, 900],
-  'leaves-hands': [900, 1200], 'market-hug': [900, 1200], 'market-seller': [946, 1200], 'nomad-sign': [1200, 900],
+  'leaves-hands': [900, 1200], 'market-seller': [946, 1200], 'nomad-sign': [1200, 900],
   'paint-duo': [1200, 801], 'paint-wave': [1200, 863], 'pine-joy': [900, 1200], 'rice-plate': [1200, 881],
   'squash-trellis': [900, 1200], squash: [976, 1200], 'stem-moustache': [900, 1200], 'thathney-bite': [900, 1200],
   'tree-rest': [900, 1200], 'two-didis': [1200, 1181], village: [1200, 923], 'yakten-gate': [1200, 900],
   'youth-smile': [900, 1200],
+  begonia: [900, 1200], 'camera-steps': [900, 1200], celosia: [900, 1200], chayote: [900, 1200],
+  'chilli-plant': [900, 1200], citrus: [900, 1200], cone: [900, 1200], 'cowork-cabin': [900, 1200],
+  'cowork-hat': [900, 1200], 'cowork-room': [1200, 900], 'cowork-view': [1200, 900], 'didi-hug': [1084, 1200],
+  'dog-stairs': [900, 1200], 'dog-table': [900, 1200], 'forest-stretch': [900, 1200], 'forest-tall': [900, 1200],
+  fuchsia: [900, 1200], 'gate-selfie': [900, 1200], 'green-roof': [1200, 912], 'homes-selfie': [900, 1200],
+  'keeper-dog': [900, 1200], 'lane-dog': [900, 1200], 'meghma-steps': [1200, 900], 'mud-stove': [900, 1200],
+  'orchid-bloom': [900, 1200], 'pakhen-bet': [900, 1200], 'pine-walk': [900, 1200], 'porch-dogs': [900, 1200],
+  radish: [900, 1200], rooster: [900, 1200], sunakhari: [900, 1200], 'white-bloom': [676, 1200],
 };
-const ykImg = (file: string, alt: string): string => {
-  const [w, h] = YK[file];
-  return `<img src="images/blog/yakten/${file}.jpg" alt="${alt}" width="${w}" height="${h}" loading="lazy" decoding="async" style="flex: ${(w / h).toFixed(3)} 1 0%" />`;
-};
+const ykSrc = (file: string): string => `images/blog/yakten/${file}.jpg`;
 /** One photo: portraits are kept within the screen height, landscapes run wide. */
-const yk = (file: string, alt: string, caption: string): string => {
+const yk = (file: string, caption: string): string => {
   const [w, h] = YK[file];
-  return `<figure class="${w >= h ? 'wide' : 'tall'}"><img src="images/blog/yakten/${file}.jpg" alt="${alt}" width="${w}" height="${h}" loading="lazy" decoding="async" /><figcaption>${caption}</figcaption></figure>`;
+  return `<figure class="${w >= h ? 'wide' : 'tall'}"><img src="${ykSrc(file)}" alt="${caption}" width="${w}" height="${h}" loading="lazy" decoding="async" /><figcaption>${caption}</figcaption></figure>`;
 };
-/** Two photos side by side at their own shapes (equal heights, no cropping), one shared caption. */
-const ykPair = (a: [string, string], b: [string, string], caption: string): string =>
-  `<figure class="duo"><div class="duo__frames">${ykImg(...a)}${ykImg(...b)}</div><figcaption>${caption}</figcaption></figure>`;
+/**
+ * Two or three photos side by side, each at its own shape and with its own caption
+ * (flex-grow = aspect ratio, so they share one height without cropping). Stacks on phones.
+ */
+const ykRow = (...items: [string, string][]): string =>
+  `<div class="photo-row">${items
+    .map(([file, caption]) => {
+      const [w, h] = YK[file];
+      return `<figure style="flex: ${(w / h).toFixed(3)} 1 0%"><img src="${ykSrc(file)}" alt="${caption}" width="${w}" height="${h}" loading="lazy" decoding="async" /><figcaption>${caption}</figcaption></figure>`;
+    })
+    .join('')}</div>`;
 const reflection = (text: string): string => `<aside class="reflection"><span>Reflection</span><p>${text}</p></aside>`;
+/** Episode heading: a small "ep. 01" label, the title, and a one-line tag under it. */
+const episode = (n: number, title: string, tag: string): string =>
+  `<p class="kicker">ep. ${String(n).padStart(2, '0')}</p>\n<h2>${title}</h2>\n<p class="deva">${tag}</p>`;
+/** A definition list of names and what they mean. */
+const names = (rows: [string, string][]): string =>
+  `<dl class="names">${rows.map(([n, m]) => `<div><dt>${n}</dt><dd>${m}</dd></div>`).join('')}</dl>`;
+/**
+ * The "ways into" guide: photo cards that jump to an episode. `goto` is the episode heading's id
+ * (its title, lowercased and hyphenated); the article page scrolls there without a #fragment.
+ */
+const guide = (cards: [string, string, string, string][]): string =>
+  `<ol class="guide">${cards
+    .map(([file, title, text, goto], i) => {
+      const [w, h] = YK[file];
+      return `<li><a href="" data-goto="${goto}"><img src="${ykSrc(file)}" alt="" width="${w}" height="${h}" loading="lazy" decoding="async" /><span class="guide__n">${String(i + 1).padStart(2, '0')}</span><span class="guide__t">${title}</span><span class="guide__d">${text}</span></a></li>`;
+    })
+    .join('')}</ol>`;
 
 /** One region's illustration (1400×788). */
 const region = (file: string, alt: string): string => rm(file, alt, '', 'wide', 1400, 788).replace('<figcaption></figcaption>', '');
@@ -83,92 +113,147 @@ export const BLOG_POSTS: BlogPost[] = [
     slug: 'yakten-through-my-lens',
     title: 'What drives Yakten’s happiness index',
     excerpt:
-      'Field notes from Yakten, a homestay village near Pakyong, Sikkim: the didis, the daajus, the forager, the youth and children, the dogs and the guests.',
+      'A photo story in nine episodes from Yakten, India’s first digital nomad village near Pakyong, Sikkim: the homestays, the didis, the daajus, the pine walks, the forager, the youth, the dogs and the guests.',
     category: 'Photo Essays',
     date: '2026-10-20',
-    readTime: 8,
-    image: 'images/blog/yakten/village.jpg',
-    imageAlt: 'Village homes with tin roofs, a greenhouse and corn plots below a forested hill in Yakten',
+    readTime: 10,
+    image: 'images/blog/yakten/meghma-steps.jpg',
+    imageAlt: 'A woman sits smiling on the steps of Meghma homestay, two dogs resting beside her among potted flowers',
     featured: false,
-    draft: true, // hidden for now — delete this line to publish
-
-    tags: ['Yakten', 'Sikkim', 'Pakyong', 'Homestay', 'Field Notes'],
+    tags: ['Yakten', 'Sikkim', 'Pakyong', 'Digital Nomad Village', 'Homestay', 'Field Notes'],
     content: `
-<p class="lede">Yakten is a homestay village near Pakyong, in Sikkim, known as India’s first digital nomad village.</p>
-<p>These are notes from a stay there: who keeps the village running, what their days look like, and what a visitor gets to witness.</p>
+<p class="lede">Thirty-five kilometres from Gangtok and ten from Pakyong airport, on a hillside of pines, a village of ten homestays answered a question most of us have asked at our desks: what if the office had a view of Kanchenjunga?</p>
+<p>In July 2025 Yakten became India’s first digital nomad village. But the label is the newest thing here. Long before the Wi-Fi, there were didis cooking from their backyards, daajus tending orchids, dogs who knew every trail, and a forest that was simply somebody’s backyard. These are my notes from the time I spent inside it.</p>
+<p class="story-meta">2026 · Pakyong, Sikkim · 9 episodes · All photographs by me</p>
+${yk('meghma-steps', 'On the steps of Meghma homestay, with two of its keepers.')}
 <aside class="legend">
 <p><span>Observed</span>Plain text. What I saw, or what the community told me about their work.</p>
 <p><span>Reflection</span><em>My own response, marked as mine.</em></p>
-<p><span>In their words</span>The community’s own words, quoted exactly. More will be added as people choose to share them.</p>
+<p><span>In their words</span>The community’s own words, quoted exactly. More as people choose to share them.</p>
 </aside>
 
-<p class="kicker">the village</p>
-<h2>A working hillside</h2>
-<p>Yakten sits on a slope near Pakyong, with forest rising behind it. Homestays stand between kitchen gardens, a greenhouse and plots of corn. Some homes are older and built of wood, with carved eaves; others are newer and concrete. Each has a name painted by the door: Khodho-1, Khodho-2, Sunakhari-2.</p>
-${yk('yakten-gate', 'A red and yellow gateway with a sign reading Yakten, India’s first digital nomad village', 'The village gateway, with a post office tucked beneath it.')}
-${yk('village', 'Village homes with tin roofs, a greenhouse and corn plots below a forested hill', 'Homes, gardens and a greenhouse below the forest. Corn stalks drying in the plots.')}
-${ykPair(['homestay', 'A wooden homestay with carved eaves and potted plants on its steps'], ['field-walk', 'A woman with a cloth bag stands on a grassy village path'], 'A wooden homestay with carved eaves. A woman on a village path, cloth bag in hand.')}
-${yk('daisy', 'A hand holds up a small white wildflower in front of a garden and greenhouse', 'A wildflower from the garden, the greenhouse behind.')}
+<h3>Ways into Yakten</h3>
+<p>Things I did there. Ask your hosts; most of it happens only if they invite you in.</p>
+${guide([
+  ['didi-hug', 'Welcomed like family', 'A didi’s hug on the lane between homestays.', 'the-didis'],
+  ['forager', 'Foraging', 'Wild plants and forest fruit, with the cab driver who learnt them from an elder.', 'the-forager'],
+  ['forest-tall', 'Pine walks and trails', 'Birding trails at first light; a trek to Jhandi Dara for Kanchenjunga.', 'the-pine-walks'],
+  ['didi-kitchen', 'Cooking with the didis', 'Rice, dalle chutney, gundruk and tongba, in their kitchens.', 'the-didis'],
+  ['daaju-plants', 'Orchids and medicinal plants', 'Learning from the daajus in the nursery and the forest.', 'the-daajus'],
+  ['radish', 'Farm to plate', 'Squash, radish, chillies and corn, a few steps from the table.', 'the-didis'],
+  ['rice-plate', 'Organic, home-grown food', 'Milk and chhurpi from the family cows; vegetables from the backyard.', 'the-didis'],
+  ['market-seller', 'Shopping at Pakyong market', 'Downhill with the didis for what the garden doesn’t grow.', 'the-didis'],
+  ['paint-wave', 'Painting houses for Dussehra', 'Pick up a brush with the youth before the festival.', 'the-youth-and-children'],
+  ['kids-football', 'Football and cooking with the youth', 'Evening games in the courtyard, and dinners after.', 'the-youth-and-children'],
+  ['dog-trail', 'Dogs for company', 'Trackers on the 5 a.m. trail, nappers on the porch.', 'the-dogs'],
+  ['cowork-view', 'Remote work, Wi-Fi first', 'A co-working space in every homestay, the pines outside.', 'the-guests'],
+  ['green-roof', 'Ten homes, one family', 'Stay with a family whose homes are linked by blood and history.', 'the-homestays'],
+])}
 
-<p class="kicker">the didis</p>
-<h2>The didis keep the hearth</h2>
+${episode(1, 'The village', 'A working hillside')}
+<p>Yakten sits on a slope in Pakyong district, with forest rising behind it. Homestays stand between kitchen gardens, a greenhouse and plots of corn. Some homes are old and wooden, with carved eaves; others are newer and concrete. Each has its name painted by the door.</p>
+${ykRow(['yakten-gate', 'The village gateway, with the post office tucked beneath it.'], ['gate-selfie', 'Me at the gate, on arrival.'])}
+${yk('village', 'Homes, gardens and a greenhouse below the forest. Corn stalks drying in the plots.')}
+${ykRow(['homestay', 'An old wooden homestay with carved eaves.'], ['field-walk', 'A woman on a village path, cloth bag in hand.'])}
+${yk('daisy', 'A wildflower from the garden, the greenhouse behind.')}
+
+${episode(2, 'The homestays', 'Ten homes, one family')}
+<p>Yakten has ten homestays. Each has its own name, its own kitchen, its own co-working space and its own didi. All of them are linked by blood and history, and they run as one family.</p>
+${ykRow(['sunakhari', 'Sunakhari’s veranda, the village on the hill behind.'], ['dog-stairs', 'A dog on the stone steps below a wooden homestay.'])}
+${ykRow(['homes-selfie', 'Homestays side by side, and me in front of them.'], ['green-roof', 'A green roof and carved eaves above stone terraces.'])}
+<p>Every homestay is named for something from these hills.</p>
+${names([
+  ['Pakhen Bet', 'a healing leaf from the nearby forests'],
+  ['Chaka', 'honeycomb'],
+  ['Kothabari', 'the old wooden style of building'],
+  ['Meghma', 'a bird'],
+  ['Guras', 'rhododendron'],
+  ['Sunakhari', 'a flower'],
+  ['Dhupi', 'a flower'],
+  ['Yakten', 'hosting guests, and the village’s own name'],
+  ['Kudoz', 'honey'],
+  ['Orchid', 'the flower'],
+])}
+${ykRow(['camera-steps', 'Resting on the steps between homes.'], ['lane-dog', 'A lane between homestays, and its regular.'])}
+<h3>Keepers of the homes</h3>
+<p>Each home has its keepers: dogs on the steps and under the tables, and a rooster that wanders up to the kitchen door.</p>
+${ykRow(['keeper-dog', 'On guard by the geraniums.'], ['rooster', 'A rooster at the kitchen door at mealtime.'])}
+${ykRow(['dog-table', 'Asleep under the table.'], ['porch-dogs', 'Asleep on the porch, and in the courtyard.'])}
+
+${episode(3, 'The didis', 'Keepers of the hearth')}
 <p>The homestays are run by the didis, the women of the house; many are Limbu. Much of what they cook grows a few steps from the kitchen: squash, avocado, dalle chillies, and the leafy greens that become gundruk. What the garden doesn’t grow, they buy at the Pakyong market downhill.</p>
-${yk('two-didis', 'Two didis sit smiling on the log bench outside their wooden homestay', 'Two didis outside their homestay.')}
-${ykPair(['didi-plate', 'A didi in her kitchen holds out a steel plate of food'], ['didi-kitchen', 'A didi kneels on her kitchen floor preparing food'], 'Serving a meal. Preparing one.')}
-<p>Families keep cows, so there is fresh milk, butter and chhurpi. Rice is served with chutneys whose flavours come from Sikkim, Nepal and Arunachal Pradesh. On cold evenings there is tongba: fermented millet with hot water poured over it.</p>
-${ykPair(['squash-trellis', 'Squash hanging from a bamboo trellis over a garden path'], ['cowshed', 'Cows and a calf in a shed, fresh fodder piled at the entrance'], 'Squash on a bamboo trellis. The family cows.')}
-${ykPair(['dalle', 'Dalle chillies crushed on a chopping board'], ['rice-plate', 'A steel plate of rice with dalle chutney and greens'], 'Dalle chillies, crushed for chutney. Rice with dalle chutney and greens.')}
-${ykPair(['squash', 'Squash piled at a market stall'], ['corn', 'Corn cobs hung to dry under a greenhouse roof'], 'Squash at the market. Corn hung to dry.')}
-${ykPair(['kitchen', 'A wood-panelled homestay kitchen lined with pots and pans'], ['market-seller', 'A vendor behind baskets of produce at the Pakyong market'], 'A homestay kitchen. A vendor at the Pakyong market.')}
+${yk('two-didis', 'Two didis outside their homestay.')}
+${ykRow(['didi-plate', 'A didi serving lunch.'], ['didi-kitchen', 'A didi preparing a meal on the kitchen floor.'])}
+<p>Families keep cows, so there is fresh milk, butter and chhurpi. Rice comes with chutneys whose flavours belong to Sikkim, Nepal and Arunachal Pradesh. On cold evenings there is tongba: fermented millet with hot water poured over it.</p>
+${ykRow(['squash-trellis', 'Squash on a bamboo trellis.'], ['cowshed', 'The family cows, with fresh fodder.'])}
+${ykRow(['dalle', 'Dalle chillies, crushed for chutney.'], ['rice-plate', 'Rice with dalle chutney and greens.'])}
+${ykRow(['squash', 'Squash at the market.'], ['corn', 'Corn hung to dry.'])}
+${ykRow(['kitchen', 'A homestay kitchen.'], ['market-seller', 'A vendor at the Pakyong market.'])}
+${yk('mud-stove', 'A wood-fired mud stove, with meat drying on a wire above it.')}
 ${reflection('Every meal I ate was served with gratitude and love.')}
 
-<p class="kicker">the daajus</p>
-<h2>The daajus tend the land</h2>
-<p>The daajus, the men of the homestays, work in horticulture. Growing orchids is a practice they have kept up for years. Seedlings in the nursery are watered by hand.</p>
-${ykPair(['daaju-orchids', 'A daaju holds an armful of flowers outside his homestay'], ['daaju-plants', 'A daaju crouches among his orchid plants'], 'Flowers from a homestay garden. Orchid plants in the nursery.')}
-${yk('daaju-water', 'A daaju waters seedlings in his nursery', 'Watering seedlings in the nursery.')}
-<p>Beyond the homes, they forage for wild mushrooms and young edible ferns, and lead birding trails through the pine forest above the village.</p>
-${yk('tree-rest', 'A woman sits against a mossy pine trunk, looking up', 'Resting against a mossy pine on one of the trails.')}
-${ykPair(['canopy', 'Looking straight up through tall pine trees'], ['binoculars', 'A boy looks through binoculars from a veranda over the hills'], 'The pine canopy. A boy with binoculars on a veranda.')}
+${episode(4, 'The daajus', 'Tending the land')}
+<p>The daajus, the men of the homestays, work in horticulture. Growing orchids is a practice they have kept up for years. Seedlings in the nursery are watered by hand, and beyond the homes they forage for wild mushrooms and young edible ferns.</p>
+${ykRow(['daaju-orchids', 'Flowers from a homestay garden.'], ['daaju-plants', 'Among the orchid plants in the nursery.'])}
+${yk('daaju-water', 'Watering seedlings by hand.')}
+${yk('tree-rest', 'Resting against a mossy pine on one of the trails.')}
 
-<p class="kicker">the forager</p>
-<h2>The driver who knows the plants</h2>
+${episode(5, 'The pine walks', 'What grows, what blooms')}
+<p>The daajus lead birding trails and walks through the pine forest above the village. A longer trek leads to the Jhandi Dara viewpoint, where on a clear day Kanchenjunga fills the horizon.</p>
+${yk('pine-walk', 'Setting off up the slope towards the trees.')}
+${ykRow(['forest-tall', 'Among the tall trunks.'], ['forest-stretch', 'A stretch on the path.'])}
+${ykRow(['canopy', 'Looking straight up.'], ['binoculars', 'A boy with binoculars on a veranda.'], ['cone', 'A cone from the forest floor.'])}
+<h3>What grows here</h3>
+${ykRow(['chayote', 'Chayote on a bamboo trellis.'], ['orchid-bloom', 'Orchids in the greenhouse.'])}
+${ykRow(['citrus', 'Citrus ripening in pots.'], ['pakhen-bet', 'Pakhen bet, a healing leaf from the nearby forest.'])}
+${ykRow(['radish', 'A radish pushing up through mulch.'], ['chilli-plant', 'Chillies flowering in the greenhouse.'])}
+<p>Edible ferns grow along the way too. And everywhere, flowers.</p>
+<h3>What blooms</h3>
+${ykRow(['fuchsia', 'Fuchsia by a doorway.'], ['celosia', 'Cockscomb in the fields.'])}
+${ykRow(['begonia', 'Begonia in the sun.'], ['white-bloom', 'A flowering tree against the sky.'])}
+
+${episode(6, 'The forager', 'The driver who knows the plants')}
 <p>He drives a cab. From an old man in his village he learnt the medicinal plants of Sikkim, and he now forages for them in the wild forests to share with the guests he drives.</p>
-${ykPair(['forager', 'A man in a dark shirt picks a stem from tall grass beside an open car door'], ['leaves-hands', 'Two pairs of hands hold freshly picked leaves beside an open car door'], 'Foraging by the road, car door still open. Leaves picked for guests to smell and crush.')}
+${ykRow(['forager', 'Foraging by the road, car door still open.'], ['leaves-hands', 'Leaves picked for guests to smell and crush.'])}
 <p>Among the plants he showed me: titepati, or mugwort; silk tumbur; thathney, the sour “lemon stem”; sagur, which smells like Vicks; and brush amala, a water plant that grows underground.</p>
-${ykPair(['thathney-bite', 'A woman in a bucket hat bites into a peeled green stem'], ['stem-moustache', 'A woman in a bucket hat balances a green stem on her upper lip'], 'Tasting a stem straight from the roadside, and then not taking it too seriously.')}
-${yk('forest-fruit', 'A palm holding four small orange forest fruits', 'Fruit picked in the forest.')}
+${ykRow(['thathney-bite', 'Tasting thathney straight from the roadside.'], ['stem-moustache', 'And then not taking it too seriously.'])}
+${yk('forest-fruit', 'Fruit picked in the forest.')}
 ${reflection('Knowledge passed from one villager to another, and now, carefully, to guests.')}
 
-<p class="kicker">the youth and children</p>
-<h2>Day jobs, then home</h2>
-<p>Young people in Yakten work day jobs and come back to village life in the evenings: football, and in the days before Dussehra, repainting their homes together for the festival. Guests are welcome to pick up a brush.</p>
-${ykPair(['paint-wave', 'A young woman with paint on her hands waves while painting a house wall'], ['paint-duo', 'Two people paint the porch and walls of a house'], 'Painting the house before Dussehra.')}
-${yk('youth-smile', 'A young woman laughs, hands on her cheeks, in the pine forest', 'In the pine forest.')}
+${episode(7, 'The youth and children', 'Day jobs, then home')}
+<p>Young people in Yakten work day jobs and come back to village life in the evenings: football, cooking, and in the days before Dussehra, repainting their homes together. Guests are welcome to pick up a brush.</p>
+${ykRow(['paint-wave', 'Paint on her hands, before Dussehra.'], ['paint-duo', 'Repainting the porch together.'])}
+${yk('youth-smile', 'Laughing in the pine forest.')}
 <p>Children play in the courtyards between the homestays.</p>
-${ykPair(['kids-steps', 'Children whisper on the steps outside a house'], ['kids-run', 'Two children run across a sunny courtyard'], 'On the steps. Across the courtyard.')}
-${yk('kids-football', 'Children play football in the courtyard outside Sunakhari-2', 'Football outside Sunakhari-2.')}
+${ykRow(['kids-steps', 'Whispers on the steps.'], ['kids-run', 'Racing across the courtyard.'])}
+${yk('kids-football', 'Football outside Sunakhari.')}
 
-<p class="kicker">the dogs</p>
-<h2>The dogs lead the way</h2>
-<p>The village dogs act as trackers and companions on walks. They go along on the early trails into the dense pine forest, some starting at 5 a.m., and play in the grass on the way back.</p>
-${yk('dog-trail', 'Three dogs lead the way up a forest trail', 'Three dogs on the trail.')}
-${ykPair(['dogs', 'Three village dogs look up from a homestay porch'], ['dog-grass', 'A dog in tall grass at the edge of the pine forest'], 'On the porch. In the grass at the forest’s edge.')}
+${episode(8, 'The dogs', 'Constant company')}
+<p>The village dogs act as trackers and companions on walks. They go along on the early trails into the pine forest, some starting at 5 a.m., and play in the grass on the way back.</p>
+${yk('dog-trail', 'Three dogs leading the way up the trail.')}
+${ykRow(['dogs', 'Waiting on the porch.'], ['dog-grass', 'In the grass at the forest’s edge.'])}
 ${reflection('They make everything a little cuter.')}
 
-<p class="kicker">the guests</p>
-<h2>Guests, for a while</h2>
-<p>Guests stay in the homestays and join in where they are invited: cricket in the yard with a plastic chair for a wicket, badminton on a forest path, a festival if one falls during the stay.</p>
-${ykPair(['guests-walk', 'Guests walk out of a garden with a bat and ball'], ['cricket', 'A man swings a cricket bat while a girl holds up a plastic chair as the wicket'], 'Heading out to play. A chair for a wicket.')}
-${ykPair(['badminton', 'Two men play badminton on a forest path while two dogs wander between them'], ['market-hug', 'A traveller holds a child close at the Pakyong market'], 'Badminton on a forest path. A hug at the Pakyong market.')}
-${yk('pine-joy', 'A guest raises her arms among tall pine trees', 'A guest in the pine forest.')}
-${yk('nomad-sign', 'A hand-painted village sign above the Karthok branch post office board', 'The sign at the village entrance, above the Karthok branch post office board.')}
+${episode(9, 'The guests', 'Wi-Fi before electricity')}
+<p>Yakten was declared India’s first digital nomad village in July 2025, under the Nomad Sikkim initiative. Every homestay has its own co-working space, and here Wi-Fi matters more than electricity. The view from the desk is pine forest and, on clear days, Kanchenjunga.</p>
+${ykRow(['cowork-hat', 'At work in a wooden co-working room.'], ['cowork-cabin', 'A cabin among the trees.'])}
+${ykRow(['cowork-room', 'A bamboo-walled workroom.'], ['cowork-view', 'A terrace looking out over the mountains.'])}
+<p>When work is done, guests join in where they are invited: cricket in the yard, badminton on a forest path, a festival if one falls during the stay.</p>
+${ykRow(['guests-walk', 'Heading out to play.'], ['cricket', 'A plastic chair for a wicket.'])}
+${yk('badminton', 'Badminton on a forest path, dogs looking on.')}
+${yk('pine-joy', 'Arms up in the pine forest.')}
+${yk('nomad-sign', 'The sign at the village entrance, above the Karthok branch post office board.')}
 <blockquote class="verse"><p>You don’t just stay here, you become a part of Yakten. Every guest helps sustain India’s first Digital Nomad Village by respecting nature, culture and community. Thank you for being part of the story.</p><cite>In their words — hand-painted sign at the entrance to the village</cite></blockquote>
 ${reflection('The aim, as I see it, is to be a brief and light part of village life, never its centre. What I call shared humanity, one with nature.')}
 
-<h3>A note on these pages</h3>
-<p>The photographs are shown as they were taken and edited, without a common filter, so a sunlit courtyard and a dark forest look like themselves.</p>
+<aside class="credits">
+<p class="credits__kicker">credits</p>
+<p class="credits__title">Photographs by <em>Garima Jain.</em></p>
+<p>Every photograph on this page was taken by me, on my own stay in Yakten. Some are sharp, some are a little tilted, one or two are blurry. Each one is mine.</p>
+<p>Please don’t copy, download, screenshot, repost, edit or use any of these photographs, for any purpose, commercial or not, without my written permission. If you’d like to use one, ask me first. I’m happy to talk, and I’ll want to credit the people in it too.</p>
 <p>Everyone pictured is part of a living, working village. If you appear here and would like a photo changed or removed, or would like to add your own words, please get in touch.</p>
+<p class="credits__copy">© 2026 Garima Jain. All photographs and text, all rights reserved.</p>
+</aside>
 `,
   },
   {

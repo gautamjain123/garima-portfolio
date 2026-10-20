@@ -130,11 +130,41 @@
       p[lang='hi']:not(:first-child) { margin-top: 1.1em; }
       cite { display: block; margin-top: 14px; font-size: 13px; font-style: normal; color: var(--c-dim); }
     }
-    // Two photos at their own shapes, sharing one height (flex grow = aspect ratio, set inline).
-    figure.duo { @include m.laptop { margin-right: calc(-1 * min(240px, max(0px, (100vw - 1180px) / 2))); } }
-    .duo__frames { display: flex; gap: 12px; align-items: flex-start;
-      img { min-width: 0; width: 100%; height: auto; }
-      @media (max-width: 600px) { flex-direction: column; img { flex: none !important; } } }
+    // A row of 2–3 photos, each at its own shape with its own caption: flex-grow is the aspect
+    // ratio (set inline), so all images share one height without cropping. Stacks on phones.
+    .photo-row {
+      display: flex; gap: 14px; align-items: flex-start;
+      @include m.laptop { margin-right: calc(-1 * min(240px, max(0px, (100vw - 1180px) / 2))); }
+      figure { margin: 0; min-width: 0; }
+      img { width: 100%; height: auto; }
+      @media (max-width: 600px) { flex-direction: column; gap: 1.4em; figure { flex: none !important; width: 100%; } }
+    }
+    p.story-meta { font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.04em; color: var(--c-dim); }
+
+    // Names and their meanings, two columns.
+    .names { margin-block: 1.6em; padding-top: 14px; border-top: 1px solid var(--c-line); display: grid; gap: 14px 32px;
+      @include m.tablet { grid-template-columns: 1fr 1fr; }
+      div { margin: 0; } dt { font-weight: 700; font-size: 1.15em; color: var(--c-fg); line-height: 1.2; } dd { margin: 2px 0 0; font-size: 0.85em; color: var(--c-dim); } }
+
+    // "Ways into" guide: small photo cards in columns that jump to an episode.
+    .guide { list-style: none; padding: 0; margin-block: 1.4em 3em; columns: 2 220px; column-gap: 18px;
+      @include m.laptop { margin-right: calc(-1 * min(240px, max(0px, (100vw - 1180px) / 2))); columns: 3 220px; }
+      li { break-inside: avoid; margin: 0 0 22px; }
+      a { display: flex; flex-direction: column; gap: 4px; color: inherit; text-decoration: none; }
+      img { width: 100%; height: auto; border-radius: var(--r-img); transition: transform var(--d-base) var(--ease-out); }
+      a:hover img { transform: translateY(-3px); }
+      a:hover .guide__t { color: var(--c-accent); } }
+    .guide__n { margin-top: 6px; font-family: var(--f-mono); font-size: 12px; color: var(--c-accent); }
+    .guide__t { font-weight: 700; font-size: 1.05em; line-height: 1.25; color: var(--c-fg); transition: color var(--d-fast); }
+    .guide__d { font-size: 0.82em; line-height: 1.5; color: var(--c-muted); }
+
+    // Photo credits / copyright, closing the story.
+    .credits { margin-top: 3em; padding: 28px clamp(20px, 3vw, 32px); border-radius: var(--r-img); background: var(--p-indigo); color: var(--p-paper);
+      p { color: rgba(251, 243, 230, 0.86); font-size: 0.9em; } p + p { margin-top: 0.9em; } }
+    .credits__kicker { font-family: var(--f-mono); font-size: 12px !important; letter-spacing: 0.06em; color: var(--p-marigold) !important; }
+    .credits__title { margin-top: 0.3em !important; font-size: clamp(26px, 3vw, 36px) !important; font-weight: 700; line-height: 1.1; color: var(--p-paper) !important;
+      em { font-family: var(--f-serif); font-weight: 400; color: var(--p-marigold); } }
+    .credits__copy { padding-top: 14px; border-top: 1px solid rgba(251, 243, 230, 0.25); font-size: 0.8em !important; color: rgba(251, 243, 230, 0.7) !important; }
     .reflection { margin-block: 2em; border-top: 1px solid var(--c-fg); padding-top: 14px;
       span { display: block; font-family: var(--f-mono); font-size: 12px; letter-spacing: 0.06em; text-transform: lowercase; color: var(--c-accent); }
       p { margin-top: 6px; font-family: var(--f-serif); font-style: italic; font-size: clamp(24px, 2.6vw, 32px); line-height: 1.2; color: var(--c-fg); } }
