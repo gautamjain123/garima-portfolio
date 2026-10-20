@@ -74,16 +74,16 @@ import { ImageFrameComponent } from '../../shared/image-frame.component';
       @include m.tablet { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px; }
       p:first-child { color: var(--c-fg); }
     }
-    // Three frames from recent stories: a sideways scroll on phones, an offset row on wider screens.
+    // Three frames from recent stories: one wide over two on phones, an offset row on wider screens.
     .about__photos {
-      display: grid; grid-auto-flow: column; grid-auto-columns: 72%; gap: 12px; max-width: 1080px;
-      overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; &::-webkit-scrollbar { display: none; }
-      @include m.tablet { grid-auto-flow: row; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; overflow: visible; align-items: start; }
+      display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 12px; max-width: 1080px; align-items: start;
+      @include m.tablet { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
     }
-    .about__photo { scroll-snap-align: start;
-      a { display: flex; flex-direction: column; gap: 12px; color: inherit; }
+    .about__photo {
+      a { display: flex; flex-direction: column; gap: 10px; color: inherit; }
       app-image-frame { aspect-ratio: 4 / 5; border-radius: var(--r-img); }
-      @include m.tablet { &--1 { margin-top: 48px; } }
+      &--0 { grid-column: 1 / -1; app-image-frame { aspect-ratio: 4 / 3; } }
+      @include m.tablet { &--0 { grid-column: auto; app-image-frame { aspect-ratio: 4 / 5; } } &--1 { margin-top: 48px; } }
       a:hover .about__photo-title { color: var(--c-accent); }
       a:hover app-image-frame { box-shadow: 0 18px 40px -24px rgba(29, 26, 22, 0.55); }
     }

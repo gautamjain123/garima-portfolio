@@ -95,7 +95,9 @@ const parts = (s: string): Part[] =>
     .quals__row {
       display: grid; gap: 8px; padding: 28px 0; border-bottom: 1px solid var(--c-line); color: inherit;
       transition: padding var(--d-base) var(--ease-out), color var(--d-fast);
-      @include m.laptop { grid-template-columns: 160px minmax(0, 1fr) 280px; gap: 32px; align-items: baseline; padding: 36px 0; }
+      // Side columns scale with the space, so the title never gets squeezed on a small laptop.
+      @include m.laptop { grid-template-columns: minmax(80px, 0.45fr) minmax(0, 2fr) minmax(150px, 0.9fr); gap: 24px; align-items: baseline; padding: 36px 0; }
+      @include m.desktop { grid-template-columns: 160px minmax(0, 1fr) 280px; gap: 32px; }
     }
     .quals__row--link:hover { color: var(--c-accent); @include m.laptop { padding-left: 16px; }
       .quals__arrow { transform: translate(3px, -3px); } }
