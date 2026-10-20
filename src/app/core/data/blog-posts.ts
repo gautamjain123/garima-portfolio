@@ -81,7 +81,7 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     id: 4,
     slug: 'yakten-through-my-lens',
-    title: 'Yakten, through my lens',
+    title: 'What drives Yakten’s happiness index',
     excerpt:
       'Field notes from Yakten, a homestay village near Pakyong, Sikkim: the didis, the daajus, the forager, the youth and children, the dogs and the guests.',
     category: 'Photo Essays',
