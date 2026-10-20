@@ -61,11 +61,11 @@ import { PageHeaderComponent } from '../../shared/page-header.component';
     .list__count { @include m.label; }
     .list__grid {
       display: grid; gap: 40px 24px; border-top: 1px solid var(--c-line); padding-top: 32px;
-      @include m.tablet { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      @include m.tablet { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px 18px; }
       @include m.laptop { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 48px 28px; }
     }
-    .list__hero { @include m.tablet { grid-column: 1 / -1; } @include m.laptop { grid-column: span 2; grid-row: span 2; } }
-    .list__hero:only-child { @include m.laptop { grid-column: 1 / -1; } }
+    // The lead story always takes a full row; the rest flow in even columns below it.
+    .list__hero { @include m.tablet { grid-column: 1 / -1; } }
     .list__empty { grid-column: 1 / -1; }
     .list__empty { padding: 40px 0; color: var(--c-muted); font-size: var(--t-lead); }
   `,

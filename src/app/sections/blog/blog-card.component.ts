@@ -74,9 +74,16 @@ import { ImageFrameComponent } from '../../shared/image-frame.component';
     .card__img { position: relative; aspect-ratio: 4 / 3; border-radius: var(--r-img); overflow: hidden;
       app-image-frame { position: absolute; inset: 0; } }
     .card--hero .card__img { @include m.tablet { aspect-ratio: 16 / 10; } }
+    // Lead story on wide screens: photo left, text right, as one full-width row.
+    .card--hero .card__link { @include m.laptop {
+      display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); grid-template-rows: auto auto 1fr;
+      column-gap: clamp(28px, 3vw, 48px); row-gap: 14px; align-items: start;
+      .card__img { grid-row: 1 / span 3; margin: 0; }
+      .card__meta { margin-top: 0; }
+    } }
     .card__meta { display: flex; justify-content: space-between; gap: 12px; font-size: 13px; color: var(--c-dim); margin-top: 4px; }
     .card__cat { color: var(--c-accent); }
-    .card__title { font-size: clamp(1.375rem, 1rem + 1vw, 1.875rem); font-weight: 600; letter-spacing: -0.028em; line-height: 1.1;
+    .card__title { font-size: clamp(1.125rem, 0.75rem + 1.1vw, 1.875rem); @media (max-width: 767px) { font-size: 1.375rem; } font-weight: 600; letter-spacing: -0.028em; line-height: 1.1;
       transition: color var(--d-fast); text-wrap: balance; }
     .card--hero .card__title { font-size: var(--t-h3); }
     .card__excerpt { font-size: var(--t-body-lg); line-height: 1.6; color: var(--c-muted); max-width: 60ch; }

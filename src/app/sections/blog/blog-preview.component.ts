@@ -42,11 +42,11 @@ import { BlogCardComponent } from './blog-card.component';
     .blog__title { @include m.heading(var(--t-display)); line-height: 0.88; }
     .blog__grid {
       display: grid; gap: 40px 24px;
-      @include m.tablet { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      @include m.tablet { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px 18px; }
       @include m.laptop { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 48px 28px; }
     }
-    .blog__hero { @include m.tablet { grid-column: 1 / -1; } @include m.laptop { grid-column: span 2; grid-row: span 2; } }
-    .blog__hero:only-child { @include m.laptop { grid-column: 1 / -1; } }
+    // The lead story always takes a full row; the rest flow in even columns below it.
+    .blog__hero { @include m.tablet { grid-column: 1 / -1; } }
     .blog__all { align-self: flex-start; }
   `,
 })
