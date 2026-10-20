@@ -45,6 +45,7 @@ const BRAJ_STORY = 'braj-a-day-that-refused-the-clock';
  * Add a new place per trip; `story` links the card to its blog post.
  */
 export const PLACES: Place[] = [
+  { name: 'Yakten', region: 'Pakyong, Sikkim', when: 'oct 2026', note: 'India’s first digital nomad village: didis at the hearth, daajus in the orchids, dogs leading the trail.', image: 'images/blog/yakten/yakten-gate.jpg', imageAlt: 'The red and yellow gateway of Yakten village', story: 'yakten-through-my-lens' },
   { name: 'Gokul', region: 'Mathura, UP', when: 'oct 2026', note: 'Every house, a shrine. Every householder, a priest. In every home, a Meera.', image: braj('gokul-courtyard'), imageAlt: 'An old stone courtyard in Gokul with peeling plaster and a small shrine', story: BRAJ_STORY, section: 'gokul' },
   { name: 'Raman Reti', region: 'Mathura, UP', when: 'oct 2026', note: 'An aarti that was less a ritual than a force. A hand at the back of the soul, saying rise.', image: braj('raman-reti-elephant'), imageAlt: 'A temple elephant with saffron markings and a silk cloth on its back', story: BRAJ_STORY, section: 'raman-reti' },
   { name: 'Barsana', region: 'Mathura, UP', when: 'oct 2026', note: '1½ hours became 3½ — and we arrived at the exact minute of the aarti.', image: braj('barsana-temple'), imageAlt: 'Crowds at the gateway of the Shri Ladli Ji temple in Barsana', story: BRAJ_STORY, section: 'barsana' },
