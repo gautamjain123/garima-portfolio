@@ -19,6 +19,8 @@ export interface BlogPost {
   image: string;
   imageAlt: string;
   featured: boolean;
+  /** Hidden from the site (lists, its own page, sitemap) but kept in the data. Remove to publish. */
+  draft?: boolean;
   tags?: string[];
 }
 

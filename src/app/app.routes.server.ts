@@ -15,7 +15,7 @@ export const serverRoutes: ServerRoute[] = [
   {
     path: 'blog/:slug',
     renderMode: RenderMode.Prerender,
-    getPrerenderParams: async () => BLOG_POSTS.map((p) => ({ slug: p.slug })),
+    getPrerenderParams: async () => BLOG_POSTS.filter((p) => !p.draft).map((p) => ({ slug: p.slug })),
   },
   // Unknown URLs fall back to the client-rendered shell (index.csr.html), which shows the 404 page.
   { path: '**', renderMode: RenderMode.Client },

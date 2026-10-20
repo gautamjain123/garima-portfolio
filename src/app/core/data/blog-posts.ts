@@ -90,6 +90,8 @@ export const BLOG_POSTS: BlogPost[] = [
     image: 'images/blog/yakten/village.jpg',
     imageAlt: 'Village homes with tin roofs, a greenhouse and corn plots below a forested hill in Yakten',
     featured: false,
+    draft: true, // hidden for now — delete this line to publish
+
     tags: ['Yakten', 'Sikkim', 'Pakyong', 'Homestay', 'Field Notes'],
     content: `
 <p class="lede">Yakten is a homestay village near Pakyong, in Sikkim, known as India’s first digital nomad village.</p>

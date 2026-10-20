@@ -14,7 +14,7 @@ import { BlogCategory, BlogPost } from '../models/blog-post.model';
 @Injectable({ providedIn: 'root' })
 export class BlogService {
   private readonly posts$: Observable<BlogPost[]> = of(
-    [...BLOG_POSTS].sort((a, b) => b.date.localeCompare(a.date)),
+    BLOG_POSTS.filter((p) => !p.draft).sort((a, b) => b.date.localeCompare(a.date)),
   );
 
   getAll(): Observable<BlogPost[]> {

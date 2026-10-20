@@ -16,7 +16,8 @@ const entries = posts.split(/\r?\n  \{\r?\n    id:/).slice(1).map((block) => ({
   cover: block.match(/image: '(.+?)'/)?.[1],
   photos: [...block.matchAll(/(?:photo|nz|rm|region|yk)\('([^']+)'|\['([a-z-]+)', '/g)].map((m) => m[1] ?? m[2]),
   dir: block.match(/images\/blog\/([^/]+)\//)?.[1],
-})).filter((p) => p.slug);
+  draft: /\n\s*draft: true/.test(block),
+})).filter((p) => p.slug && !p.draft);
 
 const newest = entries.map((p) => p.date).sort().at(-1) ?? new Date().toISOString().slice(0, 10);
 const esc = (s) => s.replace(/&/g, '&amp;');

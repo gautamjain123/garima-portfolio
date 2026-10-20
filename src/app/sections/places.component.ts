@@ -3,6 +3,7 @@ import { NgTemplateOutlet } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { PLACES } from '../core/data/site-content';
+import { BLOG_POSTS } from '../core/data/blog-posts';
 import { MotionService } from '../core/services/motion.service';
 import { RevealDirective } from '../core/directives/reveal.directive';
 import { ImageFrameComponent } from '../shared/image-frame.component';
@@ -131,7 +132,8 @@ import { ImageFrameComponent } from '../shared/image-frame.component';
   `,
 })
 export class PlacesComponent implements OnDestroy {
-  protected readonly places = PLACES;
+  /** Places whose story is a draft stay hidden until it's published. */
+  protected readonly places = PLACES.filter((p) => !p.story || !BLOG_POSTS.some((b) => b.slug === p.story && b.draft));
 
   private readonly root = viewChild.required<ElementRef<HTMLElement>>('root');
   private readonly viewport = viewChild.required<ElementRef<HTMLElement>>('viewport');
