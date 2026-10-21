@@ -56,5 +56,42 @@ ${pages
 </urlset>
 `;
 writeFileSync('public/sitemap.xml', xml);
+
+// RSS feed of the stories, newest first — for feed readers, and for an email tool's RSS campaign.
+const field = (block, key) => block.match(new RegExp(`${key}:\\s*'((?:[^'\\\\]|\\\\.)*)'`))?.[1]?.replace(/\\'/g, "'") ?? '';
+const xmlEsc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+const feedItems = posts.split(/\r?\n  \{\r?\n    id:/).slice(1)
+  .filter((block) => !/\n\s*draft: true/.test(block))
+  .map((block) => ({ slug: field(block, 'slug'), title: field(block, 'title'), excerpt: field(block, 'excerpt'), date: field(block, 'date'), image: field(block, 'image') }))
+  .filter((p) => p.slug)
+  .sort((a, b) => b.date.localeCompare(a.date));
+const rss = `<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/">
+  <channel>
+    <title>Garima Jain — stories from everywhere</title>
+    <link>${base}/blog</link>
+    <atom:link href="${base}/rss.xml" rel="self" type="application/rss+xml" />
+    <description>Oral histories, photo essays and field notes from the road.</description>
+    <language>en</language>
+${feedItems
+  .map((p) =>
+    [
+      '    <item>',
+      `      <title>${xmlEsc(p.title)}</title>`,
+      `      <link>${base}/blog/${p.slug}</link>`,
+      `      <guid isPermaLink="true">${base}/blog/${p.slug}</guid>`,
+      `      <pubDate>${new Date(`${p.date}T09:00:00+05:30`).toUTCString()}</pubDate>`,
+      `      <description>${xmlEsc(p.excerpt)}</description>`,
+      p.image ? `      <media:content url="${xmlEsc(`${base}/${p.image}`)}" medium="image" />` : '',
+      '    </item>',
+    ]
+      .filter(Boolean)
+      .join('\n'),
+  )
+  .join('\n')}
+  </channel>
+</rss>
+`;
+writeFileSync('public/rss.xml', rss);
 writeFileSync('public/robots.txt', `User-agent: *\nAllow: /\n\nSitemap: ${base}/sitemap.xml\n`);
 console.log(`sitemap.xml (${pages.length} pages) and robots.txt written for ${base}`);

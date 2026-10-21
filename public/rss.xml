@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/">
+  <channel>
+    <title>Garima Jain — stories from everywhere</title>
+    <link>https://garima-portfolio-three.vercel.app/blog</link>
+    <atom:link href="https://garima-portfolio-three.vercel.app/rss.xml" rel="self" type="application/rss+xml" />
+    <description>Oral histories, photo essays and field notes from the road.</description>
+    <language>en</language>
+    <item>
+      <title>What drives Yakten’s happiness index</title>
+      <link>https://garima-portfolio-three.vercel.app/blog/yakten-through-my-lens</link>
+      <guid isPermaLink="true">https://garima-portfolio-three.vercel.app/blog/yakten-through-my-lens</guid>
+      <pubDate>Tue, 20 Oct 2026 03:30:00 GMT</pubDate>
+      <description>A photo story in nine episodes from Yakten, India’s first digital nomad village near Pakyong, Sikkim: the homestays, the didis, the daajus, the pine walks, the forager, the youth, the dogs and the guests.</description>
+      <media:content url="https://garima-portfolio-three.vercel.app/images/blog/yakten/meghma-steps.jpg" medium="image" />
+    </item>
+    <item>
+      <title>Told, not written: home remedies from Tamil Nadu to Kashmir</title>
+      <link>https://garima-portfolio-three.vercel.app/blog/told-not-written-home-remedies</link>
+      <guid isPermaLink="true">https://garima-portfolio-three.vercel.app/blog/told-not-written-home-remedies</guid>
+      <pubDate>Sun, 04 Oct 2026 03:30:00 GMT</pubDate>
+      <description>Remedies that travelled by voice, from an older person in a kitchen to a younger one — recorded across nine regions, from a Diwali jam in Tamil Nadu to a village in Uri where the road ends.</description>
+      <media:content url="https://garima-portfolio-three.vercel.app/images/blog/remedies/tamil-nadu.jpg" medium="image" />
+    </item>
+    <item>
+      <title>Braj: a day that refused the clock</title>
+      <link>https://garima-portfolio-three.vercel.app/blog/braj-a-day-that-refused-the-clock</link>
+      <guid isPermaLink="true">https://garima-portfolio-three.vercel.app/blog/braj-a-day-that-refused-the-clock</guid>
+      <pubDate>Fri, 02 Oct 2026 03:30:00 GMT</pubDate>
+      <description>Gokul, Barsana, Vrindavan and the Yamuna in a single day — three towns that keep a different clock, and the day I stopped wanting my own.</description>
+      <media:content url="https://garima-portfolio-three.vercel.app/images/blog/braj/cover.jpg" medium="image" />
+    </item>
+    <item>
+      <title>Nizamuddin Dargah: music, market and mannat at a living Sufi shrine</title>
+      <link>https://garima-portfolio-three.vercel.app/blog/nizamuddin-dargah-oral-history</link>
+      <guid isPermaLink="true">https://garima-portfolio-three.vercel.app/blog/nizamuddin-dargah-oral-history</guid>
+      <pubDate>Fri, 25 Sep 2026 03:30:00 GMT</pubDate>
+      <description>An oral history and photographic documentation — how music, faith, commerce and everyday human interaction keep Nizamuddin Dargah alive as a heritage across generations.</description>
+      <media:content url="https://garima-portfolio-three.vercel.app/images/blog/nizamuddin/cover.jpg" medium="image" />
+    </item>
+  </channel>
+</rss>

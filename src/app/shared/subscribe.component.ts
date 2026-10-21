@@ -5,7 +5,7 @@ type Status = 'idle' | 'sending' | 'subscribed' | 'confirm' | 'error';
 
 /**
  * "Get new stories by email" — posts to /api/subscribe (api/subscribe.mjs), which adds the
- * reader to the Brevo list. A new story then reaches them via scripts/notify-subscribers.mjs.
+ * reader to the MailerLite "Blog subscribers" group. A new story then reaches them via scripts/notify-subscribers.mjs.
  */
 @Component({
   selector: 'app-subscribe',

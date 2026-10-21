@@ -1,15 +1,39 @@
-// POST /api/subscribe — adds a reader to the Brevo newsletter list.
-// Runs as a Vercel serverless function, so the Brevo API key never reaches the browser.
+// POST /api/subscribe — adds a reader to the MailerLite "Blog subscribers" group.
+// Runs as a Vercel serverless function, so the MailerLite token never reaches the browser.
 //
 // Environment variables (Vercel → Project → Settings → Environment Variables):
-//   BREVO_API_KEY           required  Brevo → SMTP & API → API keys
-//   BREVO_LIST_ID           required  the numeric id of the "Blog subscribers" list
-//   BREVO_DOI_TEMPLATE_ID   optional  a Double opt-in template id; when set, readers get a
-//                                     "confirm your subscription" email before they're added
-//   SITE_URL                optional  where the confirm link lands (defaults to the live site)
+//   MAILERLITE_API_KEY      required  MailerLite → Integrations → API → Generate new token
+//   MAILERLITE_GROUP_ID     optional  the group's id; without it the group is looked up by name
+//   MAILERLITE_GROUP_NAME   optional  defaults to "Blog subscribers"
+//
+// Double opt-in is a MailerLite account setting (Account settings → Subscribe settings →
+// "Double opt-in for API and integrations"). When it's on, new readers get a confirmation
+// email first, and the form tells them to check their inbox.
 
-const BREVO = 'https://api.brevo.com/v3';
+const API = 'https://connect.mailerlite.com/api';
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const FAILED = 'Couldn’t subscribe you just now. Please try again in a bit.';
+
+let cachedGroupId = process.env.MAILERLITE_GROUP_ID || '';
+
+async function ml(path, key, init = {}) {
+  const r = await fetch(API + path, {
+    ...init,
+    headers: { authorization: `Bearer ${key}`, 'content-type': 'application/json', accept: 'application/json' },
+  });
+  const body = await r.json().catch(() => ({}));
+  return { ok: r.ok, status: r.status, body };
+}
+
+/** The group's id, looked up by name once per warm function instance. */
+async function groupId(key) {
+  if (cachedGroupId) return cachedGroupId;
+  const name = process.env.MAILERLITE_GROUP_NAME || 'Blog subscribers';
+  const r = await ml(`/groups?limit=100&filter[name]=${encodeURIComponent(name)}`, key);
+  const group = r.body?.data?.find((g) => g.name.toLowerCase() === name.toLowerCase());
+  if (!group) throw new Error(`MailerLite group "${name}" not found`);
+  return (cachedGroupId = group.id);
+}
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -17,9 +41,8 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const key = process.env.BREVO_API_KEY;
-  const listId = Number(process.env.BREVO_LIST_ID);
-  if (!key || !listId) return res.status(503).json({ error: 'The newsletter isn’t set up yet.' });
+  const key = process.env.MAILERLITE_API_KEY;
+  if (!key) return res.status(503).json({ error: 'The newsletter isn’t set up yet.' });
 
   let body = req.body ?? {};
   if (typeof body === 'string') {
@@ -32,29 +55,17 @@ export default async function handler(req, res) {
   if (body.website) return res.status(200).json({ status: 'subscribed' });
   if (!EMAIL.test(email) || email.length > 254) return res.status(400).json({ error: 'Please enter a valid email address.' });
 
-  const attributes = name ? { FIRSTNAME: name } : undefined;
-  const doiTemplate = Number(process.env.BREVO_DOI_TEMPLATE_ID);
-  const site = (process.env.SITE_URL || 'https://garima-portfolio-three.vercel.app').replace(/\/$/, '');
-
-  const [path, payload, status] = doiTemplate
-    ? ['/contacts/doubleOptinConfirmation', { email, attributes, includeListIds: [listId], templateId: doiTemplate, redirectionUrl: `${site}/blog` }, 'confirm']
-    : ['/contacts', { email, attributes, listIds: [listId], updateEnabled: true }, 'subscribed'];
-
   try {
-    const r = await fetch(BREVO + path, {
+    const r = await ml('/subscribers', key, {
       method: 'POST',
-      headers: { 'api-key': key, 'content-type': 'application/json', accept: 'application/json' },
-      body: JSON.stringify(payload),
+      body: JSON.stringify({ email, fields: name ? { name } : undefined, groups: [await groupId(key)] }),
     });
-    if (r.ok) return res.status(200).json({ status });
-
-    const detail = await r.json().catch(() => ({}));
-    // Already on the list: treat as success rather than telling a stranger who is subscribed.
-    if (detail.code === 'duplicate_parameter') return res.status(200).json({ status });
-    console.error('Brevo error', r.status, detail);
-    return res.status(502).json({ error: 'Couldn’t subscribe you just now. Please try again in a bit.' });
+    if (r.ok) return res.status(200).json({ status: r.body?.data?.status === 'unconfirmed' ? 'confirm' : 'subscribed' });
+    if (r.status === 422) return res.status(400).json({ error: 'Please enter a valid email address.' });
+    console.error('MailerLite error', r.status, r.body);
+    return res.status(502).json({ error: FAILED });
   } catch (e) {
-    console.error('Brevo request failed', e);
-    return res.status(502).json({ error: 'Couldn’t subscribe you just now. Please try again in a bit.' });
+    console.error('MailerLite request failed', e);
+    return res.status(502).json({ error: FAILED });
   }
 }

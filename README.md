@@ -44,18 +44,20 @@ Book covers: add `cover: 'images/books/why-nations-fail.jpg'` to a book in `BOOK
 
 `src/app/sections/contact/contact.component.ts` validates with Reactive Forms and currently simulates sending. Replace the marked `TODO` with Formspree, a Firebase function, or your own endpoint.
 
-### Newsletter (Brevo)
+### Newsletter (MailerLite)
 
-Readers subscribe from the form at the end of every story and on `/blog`. The form posts to `api/subscribe.mjs`, a Vercel serverless function that adds them to a Brevo list. When a new story is published, `scripts/notify-subscribers.mjs` emails the list. It runs from `.github/workflows/notify-subscribers.yml`.
+Readers subscribe from the form at the end of every story and on `/blog`. The form posts to `api/subscribe.mjs`, a Vercel serverless function that adds them to the MailerLite group **Blog subscribers**. When a new story is published, `scripts/notify-subscribers.mjs` emails that group. It runs from `.github/workflows/notify-subscribers.yml`.
 
 **One-time setup**
 
-1. In Brevo, create a contact list (for example "Blog subscribers") and note its id.
-2. Under **Senders, domains & dedicated IPs**, add and verify the sender address. A domain you own works much better than a Gmail address, which Brevo and inbox providers often flag.
-3. Optional but recommended: create a **Double opt-in** template. Readers then confirm by email before they are added.
-4. Under **SMTP & API → API keys**, create an API key.
-5. In Vercel, go to **Settings → Environment Variables** and add `BREVO_API_KEY` and `BREVO_LIST_ID`. If you made the double opt-in template, also add `BREVO_DOI_TEMPLATE_ID`. Then redeploy.
-6. In GitHub, go to **Settings → Secrets and variables → Actions**. Add the secret `BREVO_API_KEY` and the variables `BREVO_LIST_ID`, `BREVO_SENDER_EMAIL` and `BREVO_SENDER_NAME`. `BREVO_SENDER_NAME` is optional and defaults to "Garima Jain".
+1. In MailerLite, go to **Subscribers → Groups** and create a group named exactly `Blog subscribers`. To use another name, set `MAILERLITE_GROUP_NAME` in both Vercel and GitHub.
+2. Under **Account settings → Domains**, verify a domain you own and use an address on it as the sender. MailerLite doesn't send campaigns from Gmail or other free addresses.
+3. Optional but recommended: under **Account settings → Subscribe settings**, turn on **Double opt-in for API and integrations**. New readers then confirm by email first.
+4. Under **Integrations → API**, generate a token.
+5. In Vercel, go to **Settings → Environment Variables**, add `MAILERLITE_API_KEY`, then redeploy.
+6. In GitHub, go to **Settings → Secrets and variables → Actions**. Add the secret `MAILERLITE_API_KEY` and the variable `MAILERLITE_SENDER_EMAIL`. `MAILERLITE_SENDER_NAME` is optional and defaults to "Garima Jain".
+
+Sending your own HTML through the API may need a paid MailerLite plan once the trial ends. If the workflow then fails with a plan error, use MailerLite's **RSS campaign** instead. The site publishes a feed of every story at `/rss.xml`; point an RSS campaign at it, with the **Blog subscribers** group, and MailerLite emails each new story itself.
 
 **Publishing a story**
 

@@ -1,6 +1,6 @@
-# Emails Brevo subscribers when a new story is published (see scripts/notify-subscribers.mjs).
-# Needs: secret BREVO_API_KEY, and variables BREVO_LIST_ID, BREVO_SENDER_EMAIL (BREVO_SENDER_NAME optional)
-# under GitHub → Settings → Secrets and variables → Actions.
+# Emails MailerLite subscribers when a new story is published (see scripts/notify-subscribers.mjs).
+# Needs: secret MAILERLITE_API_KEY, and variable MAILERLITE_SENDER_EMAIL (MAILERLITE_SENDER_NAME and
+# MAILERLITE_GROUP_NAME optional) under GitHub → Settings → Secrets and variables → Actions.
 name: Email subscribers about new stories
 
 on:
@@ -34,10 +34,10 @@ jobs:
       - name: Email new stories
         run: node scripts/notify-subscribers.mjs
         env:
-          BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
-          BREVO_LIST_ID: ${{ vars.BREVO_LIST_ID }}
-          BREVO_SENDER_EMAIL: ${{ vars.BREVO_SENDER_EMAIL }}
-          BREVO_SENDER_NAME: ${{ vars.BREVO_SENDER_NAME }}
+          MAILERLITE_API_KEY: ${{ secrets.MAILERLITE_API_KEY }}
+          MAILERLITE_SENDER_EMAIL: ${{ vars.MAILERLITE_SENDER_EMAIL }}
+          MAILERLITE_SENDER_NAME: ${{ vars.MAILERLITE_SENDER_NAME }}
+          MAILERLITE_GROUP_NAME: ${{ vars.MAILERLITE_GROUP_NAME }}
           BEFORE_SHA: ${{ github.event.before }}
           SLUG: ${{ inputs.slug }}
           DRY_RUN: ${{ inputs.dry_run }}
