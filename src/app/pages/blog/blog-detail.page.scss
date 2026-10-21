@@ -47,7 +47,9 @@
 }
 .article__rail {
   display: flex; flex-direction: column; gap: 32px; order: 2;
-  @include m.laptop { order: 0; position: sticky; top: calc(var(--nav-h) + 40px); align-self: start; }
+  // Sticky, and scrolls on its own on short screens so the subscribe form at the bottom stays reachable.
+  @include m.laptop { order: 0; position: sticky; top: calc(var(--nav-h) + 40px); align-self: start;
+    max-height: calc(100svh - var(--nav-h) - 64px); overflow-y: auto; scrollbar-width: none; &::-webkit-scrollbar { display: none; } }
 }
 .rail__label { @include m.label; margin-bottom: 10px; }
 .toc {
@@ -219,7 +221,6 @@
 .bio { display: flex; gap: 16px; align-items: baseline; border-top: 1px solid var(--c-line); padding-top: 24px; max-width: var(--measure); }
 .bio__name { font-weight: 600; font-size: 18px; white-space: nowrap; text-transform: uppercase; letter-spacing: 0.02em; }
 .bio__text { color: var(--c-muted); font-size: 15px; }
-.article__sub { max-width: var(--measure); margin-top: 16px; }
 
 .pager {
   @include m.container;

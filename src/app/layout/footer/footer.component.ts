@@ -1,13 +1,15 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { PROFILE } from '../../core/data/site-content';
+import { SubscribeComponent } from '../../shared/subscribe.component';
 
 @Component({
   selector: 'app-footer',
-  imports: [RouterLink],
+  imports: [RouterLink, SubscribeComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <footer class="footer">
+      <app-subscribe class="footer__sub" variant="footer" />
       <span class="footer__copy">© {{ year }} GARIMA JAIN — collected along the way.</span>
       <nav class="footer__links" aria-label="Footer">
         <a routerLink="/about">about</a>
@@ -28,6 +30,7 @@ import { PROFILE } from '../../core/data/site-content';
       padding-block: 28px 40px; border-top: 1px solid var(--c-line);
       font-size: 14px; color: var(--c-muted);
     }
+    .footer__sub { flex-basis: 100%; }
     .footer__links { display: flex; flex-wrap: wrap; gap: 8px 24px; a { padding: 6px 0; &:hover { color: var(--c-fg); } } }
     .footer__top { background: none; border: 0; padding: 6px 0; color: var(--c-fg); font-size: 14px; &:hover { color: var(--c-accent); } }
   `,
