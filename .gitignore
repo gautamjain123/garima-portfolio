@@ -44,3 +44,7 @@ __screenshots__/
 Thumbs.db
 
 email-preview.html
+
+# Local secrets
+.env.local
+.env*.local

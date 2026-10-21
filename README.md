@@ -65,7 +65,7 @@ Add the post to `blog-posts.ts` (or remove its `draft: true`) and push to `main`
 
 To send or preview a story by hand, open GitHub → **Actions → Email subscribers about new stories → Run workflow**. Enter the slug and leave **dry run** ticked to send nothing. To preview the email locally, run `npm run notify -- --slug <slug> --dry-run`, which writes `email-preview.html`.
 
-The `/api/subscribe` function only exists on Vercel. Under `ng serve` the form shows an error; use `vercel dev` to test it locally.
+**Testing the form locally:** copy `.env.example` to `.env.local` and add your `MAILERLITE_API_KEY`. `.env.local` is git-ignored. Then run `npm start`, which starts the dev server and runs `api/` locally (`scripts/dev-api.mjs`). The dev server forwards `/api/*` to it through `proxy.conf.json`.
 
 ## Structure
 
