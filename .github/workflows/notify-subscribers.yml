@@ -1,0 +1,43 @@
+# Emails Brevo subscribers when a new story is published (see scripts/notify-subscribers.mjs).
+# Needs: secret BREVO_API_KEY, and variables BREVO_LIST_ID, BREVO_SENDER_EMAIL (BREVO_SENDER_NAME optional)
+# under GitHub → Settings → Secrets and variables → Actions.
+name: Email subscribers about new stories
+
+on:
+  push:
+    branches: [main]
+    paths: ['src/app/core/data/blog-posts.ts']
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: Slug of the story to email (e.g. yakten-through-my-lens)
+        required: true
+      dry_run:
+        description: Dry run (build the email, send nothing)
+        type: boolean
+        default: true
+
+# One run at a time, so two quick pushes can't send the same story twice.
+concurrency: notify-subscribers
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # needs the previous commit to spot new stories
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Email new stories
+        run: node scripts/notify-subscribers.mjs
+        env:
+          BREVO_API_KEY: ${{ secrets.BREVO_API_KEY }}
+          BREVO_LIST_ID: ${{ vars.BREVO_LIST_ID }}
+          BREVO_SENDER_EMAIL: ${{ vars.BREVO_SENDER_EMAIL }}
+          BREVO_SENDER_NAME: ${{ vars.BREVO_SENDER_NAME }}
+          BEFORE_SHA: ${{ github.event.before }}
+          SLUG: ${{ inputs.slug }}
+          DRY_RUN: ${{ inputs.dry_run }}

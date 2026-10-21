@@ -6,10 +6,11 @@ import { BlogService } from '../../core/services/blog.service';
 import { SeoService } from '../../core/services/seo.service';
 import { BlogCardComponent } from '../../sections/blog/blog-card.component';
 import { PageHeaderComponent } from '../../shared/page-header.component';
+import { SubscribeComponent } from '../../shared/subscribe.component';
 
 @Component({
   selector: 'app-blog-list-page',
-  imports: [RouterLink, PageHeaderComponent, BlogCardComponent],
+  imports: [RouterLink, PageHeaderComponent, BlogCardComponent, SubscribeComponent],
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <app-page-header
@@ -52,6 +53,8 @@ import { PageHeaderComponent } from '../../shared/page-header.component';
           <p class="list__empty">Nothing here yet — the first story in this category is on its way.</p>
         }
       </div>
+
+      <app-subscribe class="list__sub" />
     </div>
   `,
   styles: `
@@ -68,6 +71,7 @@ import { PageHeaderComponent } from '../../shared/page-header.component';
     .list__hero { @include m.tablet { grid-column: 1 / -1; } }
     .list__empty { grid-column: 1 / -1; }
     .list__empty { padding: 40px 0; color: var(--c-muted); font-size: var(--t-lead); }
+    .list__sub { margin-top: clamp(32px, 5vw, 64px); }
   `,
 })
 export default class BlogListPage implements OnInit {

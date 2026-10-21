@@ -44,6 +44,27 @@ Book covers: add `cover: 'images/books/why-nations-fail.jpg'` to a book in `BOOK
 
 `src/app/sections/contact/contact.component.ts` validates with Reactive Forms and currently simulates sending. Replace the marked `TODO` with Formspree, a Firebase function, or your own endpoint.
 
+### Newsletter (Brevo)
+
+Readers subscribe from the form at the end of every story and on `/blog`. The form posts to `api/subscribe.mjs`, a Vercel serverless function that adds them to a Brevo list. When a new story is published, `scripts/notify-subscribers.mjs` emails the list. It runs from `.github/workflows/notify-subscribers.yml`.
+
+**One-time setup**
+
+1. In Brevo, create a contact list (for example "Blog subscribers") and note its id.
+2. Under **Senders, domains & dedicated IPs**, add and verify the sender address. A domain you own works much better than a Gmail address, which Brevo and inbox providers often flag.
+3. Optional but recommended: create a **Double opt-in** template. Readers then confirm by email before they are added.
+4. Under **SMTP & API → API keys**, create an API key.
+5. In Vercel, go to **Settings → Environment Variables** and add `BREVO_API_KEY` and `BREVO_LIST_ID`. If you made the double opt-in template, also add `BREVO_DOI_TEMPLATE_ID`. Then redeploy.
+6. In GitHub, go to **Settings → Secrets and variables → Actions**. Add the secret `BREVO_API_KEY` and the variables `BREVO_LIST_ID`, `BREVO_SENDER_EMAIL` and `BREVO_SENDER_NAME`. `BREVO_SENDER_NAME` is optional and defaults to "Garima Jain".
+
+**Publishing a story**
+
+Add the post to `blog-posts.ts` (or remove its `draft: true`) and push to `main`. The workflow sees which stories are newly published, waits until each page is live on the site, then sends one campaign per story. It never sends the same story twice.
+
+To send or preview a story by hand, open GitHub → **Actions → Email subscribers about new stories → Run workflow**. Enter the slug and leave **dry run** ticked to send nothing. To preview the email locally, run `npm run notify -- --slug <slug> --dry-run`, which writes `email-preview.html`.
+
+The `/api/subscribe` function only exists on Vercel. Under `ng serve` the form shows an error; use `vercel dev` to test it locally.
+
 ## Structure
 
 ```

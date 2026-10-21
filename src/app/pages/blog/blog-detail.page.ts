@@ -11,13 +11,14 @@ import { RevealDirective } from '../../core/directives/reveal.directive';
 import { ReadingProgressComponent } from '../../layout/reading-progress.component';
 import { BlogCardComponent } from '../../sections/blog/blog-card.component';
 import { ImageFrameComponent } from '../../shared/image-frame.component';
+import { SubscribeComponent } from '../../shared/subscribe.component';
 import { PROFILE } from '../../core/data/site-content';
 
 interface TocEntry { id: string; text: string; }
 
 @Component({
   selector: 'app-blog-detail-page',
-  imports: [RouterLink, DatePipe, RevealDirective, ReadingProgressComponent, BlogCardComponent, ImageFrameComponent],
+  imports: [RouterLink, DatePipe, RevealDirective, ReadingProgressComponent, BlogCardComponent, ImageFrameComponent, SubscribeComponent],
   templateUrl: './blog-detail.page.html',
   styleUrl: './blog-detail.page.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

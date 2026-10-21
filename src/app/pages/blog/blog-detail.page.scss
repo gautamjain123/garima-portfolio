@@ -219,6 +219,7 @@
 .bio { display: flex; gap: 16px; align-items: baseline; border-top: 1px solid var(--c-line); padding-top: 24px; max-width: var(--measure); }
 .bio__name { font-weight: 600; font-size: 18px; white-space: nowrap; text-transform: uppercase; letter-spacing: 0.02em; }
 .bio__text { color: var(--c-muted); font-size: 15px; }
+.article__sub { max-width: var(--measure); margin-top: 16px; }
 
 .pager {
   @include m.container;
